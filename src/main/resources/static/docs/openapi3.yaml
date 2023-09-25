@@ -1,0 +1,158 @@
+openapi: 3.0.1
+info:
+  title: ADS-APP SERVER
+  description: 광고 API 서버 REST API SPEC
+  version: 0.1.0
+servers:
+- url: https://localhost:8082
+tags: []
+paths:
+  /v1/ads/search/{group-code}:
+    get:
+      tags:
+      - 퀴즈 광고 요청
+      summary: 퀴즈 광고 목록 노출
+      description: 진행중 인 퀴즈 광고 목록을 노출 한다.
+      operationId: ads-search
+      parameters:
+      - name: group-code
+        in: path
+        description: 파트너 광고 그룹 코드
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: 파트너 광고 그룹 코드
+        required: true
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: 파트너 광고 그룹 코드
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizAdsRespVo'
+              examples:
+                ads-search:
+                  value: |-
+                    {
+                      "result" : {
+                        "content" : [ {
+                          "requestId" : "veheIlDtupJaTzo",
+                          "campaignName" : "정탑형 퀴즈",
+                          "campaignCode" : "tLamHiNUQj",
+                          "totalParticipationLimit" : 1000,
+                          "dayParticipationLimit" : 100,
+                          "quizTitle" : "제목.",
+                          "landing" : {
+                            "thumb" : "http://localhost:8082/api/v1/ads/request/veheIlDtupJaTzo/tLamHiNUQj?redirect=http%3A%2F%2Flocalhost%3A9000%2Ffiles%2Fcampaign%2Fb9b28f587a954e579372df269509951a.png",
+                            "detail_page" : "http://localhost:8082/api/v1/ads/detail/veheIlDtupJaTzo/tLamHiNUQj"
+                          }
+                        }, {
+                          "requestId" : "vvbhrTJjVrVdNEs",
+                          "campaignName" : "정탑형 퀴즈",
+                          "campaignCode" : "ZjIHEjaRIH",
+                          "totalParticipationLimit" : 1000,
+                          "dayParticipationLimit" : 100,
+                          "quizTitle" : "퀴즈제목",
+                          "landing" : {
+                            "thumb" : "http://localhost:8082/api/v1/ads/request/vvbhrTJjVrVdNEs/ZjIHEjaRIH?redirect=http%3A%2F%2Flocalhost%3A9000%2Ffiles%2Fcampaign%2Fa0911b2c09db43e385ffae3d85f4fb02.png",
+                            "detail_page" : "http://localhost:8082/api/v1/ads/detail/vvbhrTJjVrVdNEs/ZjIHEjaRIH"
+                          }
+                        }, {
+                          "requestId" : "ygMZpzuVKPVkztV",
+                          "campaignName" : "정답은??",
+                          "campaignCode" : "QAhkPQsIFP",
+                          "totalParticipationLimit" : 100000,
+                          "dayParticipationLimit" : 1000,
+                          "quizTitle" : "퀴즈 제목",
+                          "landing" : {
+                            "thumb" : "http://localhost:8082/api/v1/ads/request/ygMZpzuVKPVkztV/QAhkPQsIFP?redirect=http%3A%2F%2Flocalhost%3A9000%2Ffiles%2Fcampaign%2Fcfbd470c988647f1a2328d7c7941322f.png",
+                            "detail_page" : "http://localhost:8082/api/v1/ads/detail/ygMZpzuVKPVkztV/QAhkPQsIFP"
+                          }
+                        }, {
+                          "requestId" : "hqXYIFbNhkFcuDL",
+                          "campaignName" : "정답은??",
+                          "campaignCode" : "krslrUaqKd",
+                          "totalParticipationLimit" : 100000,
+                          "dayParticipationLimit" : 1000,
+                          "quizTitle" : "퀴즈 제목",
+                          "landing" : {
+                            "thumb" : "http://localhost:8082/api/v1/ads/request/hqXYIFbNhkFcuDL/krslrUaqKd?redirect=http%3A%2F%2Flocalhost%3A9000%2Ffiles%2Fcampaign%2Fc4dd90eb8599478a9f1e814f5b76ca0b.png",
+                            "detail_page" : "http://localhost:8082/api/v1/ads/detail/hqXYIFbNhkFcuDL/krslrUaqKd"
+                          }
+                        }, {
+                          "requestId" : "CerBClEDfcDDyXT",
+                          "campaignName" : "sdf",
+                          "campaignCode" : "FnLtdkDUCS",
+                          "totalParticipationLimit" : 100000,
+                          "dayParticipationLimit" : 1000,
+                          "quizTitle" : "퀴즈 제목 12ㄷ123",
+                          "landing" : {
+                            "thumb" : "http://localhost:8082/api/v1/ads/request/CerBClEDfcDDyXT/FnLtdkDUCS?redirect=http%3A%2F%2Flocalhost%3A9000%2Ffiles%2Fcampaign%2Fc498b8c0ca81489db37ab4e9b2dd4cf7.png",
+                            "detail_page" : "http://localhost:8082/api/v1/ads/detail/CerBClEDfcDDyXT/FnLtdkDUCS"
+                          }
+                        } ],
+                        "totalPages" : 1,
+                        "totalElements" : 1,
+                        "size" : 10
+                      }
+                    }
+components:
+  schemas:
+    QuizAdsRespVo:
+      title: QuizAdsRespVo
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            size:
+              type: number
+              description: 페이지 당 광고수
+            totalPages:
+              type: number
+              description: 현제 페이지 수
+            content:
+              type: array
+              items:
+                type: object
+                properties:
+                  dayParticipationLimit:
+                    type: number
+                    description: 일별 참여 가능 인원
+                  landing:
+                    type: object
+                    properties:
+                      detail_page:
+                        type: string
+                        description: 광고 진행 여부
+                      thumb:
+                        type: string
+                        description: 광고 진행 여부
+                  requestId:
+                    type: string
+                    description: 광고 요청 키
+                  totalParticipationLimit:
+                    type: number
+                    description: 총 참여 가능 인원
+                  campaignName:
+                    type: string
+                    description: 광고 제목
+                  quizTitle:
+                    type: string
+                    description: 퀴즈 문제
+                  campaignCode:
+                    type: string
+                    description: 광고 코드
+            totalElements:
+              type: number
+              description: 총 광고 수
