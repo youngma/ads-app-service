@@ -179,9 +179,7 @@ public class AdCampaignService {
     public void saveImpressionLog(RptAdImpression impression) {
 
         try {
-            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                adImpressionTemplate.saveAll(List.of(impression));
-            });
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> adImpressionTemplate.saveAll(List.of(impression)));
             future.get();
 
         } catch (Exception e) {
@@ -216,9 +214,7 @@ public class AdCampaignService {
         rptAdAnswerConvert.updateFromDto(adAnswer, rptAdAnswerVo);
         rptAdAnswerVo.setCost(cost);
         try {
-            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                adAnswerTemplate.saveAll(List.of(rptAdAnswerVo));
-            });
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> adAnswerTemplate.saveAll(List.of(rptAdAnswerVo)));
             future.get();
         } catch (Exception e) {
             adAnswerTemplate.saveAll(List.of(rptAdAnswerVo));
@@ -228,9 +224,7 @@ public class AdCampaignService {
 
     public void saveClickLog(RptAdClick click) {
         try {
-            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                adClickTemplate.saveAll(List.of(click));
-            });
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> adClickTemplate.saveAll(List.of(click)));
             future.get();
         } catch (Exception e) {
             log.debug("# click save error, {}", click);

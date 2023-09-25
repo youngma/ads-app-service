@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class}) // When using JUnit5
-@SpringBootTest(properties = { "spring.profiles.active", "local" })
+@SpringBootTest(properties = { "spring.profiles.active", "local=" })
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 public class AdsAppApiTest {

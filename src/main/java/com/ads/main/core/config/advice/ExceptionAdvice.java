@@ -55,17 +55,16 @@ public class ExceptionAdvice {
 
         List<String> validErrors = new ArrayList<>();
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            StringBuilder builder = new StringBuilder();
 
-            builder.append("[");
-            builder.append(fieldError.getField());
-            builder.append("] => ");
-            builder.append(fieldError.getDefaultMessage());
-            builder.append(" 입력된 값: [");
-            builder.append(fieldError.getRejectedValue());
-            builder.append("]");
+            String builder = "[" +
+                    fieldError.getField() +
+                    "] => " +
+                    fieldError.getDefaultMessage() +
+                    " 입력된 값: [" +
+                    fieldError.getRejectedValue() +
+                    "]";
 
-            validErrors.add(builder.toString());
+            validErrors.add(builder);
         }
 
         return new RespVo<>(validErrors);

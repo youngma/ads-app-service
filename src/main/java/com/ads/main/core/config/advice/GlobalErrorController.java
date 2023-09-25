@@ -56,8 +56,7 @@ public class GlobalErrorController implements ErrorController {
     private HttpStatusCode getHttpStatus(Throwable error) {
         HttpStatusCode status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        if (error instanceof HttpStatusCodeException) {
-            HttpStatusCodeException httpStatusCodeException = (HttpStatusCodeException) error;
+        if (error instanceof HttpStatusCodeException httpStatusCodeException) {
             status = httpStatusCodeException.getStatusCode();
         }
 

@@ -25,24 +25,5 @@ import java.util.Set;
 @RequestMapping("/xauth")
 public class GlobalController {
 
-    @GetMapping("/codes")
-    public RespVo<HashMap<String, List<CodeVo>>> getCodes(
-            @RequestParam(value = "codes", required = false) Set<String> codes
-    ) {
-
-        HashMap<String, List<CodeVo>> codeMap = new HashMap<String, List<CodeVo>>();
-
-        codeMap.put("UserStatus", UserStatus.getCodes());
-
-        codeMap.put("CampaignType", CampaignType.getCodes());
-        codeMap.put("PaymentTerms", PaymentTerms.getCodes());
-        codeMap.put("Bank", Bank.getCodes());
-
-        codeMap.put("CampaignStatus", CampaignStatus.getCodes());
-        codeMap.put("AdGroupStatus", AdGroupStatus.getCodes());
-
-        return new RespVo<>(codeMap);
-    }
-
 }
 

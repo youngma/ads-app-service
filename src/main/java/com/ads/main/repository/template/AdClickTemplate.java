@@ -1,6 +1,5 @@
 package com.ads.main.repository.template;
 
-import com.ads.main.vo.campaign.RptAdAnswerVo;
 import com.ads.main.vo.campaign.req.RptAdClick;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
