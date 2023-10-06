@@ -1,5 +1,6 @@
 package com.ads.main.core.security.fillter;
 
+import com.ads.main.core.config.exception.AppException;
 import com.ads.main.service.AdGroupCacheService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,7 +29,11 @@ public class AdsAppFilter extends OncePerRequestFilter {
         int start = request.getRequestURI().lastIndexOf("/");
         String groupCode = request.getRequestURI().substring(start+1);
 
-        adGroupService.findCampaignType(groupCode);
+        try {
+            adGroupService.findCampaignType(groupCode);
+        } catch (AppException e) {
+            throw new RuntimeException(e);
+        }
 
         filterChain.doFilter(request, response);
     }

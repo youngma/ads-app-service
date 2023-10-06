@@ -1,6 +1,7 @@
 package com.ads.main.service;
 
 
+import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.core.utils.PageMapper;
@@ -36,7 +37,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static com.ads.main.enums.AdGroupException.NO_AD;
+import static com.ads.main.enums.AdException.NO_AD;
 
 @Service
 @Slf4j
@@ -44,25 +45,31 @@ import static com.ads.main.enums.AdGroupException.NO_AD;
 public class AdCampaignService {
 
 
+    // 광고 이미지 서버
     @Value("${app.file-server}")
     private String FILE_SERVER;
 
 
+    // 광고 앱 서버(랜딩 로그 적재)
     @Value("${app.app-server}")
     private String APP_SERVER;
 
-    private final AdGroupCacheService adGroupService;
-    private final AdCampaignCacheService adCampaignCacheService;
 
+    private final AdGroupCacheService adGroupService;
+
+//    private final AdCampaignCacheService adCampaignCacheService;
+
+    private final AdQuizRedisService quizRedisService;
 
     private final QAdvertiserCampaignMasterRepository qAdvertiserCampaignMasterRepository;
 
-
+    // 로그 저장용
     private final AdRequestTemplate adRequestTemplate;
     private final AdImpressionTemplate adImpressionTemplate;
     private final AdAnswerTemplate adAnswerTemplate;
     private final AdClickTemplate adClickTemplate;
 
+    // Entity <-> Vo 변경용
     private final AdCampaignMasterConvert adCampaignMasterConvert;
     private final RptAdAnswerConvert rptAdAnswerConvert;
     private PageMapper<AdCampaignMasterVo, AdCampaignMasterEntity> pageMapper;
@@ -72,7 +79,8 @@ public class AdCampaignService {
         pageMapper =  new PageMapper<>(adCampaignMasterConvert);
     }
 
-    public PageAds<QuizAds> requestList(String groupCode, int page, int size) throws NoAdException {
+
+    public PageAds<QuizAds> requestList(String groupCode, int page, int size) throws NoAdException, AppException {
 
         CampaignType campaignType = adGroupService.findCampaignType(groupCode);
 
@@ -82,18 +90,18 @@ public class AdCampaignService {
             throw AdException.NO_AD.throwErrors();
         }
 
-        return convert(pageMapper.convert(adCampaignMasterEntity));
+        return convert(groupCode, pageMapper.convert(adCampaignMasterEntity));
     }
 
-    private PageAds<QuizAds> convert(Page<AdCampaignMasterVo> vos) {
+    private PageAds<QuizAds> convert(String groupCode, Page<AdCampaignMasterVo> vos) {
 
         List<QuizAds> quizAds = vos.getContent().stream().map(ad -> {
 
             String requestId = RandomStringUtils.randomAlphabetic(15);
 
-            LandingVo landing = new LandingVo(requestId, APP_SERVER);
+            LandingVo landing = new LandingVo(groupCode, requestId, APP_SERVER);
             landing.setThumb(generateUrl("quiz-list", ad));
-            landing.setDetail_page(ad.getCampaignCode());
+            landing.setCampaignCode(ad.getCampaignCode());
 
             return QuizAds.builder()
                     .requestId(requestId)
@@ -136,42 +144,38 @@ public class AdCampaignService {
         }
     }
 
-    public QuizAds markImpression(RptAdImpression impression) {
-        AdCampaignMasterVo adCampaignMaster = adCampaignCacheService.findCampaignByCode(impression.campaignCode());
+    public QuizAds markImpression(RptAdImpression impression) throws NoAdException {
+        AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(impression.campaignCode());
 
         log.info("# adCampaignMaster => {}", adCampaignMaster);
 
         CampaignType campaignType = CampaignType.valueOf(adCampaignMaster.getCampaignType());
 
+        if (campaignType == CampaignType.Quiz01) {
+            saveImpressionLog(impression);
 
+            LandingVo landing = new LandingVo(null, impression.requestId(), APP_SERVER);
 
-        switch (campaignType)  {
-            case Quiz01 -> {
-                saveImpressionLog(impression);
+            landing.setThumb(generateUrl("quiz-list", adCampaignMaster));
+            landing.setDetail(generateUrl("quiz-detail-1", adCampaignMaster));
 
-                LandingVo landing = new LandingVo(impression.requestId(), APP_SERVER);
+            landing.setAnswer(adCampaignMaster.getCampaignCode());
 
-                landing.setThumb(generateUrl("quiz-list", adCampaignMaster));
-                landing.setDetail(generateUrl("quiz-detail-1", adCampaignMaster));
+            landing.setHint_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlPc());
+            landing.setHint_ad_pc(adCampaignMaster.getQuiz().getTargetUrlMobile());
 
-                landing.setAnswer(adCampaignMaster.getCampaignCode());
+            landing.setAnswer_ad_pc(adCampaignMaster.getQuiz().getTargetUrlPc());
+            landing.setAnswer_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlMobile());
 
-                landing.setHint_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlPc());
-                landing.setHint_ad_pc(adCampaignMaster.getQuiz().getTargetUrlMobile());
-
-                landing.setAnswer_ad_pc(adCampaignMaster.getQuiz().getTargetUrlPc());
-                landing.setAnswer_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlMobile());
-
-                return QuizAds.builder()
-                        .requestId(impression.requestId())
-                        .campaignName(adCampaignMaster.getCampaignName())
-                        .campaignCode(adCampaignMaster.getCampaignCode())
-                        .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
-                        .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
-                        .quizTitle(adCampaignMaster.getQuiz().getQuizTitle())
-                        .landing(landing)
-                        .build();
-            }
+            return QuizAds.builder()
+                    .requestId(impression.requestId())
+                    .campaignName(adCampaignMaster.getCampaignName())
+                    .campaignCode(adCampaignMaster.getCampaignCode())
+                    .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
+                    .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
+                    .quizTitle(adCampaignMaster.getQuiz().getQuizTitle())
+                    .landing(landing)
+                    .build();
         }
         throw NO_AD.throwErrors();
     }
@@ -186,28 +190,16 @@ public class AdCampaignService {
             log.debug("# impression save error, {}", impression);
             adImpressionTemplate.saveAll(List.of(impression));
         }
-
     }
 
+    public String checkAnswer(RptAdAnswer rptAdAnswer) throws NoAdException, AppException {
+        AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(rptAdAnswer.campaignCode());
 
+        String ret = quizRedisService.joinProcess(adCampaignMaster, rptAdAnswer);
+        saveAnswerLog(rptAdAnswer, BigDecimal.ZERO);
 
-    public String checkAnswer(RptAdAnswer rptAdAnswer) {
-        String answer = adCampaignCacheService.findQuizAnswerByCode(rptAdAnswer.campaignCode());
-
-        log.debug("# 정답 => {}", answer);
-        if (adCampaignCacheService.findQuizAnswerByCodeUser(rptAdAnswer.campaignCode(), rptAdAnswer.user())) {
-            return "이미 참여한 퀴즈 입니다.";
-        }
-
-        if (rptAdAnswer.answer().equals(answer)) {
-            // save call
-            saveAnswerLog(rptAdAnswer, BigDecimal.valueOf(100L));
-            return "정답 입니다.";
-        }
-
-        return "오답 입니다..";
+        return ret;
     }
-
 
     private void saveAnswerLog(RptAdAnswer adAnswer, BigDecimal cost) {
         RptAdAnswerVo rptAdAnswerVo = new RptAdAnswerVo();
@@ -220,7 +212,6 @@ public class AdCampaignService {
             adAnswerTemplate.saveAll(List.of(rptAdAnswerVo));
         }
     }
-
 
     public void saveClickLog(RptAdClick click) {
         try {

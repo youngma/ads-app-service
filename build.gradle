@@ -96,6 +96,15 @@ def var = dependencies {
 
     // restdocs-api-spec
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.2' //2.2
+
+    // redisson
+    implementation 'org.redisson:redisson-spring-boot-starter:3.23.5'
+
+    // m1 dns error
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.15.2'
+
 }
 
 tasks.named('test') {

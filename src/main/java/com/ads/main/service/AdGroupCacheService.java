@@ -1,6 +1,7 @@
 package com.ads.main.service;
 
 
+import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.enums.advertiser.AdGroupStatus;
 import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.entity.PartnerAdGroupEntity;
@@ -24,7 +25,7 @@ public class AdGroupCacheService {
             , key = "#groupCode"
             , unless = "#result == null"
     )
-    public void checkAdGroupCode(String groupCode) {
+    public void checkAdGroupCode(String groupCode) throws AppException {
         long count = partnerAdGroupRepository.countByGroupCodeAndGroupStatus(groupCode, AdGroupStatus.Approval);
         log.debug("# repo checkAdGroupCode => {}", groupCode);
         if (count == 0) {
@@ -37,7 +38,7 @@ public class AdGroupCacheService {
             , key = "#groupCode"
             , unless = "#result == null"
     )
-    public CampaignType findCampaignType(String groupCode) {
+    public CampaignType findCampaignType(String groupCode) throws AppException {
         PartnerAdGroupEntity partnerAdGroupEntity = partnerAdGroupRepository.findFirstByGroupCodeAndGroupStatus(groupCode, AdGroupStatus.Approval)
                 .orElseThrow(AD_GROUP_NOT_FOUND::throwErrors);
 

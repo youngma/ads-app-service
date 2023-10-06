@@ -60,8 +60,8 @@ public class QAdvertiserCampaignMasterRepository {
                 .where(
                     adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval)
                     .and(adCampaignMasterEntity.campaignType.eq(campaignType))
-                    .and(adCampaignMasterEntity.adStartDate.after(LocalDateTime.now()))
-                    .and(adCampaignMasterEntity.adEndDate.before(LocalDateTime.now()))
+                    .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
+                    .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
                 )
                 .fetchOne();
 

@@ -1,6 +1,7 @@
 package com.ads.main.controller;
 
 
+import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.core.security.config.dto.Role;
 import com.ads.main.core.utils.AppUtils;
@@ -18,8 +19,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.util.URLEncoder;
-import org.apache.logging.log4j.util.Strings;
 import org.apache.tomcat.util.buf.HexUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.validation.annotation.Validated;
@@ -27,12 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,17 +43,17 @@ public class AdsController {
             @PathVariable("ad-group") String adGroup,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "20") int size
-    ) throws NoAdException {
-//        log.debug("# adGroup {}, page {}, size {}", adGroup, page, size);
+    ) throws NoAdException, AppException {
         adGroupService.checkAdGroupCode(adGroup);
         return new RespVo<>(adCampaignService.requestList(adGroup, page, size));
     }
 
 
     // 메인 이미지가 로딩 ( request check )
-    @GetMapping("/request/{request-id}/{ad-code}")
+    @GetMapping("/request/{request-id}/{ad-group}/{ad-code}")
     public void request(
             @PathVariable("request-id") String requestId,
+            @PathVariable("ad-group") String adGroup,
             @PathVariable("ad-code") String adCode,
             @RequestHeader(HttpHeaders.USER_AGENT) String userAgent,
             @Validated @NotBlank @RequestParam("redirect") String redirect,
@@ -67,14 +61,10 @@ public class AdsController {
             HttpServletResponse response
     ) throws IOException {
 
+        RptAdRequest rptAdRequest = new RptAdRequest(adGroup, requestId, adCode, userAgent,  AppUtils.etRemoteAddr(request));
+        log.info("# rptAdRequest => {}", rptAdRequest);
 
-        log.info("# requestId => {}", requestId);
-        log.info("# adCode => {}", adCode);
-        log.info("# userAgent => {}", userAgent);
-        log.info("# remoteIp => {}", AppUtils.etRemoteAddr(request));
-        log.info("# redirect => {}", redirect);
-
-        adCampaignService.markRequest(new RptAdRequest(requestId, adCode, userAgent,  AppUtils.etRemoteAddr(request)));
+        adCampaignService.markRequest(rptAdRequest);
 
         response.sendRedirect(new String( HexUtils.fromHexString(redirect)));
 
@@ -90,11 +80,11 @@ public class AdsController {
             HttpServletRequest request
     ) throws NoAdException {
 
-        log.info("# requestId => {}", requestId);
-        log.info("# adCode => {}", adCode);
-        log.info("# userAgent => {}", userAgent);
+        RptAdImpression rptAdImpression = new RptAdImpression(Role.PARTNER, requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO);
 
-        QuizAds quizAds = adCampaignService.markImpression(new RptAdImpression(Role.PARTNER, requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO));
+        log.info("# rptAdImpression => {}", rptAdImpression);
+
+        QuizAds quizAds = adCampaignService.markImpression(rptAdImpression);
 
         return  new RespVo<>(quizAds);
     }
@@ -108,33 +98,28 @@ public class AdsController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
+        RptAdImpression rptAdImpression = new RptAdImpression(Role.ADVERTISER, requestId, "", userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO);
+        log.info("# rptAdImpression => {}", rptAdImpression);
 
-        log.info("# requestId => {}", requestId);
-        log.info("# redirect => {}", redirect);
+        adCampaignService.saveImpressionLog(rptAdImpression);
 
-        adCampaignService.saveImpressionLog(new RptAdImpression(Role.ADVERTISER, requestId, "", userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO));
-
-        response.sendRedirect(new String( HexUtils.fromHexString(redirect)));
-
+        response.sendRedirect(new String( HexUtils.fromHexString(redirect)) );
     }
 
     // 정답 확인
     @GetMapping("/answer/{request-id}/{ad-code}")
-    public String answer(
+    public RespVo<String> answer(
             @PathVariable("request-id") String requestId,
             @PathVariable("ad-code") String adCode,
             @RequestParam("answer") String answer,
             @RequestParam("user-key") String user,
             HttpServletRequest request,
             @RequestHeader(HttpHeaders.USER_AGENT) String userAgent
-    ) {
+    ) throws NoAdException, AppException {
 
-        log.info("# requestId => {}", requestId);
-        log.info("# adCode => {}", adCode);
-        log.info("# answer => {}", answer);
-        log.info("# user => {}", user);
-
-        return adCampaignService.checkAnswer(new RptAdAnswer(requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), user, answer, BigDecimal.ZERO));
+        RptAdAnswer rptAdAnswer = new RptAdAnswer(requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), user, answer, BigDecimal.ZERO);
+        log.info("# rptAdAnswer => {}", rptAdAnswer);
+        return  new RespVo<>(adCampaignService.checkAnswer(rptAdAnswer));
     }
 
     // 광고주 페이지 랜딩
@@ -148,14 +133,11 @@ public class AdsController {
             HttpServletResponse response
     ) throws IOException, URISyntaxException {
 
-        log.info("# requestId => {}", requestId);
-        log.info("# redirect => {}", redirect);
-        log.info("# userAgent => {}", userAgent);
+        RptAdClick rptAdClick = new RptAdClick(requestId, target, userAgent, AppUtils.etRemoteAddr(request));
 
-        adCampaignService.saveClickLog(new RptAdClick(requestId, target, userAgent, AppUtils.etRemoteAddr(request)));
+        log.info("# rptAdClick => {}", rptAdClick);
 
-
-
+        adCampaignService.saveClickLog(rptAdClick);
 
         response.sendRedirect(new String( HexUtils.fromHexString(redirect)));
 

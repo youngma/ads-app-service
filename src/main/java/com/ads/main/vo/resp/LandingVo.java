@@ -4,14 +4,14 @@ package com.ads.main.vo.resp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Setter;
-import org.apache.catalina.util.URLEncoder;
 import org.apache.tomcat.util.buf.HexUtils;
-
-import java.nio.charset.Charset;
 
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LandingVo {
+
+    @JsonIgnore
+    private String groupCode;
 
     @JsonIgnore
     private String requestId;
@@ -19,13 +19,14 @@ public class LandingVo {
     @JsonIgnore
     private String appServerUrl;
 
+    private String campaignCode;
+
     // 광고 요청
     // private String request;
     private String thumb;
 
     // 광고 상세
     private String detail;
-    private String detail_page;
 
     // 퀴즈 정답 요청
     private String answer;
@@ -38,23 +39,23 @@ public class LandingVo {
     private String answer_ad_pc;
     private String answer_ad_mobile;
 
-    public LandingVo(String requestId, String appServerUrl) {
+    public LandingVo(String groupCode, String requestId,  String appServerUrl) {
+        this.groupCode = groupCode;
         this.requestId = requestId;
         this.appServerUrl = appServerUrl;
     }
 
-
     public String getThumb() {
-        if (this.detail_page != null) {
-            return this.appServerUrl.concat("/api/v1/ads/request/"+requestId+"/"+this.detail_page+"?redirect=").concat(HexUtils.toHexString(this.thumb.getBytes()));
+        if (this.campaignCode != null) {
+            return this.appServerUrl.concat("/api/v1/ads/request/"+requestId+"/"+groupCode+"/"+this.campaignCode+"?redirect=").concat(HexUtils.toHexString(this.thumb.getBytes()));
         } else {
             return null;
         }
     }
 
     public String getDetail_page() {
-        if (this.detail_page != null) {
-            return this.appServerUrl.concat("/api/v1/ads/detail/"+requestId+"/"+this.detail_page);
+        if (this.campaignCode != null) {
+            return this.appServerUrl.concat("/api/v1/ads/detail/"+requestId+"/"+this.campaignCode);
         } else {
             return null;
         }

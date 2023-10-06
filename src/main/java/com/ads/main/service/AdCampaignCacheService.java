@@ -1,5 +1,6 @@
 package com.ads.main.service;
 
+import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.RptAdAnswerEntity;
 import com.ads.main.entity.mapper.AdCampaignMasterConvert;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.ads.main.enums.AdGroupException.NO_AD;
+import static com.ads.main.enums.AdException.NO_AD;
 
 @Service
 @Slf4j
@@ -33,20 +34,21 @@ public class AdCampaignCacheService {
             , key = "#campaignCode"
             , unless = "#result == null"
     )
-    public AdCampaignMasterVo findCampaignByCode(String campaignCode) {
+    @Deprecated
+    public AdCampaignMasterVo findCampaignByCode(String campaignCode) throws NoAdException {
         log.debug("# campaign cache => {}", campaignCode);
         Optional<AdCampaignMasterEntity> adCampaignMasterEntityOptional = qAdvertiserCampaignMasterRepository.findAdCampaign(campaignCode);
         AdCampaignMasterEntity adCampaignMasterEntity = adCampaignMasterEntityOptional.orElseThrow(NO_AD::throwErrors);
         return adCampaignMasterConvert.toDto(adCampaignMasterEntity);
     }
 
-
     @Cacheable(
             cacheNames = "quiz-answer"
             , key = "#campaignCode"
             , unless = "#result == null"
     )
-    public String findQuizAnswerByCode(String campaignCode) {
+    @Deprecated
+    public String findQuizAnswerByCode(String campaignCode) throws NoAdException {
         Optional<String> quizAnswerOpt = qAdvertiserCampaignMasterRepository.findQuizAnswer(campaignCode);
         log.debug("# campaign answer => {}, {}", campaignCode, quizAnswerOpt);
         return quizAnswerOpt.orElseThrow(NO_AD::throwErrors);
@@ -57,6 +59,7 @@ public class AdCampaignCacheService {
         cacheNames = "quiz-answer"
         , unless = "#result == false"
     )
+    @Deprecated
     public boolean findQuizAnswerByCodeUser(String campaignCode, String user) {
         log.debug("# campaign join => {}", campaignCode);
        Optional<RptAdAnswerEntity> rptAdAnswerEntityOptional = rptAdAnswerEntityRepository.findFirstByCampaignCodeAndUserKey(campaignCode, user);

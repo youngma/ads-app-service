@@ -9,7 +9,6 @@ public record RptAdAnswer(
         String remoteIp,
         String user,
         String answer,
-
         BigDecimal cost
 ) {
 
