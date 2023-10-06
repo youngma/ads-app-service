@@ -7,7 +7,7 @@ server:
 
 spring:
   application:
-    name: partner_center
+    name: quiz_ad_app
   profiles:
     active: local
 
