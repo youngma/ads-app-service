@@ -43,7 +43,8 @@ public class QAdvertiserCampaignMasterRepository {
 
                 .where(
                         adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval)
-                    .and(adCampaignMasterEntity.campaignType.eq(campaignType))
+                    .and(adCampaignMasterEntity.exposureStatus.eq(true))
+//                    .and(adCampaignMasterEntity.campaignType.eq(campaignType))
                     .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
                     .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
 
@@ -59,7 +60,9 @@ public class QAdvertiserCampaignMasterRepository {
                 .from(adCampaignMasterEntity)
                 .where(
                     adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval)
-                    .and(adCampaignMasterEntity.campaignType.eq(campaignType))
+                    .and(adCampaignMasterEntity.exposureStatus.eq(true))
+
+//                    .and(adCampaignMasterEntity.campaignType.eq(campaignType))
                     .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
                     .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
                 )

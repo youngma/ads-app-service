@@ -8,15 +8,13 @@ server:
 spring:
   application:
     name: quiz_ad_app
-  profiles:
-    active: local
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/smart_ad
+    url: jdbc:mysql://223.130.139.66:3306/quiz_ad
     hikari:
-      username: local
-      password: local
+      username: ad_user
+      password: password
       maximum-pool-size: 100
   jpa:
     database: mysql
@@ -43,9 +41,11 @@ spring:
   data:
     redis:
       default:
-        host: 127.0.0.1
+        host: 223.130.139.66
         port: 6379
         database: 2
+      repositories:
+        enabled: false
 
   mvc:
     throw-exception-if-no-handler-found: true
@@ -71,7 +71,7 @@ spring:
 
 logging:
   file:
-    name: ./logs/${spring.application.name}.log
+    name: /home/ads/logs/app/${spring.application.name}.log
   logback:
     rollingpolicy:
       max-history: 7
@@ -99,11 +99,11 @@ logging:
           jdbc:
             bind: trace
 app:
-  app-server: http://localhost:8082/api
-  file-server: http://localhost:9000
+  app-server: http://quiz.app.test.jamonglab.com/api
+  file-server: http://quiz.admin.test.jamonglab.com/files
   file:
-    uploadTempPath: /Users/bob/projects/file-upload/temp
-    uploadPath: /Users/bob/projects/file-upload/files
+    uploadTempPath: /home/ads/uploads/temp
+    uploadPath: /home/ads/uploads/files
 
   quiz:
     join-key:

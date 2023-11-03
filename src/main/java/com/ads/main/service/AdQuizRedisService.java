@@ -73,8 +73,8 @@ public class AdQuizRedisService {
             if (maps.containsKey(campaignCode)) {
                 return objectMapper.readValue(campaignStrStr, AdCampaignMasterVo.class);
             }
-        } catch (JsonProcessingException ignored) {
-
+        } catch (JsonProcessingException e) {
+            log.error("# ad detail parsing error: ", e);
         }
         throw AdException.NO_AD.throwErrors();
     }

@@ -42,9 +42,9 @@ public class AdRequestTemplate {
         jdbcTemplate.batchUpdate(
         """
                 insert into RPT_AD_REQUEST
-                 (REQUEST_ID, GROUP_CODE,  CAMPAIGN_CODE, USER_AGENT, REMOTE_IP, REQUEST_AT)
+                 (REQUEST_ID, GROUP_CODE,  CAMPAIGN_CODE, USER_AGENT, REMOTE_IP, REQUEST_AT, AD_PRICE, USER_COMMISSION, PARTNER_COMMISSION, AD_REWORD)
                 values
-                 (? , ?, ?, ?, ?, current_timestamp)
+                 (? , ?, ?, ?, ?, current_timestamp, ?, ?, ?, ?)
                 on DUPLICATE KEY UPDATE
                 USER_AGENT = values(USER_AGENT),
                 REMOTE_IP = values(REMOTE_IP)
@@ -52,11 +52,15 @@ public class AdRequestTemplate {
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setObject(1, subItems.get(i).requestId());
-                        ps.setObject(2, subItems.get(i).groupCode());
-                        ps.setObject(3, subItems.get(i).campaignCode());
-                        ps.setObject(4, subItems.get(i).userAgent());
-                        ps.setObject(5, subItems.get(i).remoteIp());
+                        ps.setObject(1, subItems.get(i).getRequestId());
+                        ps.setObject(2, subItems.get(i).getGroupCode());
+                        ps.setObject(3, subItems.get(i).getCampaignCode());
+                        ps.setObject(4, subItems.get(i).getUserAgent());
+                        ps.setObject(5, subItems.get(i).getRemoteIp());
+                        ps.setInt(6, subItems.get(i).getAdPrice());
+                        ps.setObject(7, subItems.get(i).getUserCommission());
+                        ps.setObject(8, subItems.get(i).getPartnerCommission());
+                        ps.setObject(9, subItems.get(i).getAdReword());
                     }
                     @Override
                     public int getBatchSize() {

@@ -73,26 +73,4 @@ public class AdQuizVo implements Serializable {
      */
     private String goodsCode;
 
-    /**
-     * 등록 일자
-     */
-    private LocalDateTime insertedAt;
-
-    /**
-     * 등록자
-     */
-    private String insertedId;
-
-
-    /**
-     * 수정 일자
-     */
-    private LocalDateTime updatedAt;
-
-
-    /**
-     * 수정자
-     */
-    private String updatedId;
-
 }

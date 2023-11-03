@@ -47,7 +47,7 @@ public class LandingVo {
 
     public String getThumb() {
         if (this.campaignCode != null) {
-            return this.appServerUrl.concat("/api/v1/ads/request/"+requestId+"/"+groupCode+"/"+this.campaignCode+"?redirect=").concat(HexUtils.toHexString(this.thumb.getBytes()));
+            return this.appServerUrl.concat("/app/v1/ads/request/"+requestId+"/"+groupCode+"/"+this.campaignCode+"?redirect=").concat(HexUtils.toHexString(this.thumb.getBytes()));
         } else {
             return null;
         }
@@ -55,7 +55,7 @@ public class LandingVo {
 
     public String getDetail_page() {
         if (this.campaignCode != null) {
-            return this.appServerUrl.concat("/api/v1/ads/detail/"+requestId+"/"+this.campaignCode);
+            return this.appServerUrl.concat("/app/v1/ads/detail/"+requestId+"/"+this.campaignCode);
         } else {
             return null;
         }
@@ -63,7 +63,7 @@ public class LandingVo {
 
     public String getDetail() {
         if (this.detail != null) {
-            return this.appServerUrl.concat("/api/v1/ads/impression/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.detail.getBytes()) );
+            return this.appServerUrl.concat("/app/v1/ads/impression/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.detail.getBytes()) );
         } else {
             return null;
         }
@@ -71,7 +71,7 @@ public class LandingVo {
 
     public String getAnswer() {
         if (this.answer != null) {
-            return this.appServerUrl.concat("/api/v1/ads/answer/"+requestId+"/"+answer);
+            return this.appServerUrl.concat("/app/v1/ads/answer/"+requestId+"/"+answer);
         } else {
             return null;
         }
@@ -79,7 +79,7 @@ public class LandingVo {
 
     public String getHint_ad_pc() {
         if (this.hint_ad_pc != null) {
-            return this.appServerUrl.concat("/api/v1/ads/click/hint/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.hint_ad_pc.getBytes()) );
+            return this.appServerUrl.concat("/app/v1/ads/click/hint/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.hint_ad_pc.getBytes()) );
         } else {
             return null;
         }
@@ -91,7 +91,7 @@ public class LandingVo {
 
 
 
-            return this.appServerUrl.concat("/api/v1/ads/click/hint/"+requestId+"?redirect=").concat( HexUtils.toHexString(this.hint_ad_mobile.getBytes()) );
+            return this.appServerUrl.concat("/app/v1/ads/click/hint/"+requestId+"?redirect=").concat( HexUtils.toHexString(this.hint_ad_mobile.getBytes()) );
         } else {
             return null;
         }
@@ -99,7 +99,7 @@ public class LandingVo {
 
     public String getAnswer_ad_pc() {
         if (this.answer_ad_pc != null) {
-            return this.appServerUrl.concat("/api/v1/ads/click/answer/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.answer_ad_pc.getBytes()) );
+            return this.appServerUrl.concat("/app/v1/ads/click/answer/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.answer_ad_pc.getBytes()) );
         } else {
             return null;
         }
@@ -107,7 +107,7 @@ public class LandingVo {
 
     public String getAnswer_ad_mobile() {
         if (this.answer_ad_mobile != null) {
-            return this.appServerUrl.concat("/api/v1/ads/click/answer/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.answer_ad_mobile.getBytes()) );
+            return this.appServerUrl.concat("/app/v1/ads/click/answer/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.answer_ad_mobile.getBytes()) );
         } else {
             return null;
         }

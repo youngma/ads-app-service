@@ -57,7 +57,7 @@ public class AdsAppApiTest {
         info.add("page", "1");
         info.add("size", "10");
 
-            String groupCode = "FMqJafxBzL";
+            String groupCode = "brBJZBMxDe";
             this.mockMvc.perform(
                     RestDocumentationRequestBuilders.get("/v1/ads/search/{group-code}", groupCode)
                     .queryParams(info)

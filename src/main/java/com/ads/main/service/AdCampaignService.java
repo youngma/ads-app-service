@@ -9,11 +9,13 @@ import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.mapper.AdCampaignMasterConvert;
 import com.ads.main.entity.mapper.RptAdAnswerConvert;
 import com.ads.main.enums.AdException;
+import com.ads.main.repository.jpa.PartnerAdGroupRepository;
 import com.ads.main.repository.querydsl.QAdvertiserCampaignMasterRepository;
 import com.ads.main.repository.template.AdAnswerTemplate;
 import com.ads.main.repository.template.AdClickTemplate;
 import com.ads.main.repository.template.AdImpressionTemplate;
 import com.ads.main.repository.template.AdRequestTemplate;
+import com.ads.main.vo.adGroup.resp.PartnerAdGroupVo;
 import com.ads.main.vo.campaign.RptAdAnswerVo;
 import com.ads.main.vo.campaign.req.RptAdAnswer;
 import com.ads.main.vo.campaign.req.RptAdClick;
@@ -43,6 +45,7 @@ import static com.ads.main.enums.AdException.NO_AD;
 @Slf4j
 @RequiredArgsConstructor
 public class AdCampaignService {
+    private final PartnerAdGroupRepository partnerAdGroupRepository;
 
 
     // 광고 이미지 서버
@@ -135,11 +138,48 @@ public class AdCampaignService {
     public void markRequest(RptAdRequest request) {
         try {
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+
+                try {
+                    PartnerAdGroupVo partnerAdGroupVo = adGroupService.searchByGroupCode(request.getGroupCode());
+                    AdCampaignMasterVo campaignMasterVo = quizRedisService.findCampaignByCode(request.getCampaignCode());
+
+                    int adPrice = campaignMasterVo.getAdPrice().intValue();
+                    int partnerCommission = 0;
+                    int userCommission = 0;
+
+
+                    int partnerAdPrice = Math.round((float) (adPrice * partnerAdGroupVo.getCommissionRate()) / 100);
+                    int userAdPrice = Math.round((float) (adPrice - partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
+
+                    log.debug("# Quiz01 {}, {},  {} ", adPrice,  partnerAdGroupVo.getCommissionRate(), partnerAdGroupVo.getUserCommissionRate());
+
+                    if (CampaignType.Quiz02.getCode().equals(campaignMasterVo.getCampaignType())) {
+                        log.debug("# Quiz02 {}, {}. {} ", adPrice,  campaignMasterVo.getCommissionRate(), campaignMasterVo.getUserCommissionRate());
+
+                        partnerCommission = campaignMasterVo.getCommissionRate().intValue();
+                        userCommission = campaignMasterVo.getUserCommissionRate().intValue();
+                    } else {
+                        partnerCommission = adPrice - partnerAdPrice;
+                        userCommission = partnerCommission - userAdPrice;
+                    }
+
+                    int adReword =  Math.round((float) (userCommission * partnerAdGroupVo.getRewordRate()));
+
+                    request.setAdPrice(adPrice);
+                    request.setAdReword(adReword);
+                    request.setPartnerCommission(partnerCommission);
+                    request.setUserCommission(userCommission);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+
                 adRequestTemplate.saveAll(List.of(request));
             });
             future.get();
         } catch (Exception e) {
-            log.debug("# request save error, {}", request);
+            log.debug("# request save error", e);
             adRequestTemplate.saveAll(List.of(request));
         }
     }
@@ -149,7 +189,7 @@ public class AdCampaignService {
 
         log.info("# adCampaignMaster => {}", adCampaignMaster);
 
-        CampaignType campaignType = CampaignType.valueOf(adCampaignMaster.getCampaignType());
+        CampaignType campaignType = CampaignType.of(adCampaignMaster.getCampaignType());
 
         if (campaignType == CampaignType.Quiz01) {
             saveImpressionLog(impression);

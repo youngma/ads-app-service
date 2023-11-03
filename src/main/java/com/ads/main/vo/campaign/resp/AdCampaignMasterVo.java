@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 @Data
@@ -51,6 +52,27 @@ public class AdCampaignMasterVo implements Serializable {
      */
     private Integer dayParticipationLimit;
 
+    /**
+     * 총 예산
+     */
+    private BigDecimal totalBudget;
+
+
+    /**
+     * 광고 단가
+     */
+    private BigDecimal adPrice;
+
+
+    /**
+     * 수수로 비율
+     */
+    private BigDecimal commissionRate;
+
+    /**
+     * 수수로 비율(사용자)
+     */
+    private BigDecimal userCommissionRate;
 
     private AdSmartStoreVo smartStore;
     private AdQuizVo quiz;

@@ -31,7 +31,7 @@ import java.net.URISyntaxException;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/v1/ads")
+@RequestMapping("/app/v1/ads")
 public class AdsController {
 
 
