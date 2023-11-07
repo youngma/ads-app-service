@@ -3,6 +3,7 @@ package com.ads.main;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class}) // When using JUnit5
-@SpringBootTest(properties = { "spring.profiles.active=", "local=" })
+@SpringBootTest(properties = { "spring.profiles.active", "test" })
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 public class AdsAppApiTest {
@@ -54,12 +55,14 @@ public class AdsAppApiTest {
     public void SearchQuizAds() throws Exception {
 
         MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
+        info.add("user-key", "test");
+        info.add("join", "all");
         info.add("page", "1");
         info.add("size", "10");
 
             String groupCode = "brBJZBMxDe";
             this.mockMvc.perform(
-                    RestDocumentationRequestBuilders.get("/v1/ads/search/{group-code}", groupCode)
+                    RestDocumentationRequestBuilders.get("/app/v1/ads/search/{group-code}", groupCode)
                     .queryParams(info)
                     .accept(MediaType.APPLICATION_JSON))
                     .andDo(print())
@@ -69,9 +72,11 @@ public class AdsAppApiTest {
                             MockMvcRestDocumentationWrapper.document("ads-search"
                                     , preprocessResponse(prettyPrint())
                                     , pathParameters(
-                                        parameterWithName("group-code").description("파트너 광고 그룹 코드")
+                                        parameterWithName("group-code").description("광고 지면 코드")
                                     )
                                     ,queryParameters(
+                                            parameterWithName("user-key").description("파트너사 APP USER 식별키"),
+                                            parameterWithName("join").description("참여 여부( true : 참여, fasle: 미참여, all: 전체)"),
                                             parameterWithName("page").description("페이지"),
                                             parameterWithName("size").description("페이지당 광고 ")
                                     )
@@ -82,8 +87,9 @@ public class AdsAppApiTest {
                                         , fieldWithPath("result.content.[].quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.content.[].totalParticipationLimit").description("총 참여 가능 인원").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.content.[].dayParticipationLimit").description("일별 참여 가능 인원").type(JsonFieldType.NUMBER)
-                                        , fieldWithPath("result.content.[].landing.thumb").description("광고 진행 여부").type(JsonFieldType.STRING)
-                                        , fieldWithPath("result.content.[].landing.detail_page").description("광고 진행 여부").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.content.[].joined").description("참여 여부").type(JsonFieldType.BOOLEAN)
+                                        , fieldWithPath("result.content.[].landing.thumb").description("메인 페이지 이미지(광고 요청 처리 용도)").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.content.[].landing.detail_page").description("광고 상세 요청(광고 노출 처리 용도)").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.totalPages").description("현제 페이지 수").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.totalElements").description("총 광고 수").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.size").description("페이지 당 광고수").type(JsonFieldType.NUMBER)
@@ -104,6 +110,8 @@ public class AdsAppApiTest {
                                                 parameterWithName("group-code").description("파트너 광고 그룹 코드")
                                         )
                                         .queryParameters(
+                                                parameterWithName("user-key").description("파트너사 APP USER 식별키"),
+                                                parameterWithName("join").description("참여 여부( true : 참여, fasle: 미참여, all: 전체)"),
                                                 parameterWithName("page").description("파트너 광고 그룹 코드"),
                                                 parameterWithName("size").description("파트너 광고 그룹 코드")
                                         )
@@ -117,8 +125,9 @@ public class AdsAppApiTest {
                                                 , fieldWithPath("result.content.[].quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
                                                 , fieldWithPath("result.content.[].totalParticipationLimit").description("총 참여 가능 인원").type(JsonFieldType.NUMBER)
                                                 , fieldWithPath("result.content.[].dayParticipationLimit").description("일별 참여 가능 인원").type(JsonFieldType.NUMBER)
-                                                , fieldWithPath("result.content.[].landing.thumb").description("광고 진행 여부").type(JsonFieldType.STRING)
-                                                , fieldWithPath("result.content.[].landing.detail_page").description("광고 진행 여부").type(JsonFieldType.STRING)
+                                                , fieldWithPath("result.content.[].joined").description("참여 여부").type(JsonFieldType.BOOLEAN)
+                                                , fieldWithPath("result.content.[].landing.thumb").description("메인 페이지 이미지(광고 요청 처리 용도)").type(JsonFieldType.STRING)
+                                                , fieldWithPath("result.content.[].landing.detail_page").description("광고 상세 요청(광고 노출 처리 용도)").type(JsonFieldType.STRING)
                                                 , fieldWithPath("result.totalPages").description("현제 페이지 수").type(JsonFieldType.NUMBER)
                                                 , fieldWithPath("result.totalElements").description("총 광고 수").type(JsonFieldType.NUMBER)
                                                 , fieldWithPath("result.size").description("페이지 당 광고수").type(JsonFieldType.NUMBER)
@@ -130,4 +139,168 @@ public class AdsAppApiTest {
 //
     }
 
+
+    @Test
+    @DisplayName("광고 상세")
+    public void QuizAdsDetails() throws Exception {
+
+
+        String requestId = "test";
+        String adCode = "YxGBfKJBsG";
+
+        MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
+        info.add("user-key", "test");
+
+
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/app/v1/ads/detail/{request-id}/{ad-code}", requestId, adCode)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .queryParams(info)
+                                .header("user-agent", "mock-mvc")
+                )
+
+                .andDo(print())
+                .andExpect(status().isOk())
+                // restdoc
+                .andDo(
+                        MockMvcRestDocumentationWrapper.document("ads-details"
+                                , preprocessResponse(prettyPrint())
+                                , pathParameters(
+                                        parameterWithName("request-id").description("광고 요청 코드"),
+                                        parameterWithName("ad-code").description("광고 지면 코드")
+                                )
+                                ,queryParameters(
+                                        parameterWithName("user-key").description("파트너사 APP USER 식별키")
+                                )
+                                ,responseFields(
+                                        fieldWithPath("result.requestId").description("광고 요청 키").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.campaignName").description("광고 제목").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.campaignCode").description("광고 코드").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.totalParticipationLimit").description("총 참여 가능 인원").type(JsonFieldType.NUMBER)
+                                        , fieldWithPath("result.dayParticipationLimit").description("일별 참여 가능 인원").type(JsonFieldType.NUMBER)
+                                        , fieldWithPath("result.joined").description("참여 여부").type(JsonFieldType.BOOLEAN)
+                                        , fieldWithPath("result.landing.detail").description("상세 이미지").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.landing.answer").description("정답 호출 Endpoint").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.landing.hint_ad_pc").description("힌트 랜딩 페이지 (PC)").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.landing.hint_ad_mobile").description("힌트 랜딩 페이지 (Mobile)").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.landing.answer_ad_pc").description("정답 랜딩 페이지 (PC)").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.landing.answer_ad_mobile").description("정답 랜딩 페이지 (Mobile)").type(JsonFieldType.STRING)
+                                )
+                        )
+                )
+//                     swagger
+                .andDo(
+                        document("ads-details"
+                                , preprocessRequest(prettyPrint())
+                                , preprocessResponse(prettyPrint())
+                                , resource(
+                                        ResourceSnippetParameters.builder()
+                                                .tag("퀴즈 광고 상세")
+                                                .summary("퀴즈 광고 상세 정보")
+                                                .description("요청한 퀴즈 광고의 상세 정보를 제공 한다.")
+                                                .pathParameters(
+                                                        parameterWithName("request-id").description("광고 요청 코드"),
+                                                        parameterWithName("ad-code").description("광고 지면 코드")
+                                                )
+                                                .queryParameters(
+                                                        parameterWithName("user-key").description("파트너사 APP USER 식별키")
+                                                )
+                                                .responseSchema(
+                                                        Schema.schema("QuizDetailRespVo")
+                                                )
+                                                .responseFields(
+                                                        fieldWithPath("result.requestId").description("광고 요청 키").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.campaignName").description("광고 제목").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.campaignCode").description("광고 코드").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.totalParticipationLimit").description("총 참여 가능 인원").type(JsonFieldType.NUMBER)
+                                                        , fieldWithPath("result.dayParticipationLimit").description("일별 참여 가능 인원").type(JsonFieldType.NUMBER)
+                                                        , fieldWithPath("result.joined").description("참여 여부").type(JsonFieldType.BOOLEAN)
+                                                        , fieldWithPath("result.landing.detail").description("상세 이미지").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.landing.answer").description("정답 호출 Endpoint").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.landing.hint_ad_pc").description("힌트 랜딩 페이지 (PC)").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.landing.hint_ad_mobile").description("힌트 랜딩 페이지 (Mobile)").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.landing.answer_ad_pc").description("정답 랜딩 페이지 (PC)").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.landing.answer_ad_mobile").description("정답 랜딩 페이지 (Mobile)").type(JsonFieldType.STRING)
+                                                )
+                                                .build()
+                                )
+                        )
+                );
+//
+    }
+
+    @Test
+    @DisplayName("광고 정답")
+    public void QuizAdsAnswer() throws Exception {
+
+
+        String requestId = "test";
+        String adCode = "YxGBfKJBsG";
+
+        String userKey = RandomStringUtils.randomAlphabetic(10);
+        String answer = "정답";
+
+
+        MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
+        info.add("user-key", userKey);
+        info.add("answer", answer);
+
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/app/v1/ads/answer/{request-id}/{ad-code}", requestId, adCode)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .queryParams(info)
+                                .header("user-agent", "mock-mvc")
+                )
+
+                .andDo(print())
+                .andExpect(status().isOk())
+                // restdoc
+                .andDo(
+                        MockMvcRestDocumentationWrapper.document("ads-answer"
+                                , preprocessResponse(prettyPrint())
+                                , pathParameters(
+                                        parameterWithName("request-id").description("광고 요청 코드"),
+                                        parameterWithName("ad-code").description("광고 지면 코드")
+                                )
+                                ,queryParameters(
+                                        parameterWithName("user-key").description("파트너사 APP USER 식별키"),
+                                        parameterWithName("answer").description("정답")
+                                )
+                                ,responseFields(
+                                        fieldWithPath("message").description("정답 결과").type(JsonFieldType.STRING)
+                                )
+                        )
+                )
+//                     swagger
+                .andDo(
+                        document("ads-answer"
+                                , preprocessRequest(prettyPrint())
+                                , preprocessResponse(prettyPrint())
+                                , resource(
+                                        ResourceSnippetParameters.builder()
+                                                .tag("퀴즈 광고 상세")
+                                                .summary("퀴즈 광고 상세 정보")
+                                                .description("요청한 퀴즈 광고의 상세 정보를 제공 한다.")
+                                                .pathParameters(
+                                                        parameterWithName("request-id").description("광고 요청 코드"),
+                                                        parameterWithName("ad-code").description("광고 지면 코드")
+                                                )
+                                                .queryParameters(
+                                                        parameterWithName("user-key").description("파트너사 APP USER 식별키"),
+                                                        parameterWithName("answer").description("정답")
+                                                )
+                                                .responseSchema(
+                                                        Schema.schema("QuizAnswerRespVo")
+                                                )
+                                                .responseFields(
+                                                        fieldWithPath("message").description("정답 결과").type(JsonFieldType.STRING)
+                                                )
+                                                .build()
+                                )
+                        )
+                );
+//
+    }
 }

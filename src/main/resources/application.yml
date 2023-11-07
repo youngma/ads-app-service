@@ -48,10 +48,15 @@ spring:
         database: 2
 
   mvc:
+    converters:
+      preferred-json-mapper: jackson
     throw-exception-if-no-handler-found: true
+    static-path-pattern: /static/**
+
   web:
     resources:
-      add-mappings: false
+      chain:
+        enabled: true
   servlet:
     multipart:
       max-file-size: 5MB
@@ -111,3 +116,4 @@ app:
       daily: DAILY_QUIZ_JOIN
       total: TOTAL_QUIZ_JOIN
     lock-key: QUIZ_LOCK
+

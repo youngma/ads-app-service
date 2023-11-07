@@ -6,10 +6,13 @@ import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.core.utils.PageMapper;
 import com.ads.main.entity.AdCampaignMasterEntity;
+import com.ads.main.entity.RptAdAnswerEntity;
 import com.ads.main.entity.mapper.AdCampaignMasterConvert;
 import com.ads.main.entity.mapper.RptAdAnswerConvert;
 import com.ads.main.enums.AdException;
+import com.ads.main.enums.CampaignJoinType;
 import com.ads.main.repository.jpa.PartnerAdGroupRepository;
+import com.ads.main.repository.jpa.RptAdAnswerEntityRepository;
 import com.ads.main.repository.querydsl.QAdvertiserCampaignMasterRepository;
 import com.ads.main.repository.template.AdAnswerTemplate;
 import com.ads.main.repository.template.AdClickTemplate;
@@ -37,7 +40,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import static com.ads.main.enums.AdException.NO_AD;
 
@@ -64,6 +70,7 @@ public class AdCampaignService {
 
     private final AdQuizRedisService quizRedisService;
 
+    private final RptAdAnswerEntityRepository rptAdAnswerEntityRepository;
     private final QAdvertiserCampaignMasterRepository qAdvertiserCampaignMasterRepository;
 
     // 로그 저장용
@@ -83,20 +90,31 @@ public class AdCampaignService {
     }
 
 
-    public PageAds<QuizAds> requestList(String groupCode, int page, int size) throws NoAdException, AppException {
+    public PageAds<QuizAds> requestList(String groupCode, String join, String user, int page, int size) throws NoAdException, AppException {
 
         CampaignType campaignType = adGroupService.findCampaignType(groupCode);
+        CampaignJoinType campaignJoinType = CampaignJoinType.of(join);
 
-        Page<AdCampaignMasterEntity> adCampaignMasterEntity= qAdvertiserCampaignMasterRepository.findAdCampaigns(campaignType, PageRequest.of(page - 1, size));
+
+        Page<AdCampaignMasterEntity> adCampaignMasterEntity= qAdvertiserCampaignMasterRepository.findAdCampaigns(campaignType, campaignJoinType, user, PageRequest.of(page - 1, size));
 
         if (adCampaignMasterEntity.isEmpty()) {
             throw AdException.NO_AD.throwErrors();
         }
 
-        return convert(groupCode, pageMapper.convert(adCampaignMasterEntity));
+        Set<String> campaignCodeSet = adCampaignMasterEntity.getContent()
+                .stream()
+                .map(AdCampaignMasterEntity::getCampaignCode)
+                .collect(Collectors.toSet());
+
+        Set<String> joinCampaignCodeSet = rptAdAnswerEntityRepository.findAllByCampaignCodeInAndUserKey(campaignCodeSet, user)
+                .stream().map(RptAdAnswerEntity::getCampaignCode).collect(Collectors.toSet());
+
+        return convert(groupCode, joinCampaignCodeSet, pageMapper.convert(adCampaignMasterEntity));
     }
 
-    private PageAds<QuizAds> convert(String groupCode, Page<AdCampaignMasterVo> vos) {
+    private PageAds<QuizAds> convert(String groupCode, Set<String> joinCampaignCodeSet, Page<AdCampaignMasterVo> vos) {
+
 
         List<QuizAds> quizAds = vos.getContent().stream().map(ad -> {
 
@@ -110,11 +128,13 @@ public class AdCampaignService {
                     .requestId(requestId)
                     .campaignName(ad.getCampaignName())
                     .campaignCode(ad.getCampaignCode())
+                    .isJoined(joinCampaignCodeSet.contains(ad.getCampaignCode()))
                     .totalParticipationLimit(ad.getTotalParticipationLimit())
                     .dayParticipationLimit(ad.getDayParticipationLimit())
                     .quizTitle(ad.getQuiz().getQuizTitle())
                     .landing(landing)
                     .build();
+
         }).toList();
 
         return new PageAds<>(quizAds, vos.getTotalPages(), vos.getTotalPages(), vos.getSize());
@@ -186,6 +206,7 @@ public class AdCampaignService {
 
     public QuizAds markImpression(RptAdImpression impression) throws NoAdException {
         AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(impression.campaignCode());
+        Optional<RptAdAnswerEntity> optionalRptAdAnswerEntity = rptAdAnswerEntityRepository.findFirstByCampaignCodeAndUserKey(impression.campaignCode(), impression.user());
 
         log.info("# adCampaignMaster => {}", adCampaignMaster);
 
@@ -198,6 +219,7 @@ public class AdCampaignService {
 
             landing.setThumb(generateUrl("quiz-list", adCampaignMaster));
             landing.setDetail(generateUrl("quiz-detail-1", adCampaignMaster));
+
 
             landing.setAnswer(adCampaignMaster.getCampaignCode());
 
@@ -213,6 +235,7 @@ public class AdCampaignService {
                     .campaignCode(adCampaignMaster.getCampaignCode())
                     .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
                     .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
+                    .isJoined(optionalRptAdAnswerEntity.isPresent())
                     .quizTitle(adCampaignMaster.getQuiz().getQuizTitle())
                     .landing(landing)
                     .build();

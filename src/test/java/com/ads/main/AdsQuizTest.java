@@ -5,13 +5,11 @@ import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.service.AdCampaignService;
 import com.ads.main.vo.TestLandingVo;
 import com.ads.main.vo.TestRespVo;
-import com.ads.main.vo.resp.LandingVo;
 import com.ads.main.vo.resp.PageAds;
 import com.ads.main.vo.resp.QuizAds;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +29,7 @@ import java.util.stream.Stream;
 
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class}) // When using JUnit5
-@SpringBootTest(properties = { "spring.profiles.active", "local" })
+@SpringBootTest(properties = { "spring.profiles.active", "test" })
 @Slf4j
 public class AdsQuizTest {
 
@@ -71,7 +69,7 @@ public class AdsQuizTest {
         public void run() {
 
             try {
-                PageAds<QuizAds> quizAds = adCampaignService.requestList("FMqJafxBzL", 1, 10);
+                PageAds<QuizAds> quizAds = adCampaignService.requestList("WezFzQSZME", "all", "user-key",1, 10);
                 quizAds.content().forEach(ad -> {
                     String thumb = ad.getLanding().getThumb();
                     String detailPage = ad.getLanding().getDetail_page();

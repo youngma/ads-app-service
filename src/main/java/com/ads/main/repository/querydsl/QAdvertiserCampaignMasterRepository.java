@@ -2,10 +2,15 @@ package com.ads.main.repository.querydsl;
 
 import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.core.enums.campaign.CampaignType;
+import com.ads.main.core.enums.common.Bank;
 import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.QAdQuizEntity;
+import com.ads.main.entity.QRptAdAnswerEntity;
+import com.ads.main.enums.CampaignJoinType;
 import com.ads.main.vo.campaign.resp.AdQuizVo;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +25,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
+import static com.ads.main.entity.QAdvertiserAccountEntity.advertiserAccountEntity;
+import static com.ads.main.entity.QRptAdAnswerEntity.rptAdAnswerEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,7 +35,26 @@ public class QAdvertiserCampaignMasterRepository {
     private final EntityManager entityManager;
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<AdCampaignMasterEntity> findAdCampaigns(CampaignType campaignType, Pageable pageable) {
+    public Page<AdCampaignMasterEntity> findAdCampaigns(CampaignType campaignType, CampaignJoinType campaignJoinType, String user, Pageable pageable) {
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval));
+        builder.and(adCampaignMasterEntity.exposureStatus.eq(true));
+        builder.and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()));
+        builder.and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()));
+
+        switch (campaignJoinType) {
+            case Join -> builder.and(adCampaignMasterEntity.campaignCode.in(JPAExpressions
+                    .select(rptAdAnswerEntity.campaignCode)
+                    .from(rptAdAnswerEntity)
+                    .where(rptAdAnswerEntity.userKey.eq(user))));
+
+            case Not_Join -> builder.and(adCampaignMasterEntity.campaignCode.notIn(JPAExpressions
+                    .select(rptAdAnswerEntity.campaignCode)
+                    .from(rptAdAnswerEntity)
+                    .where(rptAdAnswerEntity.userKey.eq(user))));
+        }
 
         List<AdCampaignMasterEntity> adCampaignEntities =  jpaQueryFactory.select(
                         adCampaignMasterEntity
@@ -40,15 +66,10 @@ public class QAdvertiserCampaignMasterRepository {
                 .leftJoin(adCampaignMasterEntity.adQuizEntity.mainImage).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adQuizEntity.detailImage1).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adQuizEntity.detailImage2).fetchJoin()
-
                 .where(
-                        adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval)
-                    .and(adCampaignMasterEntity.exposureStatus.eq(true))
-//                    .and(adCampaignMasterEntity.campaignType.eq(campaignType))
-                    .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
-                    .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
-
+                    builder
                 )
+
                 .orderBy(adCampaignMasterEntity.seq.desc())
 
                 .offset(pageable.getOffset())
@@ -59,12 +80,7 @@ public class QAdvertiserCampaignMasterRepository {
         Long count = jpaQueryFactory.select(adCampaignMasterEntity.count())
                 .from(adCampaignMasterEntity)
                 .where(
-                    adCampaignMasterEntity.campaignStatus.eq(CampaignStatus.Approval)
-                    .and(adCampaignMasterEntity.exposureStatus.eq(true))
-
-//                    .and(adCampaignMasterEntity.campaignType.eq(campaignType))
-                    .and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()))
-                    .and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()))
+                    builder
                 )
                 .fetchOne();
 

@@ -59,6 +59,8 @@ public class QuizAds {
     private String quizTitle;
 
 
+    private boolean isJoined;
+
     /**
      * 상품 코드
      */

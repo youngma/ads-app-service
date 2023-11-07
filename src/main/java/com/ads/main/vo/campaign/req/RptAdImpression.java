@@ -4,6 +4,6 @@ import com.ads.main.core.security.config.dto.Role;
 
 import java.math.BigDecimal;
 
-public record RptAdImpression(Role role, String requestId, String campaignCode, String userAgent, String remoteIp, BigDecimal adCost) {
+public record RptAdImpression(Role role, String requestId, String campaignCode, String userAgent, String remoteIp, BigDecimal adCost, String user) {
 
 }

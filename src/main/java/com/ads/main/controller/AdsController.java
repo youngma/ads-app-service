@@ -41,11 +41,13 @@ public class AdsController {
     @GetMapping("/search/{ad-group}")
     public RespVo<PageAds<QuizAds>> getAds(
             @PathVariable("ad-group") String adGroup,
+            @RequestParam("user-key") String user,
+            @RequestParam("join") String join,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "20") int size
     ) throws NoAdException, AppException {
         adGroupService.checkAdGroupCode(adGroup);
-        return new RespVo<>(adCampaignService.requestList(adGroup, page, size));
+        return new RespVo<>(adCampaignService.requestList(adGroup, join, user, page, size));
     }
 
 
@@ -76,11 +78,12 @@ public class AdsController {
     public RespVo<QuizAds> detail(
             @PathVariable("request-id") String requestId,
             @PathVariable("ad-code") String adCode,
+            @RequestParam("user-key") String user,
             @RequestHeader(HttpHeaders.USER_AGENT) String userAgent,
             HttpServletRequest request
     ) throws NoAdException {
 
-        RptAdImpression rptAdImpression = new RptAdImpression(Role.PARTNER, requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO);
+        RptAdImpression rptAdImpression = new RptAdImpression(Role.PARTNER, requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO, user);
 
         log.info("# rptAdImpression => {}", rptAdImpression);
 
@@ -98,7 +101,7 @@ public class AdsController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        RptAdImpression rptAdImpression = new RptAdImpression(Role.ADVERTISER, requestId, "", userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO);
+        RptAdImpression rptAdImpression = new RptAdImpression(Role.ADVERTISER, requestId, "", userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO, "");
         log.info("# rptAdImpression => {}", rptAdImpression);
 
         adCampaignService.saveImpressionLog(rptAdImpression);
