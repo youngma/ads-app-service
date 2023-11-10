@@ -1,6 +1,6 @@
 package com.ads.main.repository.template;
 
-import com.ads.main.vo.campaign.RptAdAnswerVo;
+import com.ads.main.vo.report.resp.RptAdAnswerVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,7 +42,7 @@ public class AdAnswerTemplate {
         jdbcTemplate.batchUpdate(
         """
                 insert into RPT_AD_ANSWER
-                 (REQUEST_ID, CAMPAIGN_CODE, USER_AGENT, REMOTE_IP, USER_KEY, COST, ANSWER, ANSWER_AT)
+                 (REQUEST_ID, CAMPAIGN_CODE, USER_AGENT, REMOTE_IP, USER_KEY, REWORD, ANSWER, ANSWER_AT)
                 values
                  (? , ?,  ?, ?, ? ,?, ?, current_timestamp)
                 on DUPLICATE KEY UPDATE
@@ -57,7 +57,7 @@ public class AdAnswerTemplate {
                         ps.setObject(3, subItems.get(i).getUserAgent());
                         ps.setObject(4, subItems.get(i).getRemoteIp());
                         ps.setObject(5, subItems.get(i).getUserKey());
-                        ps.setBigDecimal(6, subItems.get(i).getCost());
+                        ps.setBigDecimal(6, subItems.get(i).getReword());
                         ps.setObject(7, subItems.get(i).getAnswer());
                     }
                     @Override

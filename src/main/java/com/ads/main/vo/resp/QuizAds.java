@@ -1,6 +1,9 @@
 package com.ads.main.vo.resp;
 
 
+import com.ads.main.core.enums.campaign.CampaignType;
+import com.ads.main.vo.adGroup.resp.PartnerAdGroupVo;
+import com.ads.main.vo.campaign.resp.AdCampaignMasterVo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -68,4 +71,46 @@ public class QuizAds {
 
 
     private LandingVo landing;
+
+
+    private Integer reword;
+
+    private String pointName;
+
+    private Integer joinUserCount;
+
+    @JsonIgnore
+    private PartnerAdGroupVo partnerAdGroupVo;
+
+    @JsonIgnore
+    private AdCampaignMasterVo adCampaignMasterVo;
+
+
+    public Integer getReword() {
+
+        if (adCampaignMasterVo == null || partnerAdGroupVo == null) {
+            return reword;
+        }
+
+        int adPrice = adCampaignMasterVo.getAdPrice().intValue();
+
+        int partnerCommission = 0;
+        int userCommission = 0;
+
+        // 파트너 광고 수수료
+        int partnerAdPrice = Math.round((float) (adPrice * partnerAdGroupVo.getCommissionRate()) / 100);
+
+        // 유저 포인트
+        int userAdPrice = Math.round((float) (adPrice - partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
+
+        if (CampaignType.Quiz02.getCode().equals(adCampaignMasterVo.getCampaignType())) {
+            partnerCommission = adCampaignMasterVo.getCommissionRate().intValue();
+            userCommission = adCampaignMasterVo.getUserCommissionRate().intValue();
+        } else {
+            partnerCommission = adPrice - partnerAdPrice;
+            userCommission = partnerCommission - userAdPrice;
+        }
+
+        return Math.round((float) (userCommission * partnerAdGroupVo.getRewordRate()));
+    }
 }

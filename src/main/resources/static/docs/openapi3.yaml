@@ -58,76 +58,88 @@ paths:
                     {
                       "result" : {
                         "content" : [ {
-                          "requestId" : "LiYlMGNimTiaONR",
+                          "requestId" : "gfjijLmddXNXGEX",
                           "campaignName" : "1",
                           "campaignCode" : "CStNbSbBNq",
                           "totalParticipationLimit" : 10000,
                           "dayParticipationLimit" : 100,
                           "quizTitle" : "1",
                           "landing" : {
-                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/LiYlMGNimTiaONR/brBJZBMxDe/CStNbSbBNq?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f30626231663434393261346434386332613539656232313138306262383866342e706e67",
-                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/LiYlMGNimTiaONR/CStNbSbBNq"
+                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/gfjijLmddXNXGEX/brBJZBMxDe/CStNbSbBNq?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f30626231663434393261346434386332613539656232313138306262383866342e706e67",
+                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/gfjijLmddXNXGEX/CStNbSbBNq?user-key=test"
                           },
-                          "joined" : false
+                          "reword" : 138,
+                          "pointName" : "포포",
+                          "joined" : true
                         }, {
-                          "requestId" : "KWLkNpbXzTFaKrz",
+                          "requestId" : "FantrcxyoIpNgDN",
                           "campaignName" : "1",
                           "campaignCode" : "prKslCvpoZ",
                           "totalParticipationLimit" : 10,
                           "dayParticipationLimit" : 10,
                           "quizTitle" : "1",
                           "landing" : {
-                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/KWLkNpbXzTFaKrz/brBJZBMxDe/prKslCvpoZ?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f64363964343533663365356434313562626561396464396431306134303761312e706e67",
-                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/KWLkNpbXzTFaKrz/prKslCvpoZ"
+                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/FantrcxyoIpNgDN/brBJZBMxDe/prKslCvpoZ?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f64363964343533663365356434313562626561396464396431306134303761312e706e67",
+                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/FantrcxyoIpNgDN/prKslCvpoZ?user-key=test"
                           },
+                          "reword" : 980,
+                          "pointName" : "포포",
                           "joined" : false
                         }, {
-                          "requestId" : "MnyYFoMtgUkKptq",
+                          "requestId" : "WMYJcIOYhxNzlOQ",
                           "campaignName" : "1",
                           "campaignCode" : "amknLpzgXT",
                           "totalParticipationLimit" : 1000,
                           "dayParticipationLimit" : 100,
                           "quizTitle" : "1",
                           "landing" : {
-                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/MnyYFoMtgUkKptq/brBJZBMxDe/amknLpzgXT?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f63323063333266613130623434396265613866373964376132643436623834622e706e67",
-                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/MnyYFoMtgUkKptq/amknLpzgXT"
+                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/WMYJcIOYhxNzlOQ/brBJZBMxDe/amknLpzgXT?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f63323063333266613130623434396265613866373964376132643436623834622e706e67",
+                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/WMYJcIOYhxNzlOQ/amknLpzgXT?user-key=test"
                           },
+                          "reword" : 107811,
+                          "pointName" : "포포",
                           "joined" : false
                         }, {
-                          "requestId" : "POwRchWpyftsheX",
+                          "requestId" : "CQQrYKgLELMzuAc",
                           "campaignName" : "1",
                           "campaignCode" : "khwnHmtbXy",
                           "totalParticipationLimit" : 1000,
                           "dayParticipationLimit" : 10,
                           "quizTitle" : "12",
                           "landing" : {
-                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/POwRchWpyftsheX/brBJZBMxDe/khwnHmtbXy?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f39656334656133383663653634376264383437323736363162303363643634632e706e67",
-                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/POwRchWpyftsheX/khwnHmtbXy"
+                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/CQQrYKgLELMzuAc/brBJZBMxDe/khwnHmtbXy?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f39656334656133383663653634376264383437323736363162303363643634632e706e67",
+                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/CQQrYKgLELMzuAc/khwnHmtbXy?user-key=test"
                           },
+                          "reword" : 98,
+                          "pointName" : "포포",
                           "joined" : false
                         }, {
-                          "requestId" : "JChzPfqMMTAXNKo",
+                          "requestId" : "UczorTqQQwcnYWn",
                           "campaignName" : "캠페인 명",
                           "campaignCode" : "YxGBfKJBsG",
                           "totalParticipationLimit" : 100000,
                           "dayParticipationLimit" : 100,
                           "quizTitle" : "제목은 1",
                           "landing" : {
-                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/JChzPfqMMTAXNKo/brBJZBMxDe/YxGBfKJBsG?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f34363662626438653733386134346564386535663536316164656162633132622e706e67",
-                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/JChzPfqMMTAXNKo/YxGBfKJBsG"
+                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/UczorTqQQwcnYWn/brBJZBMxDe/YxGBfKJBsG?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f34363662626438653733386134346564386535663536316164656162633132622e706e67",
+                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/UczorTqQQwcnYWn/YxGBfKJBsG?user-key=test"
                           },
+                          "reword" : 98,
+                          "pointName" : "포포",
                           "joined" : false
                         }, {
-                          "requestId" : "ryuzkAHHwtOVlbd",
+                          "requestId" : "MORRukiqjvAuzdN",
                           "campaignName" : "정탑형 퀴즈(100)",
                           "campaignCode" : "tLamHiNUQj",
                           "totalParticipationLimit" : 1000,
                           "dayParticipationLimit" : 100,
                           "quizTitle" : "제목.",
                           "landing" : {
-                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/ryuzkAHHwtOVlbd/brBJZBMxDe/tLamHiNUQj?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f62396232386635383761393534653537393337326466323639353039393531612e706e67",
-                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/ryuzkAHHwtOVlbd/tLamHiNUQj"
+                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/MORRukiqjvAuzdN/brBJZBMxDe/tLamHiNUQj?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f62396232386635383761393534653537393337326466323639353039393531612e706e67",
+                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/MORRukiqjvAuzdN/tLamHiNUQj?user-key=test"
                           },
+                          "reword" : 0,
+                          "pointName" : "포포",
                           "joined" : true
                         } ],
                         "totalPages" : 1,
@@ -178,7 +190,10 @@ paths:
                 ads-answer:
                   value: |-
                     {
-                      "message" : "정답 입니다."
+                      "result" : {
+                        "message" : "정답 입니다.",
+                        "reword" : 2
+                      }
                     }
   /app/v1/ads/detail/{request-id}/{ad-code}:
     get:
@@ -226,12 +241,15 @@ paths:
                         "quizTitle" : "제목은 1",
                         "landing" : {
                           "detail" : "http://localhost:8082/api/app/v1/ads/impression/test?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f32613665333038303265323234393163393435653436323338373434643037332e706e67",
-                          "answer" : "http://localhost:8082/api/app/v1/ads/answer/test/YxGBfKJBsG",
+                          "answer" : "http://localhost:8082/api/app/v1/ads/answer/test/YxGBfKJBsG?user-key=test",
                           "hint_ad_pc" : "http://localhost:8082/api/app/v1/ads/click/hint/test?redirect=687474703a2f2f6e617665722e636f6d",
                           "hint_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/hint/test?redirect=687474703a2f2f6e617665722e636f6d",
                           "answer_ad_pc" : "http://localhost:8082/api/app/v1/ads/click/answer/test?redirect=687474703a2f2f6e617665722e636f6d",
-                          "answer_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/answer/test?redirect=687474703a2f2f6e617665722e636f6d"
+                          "answer_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/answer/test?redirect=687474703a2f2f6e617665722e636f6d",
+                          "reword" : "http://localhost:8082/api/app/v1/ads/reword/brBJZBMxDe/YxGBfKJBsG"
                         },
+                        "reword" : 2,
+                        "joinUserCount" : 19,
                         "joined" : false
                       }
                     }
@@ -241,9 +259,15 @@ components:
       title: QuizAnswerRespVo
       type: object
       properties:
-        message:
-          type: string
-          description: 정답 결과
+        result:
+          type: object
+          properties:
+            reword:
+              type: number
+              description: 적립 포인트
+            message:
+              type: string
+              description: 정답 결과
     QuizDetailRespVo:
       title: QuizDetailRespVo
       type: object
@@ -254,9 +278,15 @@ components:
             dayParticipationLimit:
               type: number
               description: 일별 참여 가능 인원
+            reword:
+              type: number
+              description: 적립 포인트
             landing:
               type: object
               properties:
+                reword:
+                  type: string
+                  description: 리워드 적립 내역 조회 URL
                 answer:
                   type: string
                   description: 정답 호출 Endpoint
@@ -278,6 +308,9 @@ components:
             joined:
               type: boolean
               description: 참여 여부
+            pointName:
+              type: string
+              description: 포인트 명
             requestId:
               type: string
               description: 광고 요청 키
@@ -290,6 +323,9 @@ components:
             quizTitle:
               type: string
               description: 퀴즈 문제
+            joinUserCount:
+              type: number
+              description: 참여 인원
             campaignCode:
               type: string
               description: 광고 코드
@@ -314,6 +350,9 @@ components:
                   dayParticipationLimit:
                     type: number
                     description: 일별 참여 가능 인원
+                  reword:
+                    type: number
+                    description: 적립 포인트
                   landing:
                     type: object
                     properties:
@@ -326,6 +365,9 @@ components:
                   joined:
                     type: boolean
                     description: 참여 여부
+                  pointName:
+                    type: string
+                    description: 포인트 명
                   requestId:
                     type: string
                     description: 광고 요청 키

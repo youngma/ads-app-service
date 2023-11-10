@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class}) // When using JUnit5
-@SpringBootTest(properties = { "spring.profiles.active", "test" })
+@SpringBootTest(properties = { "test" })
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 public class AdsAppApiTest {
@@ -85,6 +85,8 @@ public class AdsAppApiTest {
                                         , fieldWithPath("result.content.[].campaignName").description("광고 제목").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.content.[].campaignCode").description("광고 코드").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.content.[].quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.content.[].pointName").description("포인트 명").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.content.[].reword").description("적립 포인트").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.content.[].totalParticipationLimit").description("총 참여 가능 인원").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.content.[].dayParticipationLimit").description("일별 참여 가능 인원").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.content.[].joined").description("참여 여부").type(JsonFieldType.BOOLEAN)
@@ -123,6 +125,8 @@ public class AdsAppApiTest {
                                                 , fieldWithPath("result.content.[].campaignName").description("광고 제목").type(JsonFieldType.STRING)
                                                 , fieldWithPath("result.content.[].campaignCode").description("광고 코드").type(JsonFieldType.STRING)
                                                 , fieldWithPath("result.content.[].quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
+                                                , fieldWithPath("result.content.[].pointName").description("포인트 명").type(JsonFieldType.STRING)
+                                                , fieldWithPath("result.content.[].reword").description("적립 포인트").type(JsonFieldType.NUMBER)
                                                 , fieldWithPath("result.content.[].totalParticipationLimit").description("총 참여 가능 인원").type(JsonFieldType.NUMBER)
                                                 , fieldWithPath("result.content.[].dayParticipationLimit").description("일별 참여 가능 인원").type(JsonFieldType.NUMBER)
                                                 , fieldWithPath("result.content.[].joined").description("참여 여부").type(JsonFieldType.BOOLEAN)
@@ -177,6 +181,9 @@ public class AdsAppApiTest {
                                         , fieldWithPath("result.campaignName").description("광고 제목").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.campaignCode").description("광고 코드").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.pointName").description("포인트 명").type(JsonFieldType.STRING).optional()
+                                        , fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
+                                        , fieldWithPath("result.joinUserCount").description("참여 인원").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.totalParticipationLimit").description("총 참여 가능 인원").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.dayParticipationLimit").description("일별 참여 가능 인원").type(JsonFieldType.NUMBER)
                                         , fieldWithPath("result.joined").description("참여 여부").type(JsonFieldType.BOOLEAN)
@@ -186,6 +193,7 @@ public class AdsAppApiTest {
                                         , fieldWithPath("result.landing.hint_ad_mobile").description("힌트 랜딩 페이지 (Mobile)").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.landing.answer_ad_pc").description("정답 랜딩 페이지 (PC)").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.landing.answer_ad_mobile").description("정답 랜딩 페이지 (Mobile)").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.landing.reword").description("리워드 적립 내역 조회 URL").type(JsonFieldType.STRING)
                                 )
                         )
                 )
@@ -214,6 +222,9 @@ public class AdsAppApiTest {
                                                         , fieldWithPath("result.campaignName").description("광고 제목").type(JsonFieldType.STRING)
                                                         , fieldWithPath("result.campaignCode").description("광고 코드").type(JsonFieldType.STRING)
                                                         , fieldWithPath("result.quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.pointName").description("포인트 명").type(JsonFieldType.STRING).optional()
+                                                        , fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
+                                                        , fieldWithPath("result.joinUserCount").description("참여 인원").type(JsonFieldType.NUMBER)
                                                         , fieldWithPath("result.totalParticipationLimit").description("총 참여 가능 인원").type(JsonFieldType.NUMBER)
                                                         , fieldWithPath("result.dayParticipationLimit").description("일별 참여 가능 인원").type(JsonFieldType.NUMBER)
                                                         , fieldWithPath("result.joined").description("참여 여부").type(JsonFieldType.BOOLEAN)
@@ -223,6 +234,7 @@ public class AdsAppApiTest {
                                                         , fieldWithPath("result.landing.hint_ad_mobile").description("힌트 랜딩 페이지 (Mobile)").type(JsonFieldType.STRING)
                                                         , fieldWithPath("result.landing.answer_ad_pc").description("정답 랜딩 페이지 (PC)").type(JsonFieldType.STRING)
                                                         , fieldWithPath("result.landing.answer_ad_mobile").description("정답 랜딩 페이지 (Mobile)").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.landing.reword").description("리워드 적립 내역 조회 URL").type(JsonFieldType.STRING)
                                                 )
                                                 .build()
                                 )
@@ -269,7 +281,8 @@ public class AdsAppApiTest {
                                         parameterWithName("answer").description("정답")
                                 )
                                 ,responseFields(
-                                        fieldWithPath("message").description("정답 결과").type(JsonFieldType.STRING)
+                                        fieldWithPath("result.message").description("정답 결과").type(JsonFieldType.STRING),
+                                        fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
                                 )
                         )
                 )
@@ -295,7 +308,8 @@ public class AdsAppApiTest {
                                                         Schema.schema("QuizAnswerRespVo")
                                                 )
                                                 .responseFields(
-                                                        fieldWithPath("message").description("정답 결과").type(JsonFieldType.STRING)
+                                                        fieldWithPath("result.message").description("정답 결과").type(JsonFieldType.STRING),
+                                                        fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
                                                 )
                                                 .build()
                                 )

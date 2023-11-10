@@ -7,27 +7,30 @@ import com.ads.main.core.enums.campaign.CampaignType;
 import com.ads.main.core.utils.PageMapper;
 import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.RptAdAnswerEntity;
+import com.ads.main.entity.RptAdRequestEntity;
 import com.ads.main.entity.mapper.AdCampaignMasterConvert;
 import com.ads.main.entity.mapper.RptAdAnswerConvert;
+import com.ads.main.entity.mapper.RptAdRequestConvert;
 import com.ads.main.enums.AdException;
+import com.ads.main.enums.AdJoinException;
 import com.ads.main.enums.CampaignJoinType;
-import com.ads.main.repository.jpa.PartnerAdGroupRepository;
 import com.ads.main.repository.jpa.RptAdAnswerEntityRepository;
+import com.ads.main.repository.jpa.RptAdRequestEntityRepository;
+import com.ads.main.repository.querydsl.QAdRewordRepository;
 import com.ads.main.repository.querydsl.QAdvertiserCampaignMasterRepository;
 import com.ads.main.repository.template.AdAnswerTemplate;
 import com.ads.main.repository.template.AdClickTemplate;
 import com.ads.main.repository.template.AdImpressionTemplate;
 import com.ads.main.repository.template.AdRequestTemplate;
 import com.ads.main.vo.adGroup.resp.PartnerAdGroupVo;
-import com.ads.main.vo.campaign.RptAdAnswerVo;
+import com.ads.main.vo.report.resp.RptAdAnswerVo;
 import com.ads.main.vo.campaign.req.RptAdAnswer;
 import com.ads.main.vo.campaign.req.RptAdClick;
 import com.ads.main.vo.campaign.req.RptAdImpression;
 import com.ads.main.vo.campaign.req.RptAdRequest;
 import com.ads.main.vo.campaign.resp.AdCampaignMasterVo;
-import com.ads.main.vo.resp.LandingVo;
-import com.ads.main.vo.resp.PageAds;
-import com.ads.main.vo.resp.QuizAds;
+import com.ads.main.vo.report.resp.RptAdRequestVo;
+import com.ads.main.vo.resp.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +54,8 @@ import static com.ads.main.enums.AdException.NO_AD;
 @Slf4j
 @RequiredArgsConstructor
 public class AdCampaignService {
-    private final PartnerAdGroupRepository partnerAdGroupRepository;
+
+
 
 
     // 광고 이미지 서버
@@ -66,12 +70,13 @@ public class AdCampaignService {
 
     private final AdGroupCacheService adGroupService;
 
-//    private final AdCampaignCacheService adCampaignCacheService;
 
     private final AdQuizRedisService quizRedisService;
 
     private final RptAdAnswerEntityRepository rptAdAnswerEntityRepository;
+    private final RptAdRequestEntityRepository rptAdRequestEntityRepository;
     private final QAdvertiserCampaignMasterRepository qAdvertiserCampaignMasterRepository;
+    private final QAdRewordRepository qAdRewordRepository;
 
     // 로그 저장용
     private final AdRequestTemplate adRequestTemplate;
@@ -82,6 +87,7 @@ public class AdCampaignService {
     // Entity <-> Vo 변경용
     private final AdCampaignMasterConvert adCampaignMasterConvert;
     private final RptAdAnswerConvert rptAdAnswerConvert;
+    private final RptAdRequestConvert rptAdRequestConvert;
     private PageMapper<AdCampaignMasterVo, AdCampaignMasterEntity> pageMapper;
 
     @PostConstruct
@@ -94,7 +100,6 @@ public class AdCampaignService {
 
         CampaignType campaignType = adGroupService.findCampaignType(groupCode);
         CampaignJoinType campaignJoinType = CampaignJoinType.of(join);
-
 
         Page<AdCampaignMasterEntity> adCampaignMasterEntity= qAdvertiserCampaignMasterRepository.findAdCampaigns(campaignType, campaignJoinType, user, PageRequest.of(page - 1, size));
 
@@ -110,24 +115,29 @@ public class AdCampaignService {
         Set<String> joinCampaignCodeSet = rptAdAnswerEntityRepository.findAllByCampaignCodeInAndUserKey(campaignCodeSet, user)
                 .stream().map(RptAdAnswerEntity::getCampaignCode).collect(Collectors.toSet());
 
-        return convert(groupCode, joinCampaignCodeSet, pageMapper.convert(adCampaignMasterEntity));
+        return convert(groupCode, joinCampaignCodeSet, user, pageMapper.convert(adCampaignMasterEntity));
     }
 
-    private PageAds<QuizAds> convert(String groupCode, Set<String> joinCampaignCodeSet, Page<AdCampaignMasterVo> vos) {
+    private PageAds<QuizAds> convert(String groupCode, Set<String> joinCampaignCodeSet, String user, Page<AdCampaignMasterVo> vos) throws AppException {
+
+        PartnerAdGroupVo partnerAdGroupVo = adGroupService.searchByGroupCode(groupCode);
 
 
         List<QuizAds> quizAds = vos.getContent().stream().map(ad -> {
 
             String requestId = RandomStringUtils.randomAlphabetic(15);
 
-            LandingVo landing = new LandingVo(groupCode, requestId, APP_SERVER);
+            LandingVo landing = new LandingVo(groupCode, requestId, APP_SERVER, user);
             landing.setThumb(generateUrl("quiz-list", ad));
             landing.setCampaignCode(ad.getCampaignCode());
 
             return QuizAds.builder()
                     .requestId(requestId)
+                    .partnerAdGroupVo(partnerAdGroupVo)
+                    .adCampaignMasterVo(ad)
                     .campaignName(ad.getCampaignName())
                     .campaignCode(ad.getCampaignCode())
+                    .pointName(partnerAdGroupVo.getPointName())
                     .isJoined(joinCampaignCodeSet.contains(ad.getCampaignCode()))
                     .totalParticipationLimit(ad.getTotalParticipationLimit())
                     .dayParticipationLimit(ad.getDayParticipationLimit())
@@ -164,18 +174,13 @@ public class AdCampaignService {
                     AdCampaignMasterVo campaignMasterVo = quizRedisService.findCampaignByCode(request.getCampaignCode());
 
                     int adPrice = campaignMasterVo.getAdPrice().intValue();
-                    int partnerCommission = 0;
-                    int userCommission = 0;
-
+                    int partnerCommission;
+                    int userCommission;
 
                     int partnerAdPrice = Math.round((float) (adPrice * partnerAdGroupVo.getCommissionRate()) / 100);
                     int userAdPrice = Math.round((float) (adPrice - partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
 
-                    log.debug("# Quiz01 {}, {},  {} ", adPrice,  partnerAdGroupVo.getCommissionRate(), partnerAdGroupVo.getUserCommissionRate());
-
                     if (CampaignType.Quiz02.getCode().equals(campaignMasterVo.getCampaignType())) {
-                        log.debug("# Quiz02 {}, {}. {} ", adPrice,  campaignMasterVo.getCommissionRate(), campaignMasterVo.getUserCommissionRate());
-
                         partnerCommission = campaignMasterVo.getCommissionRate().intValue();
                         userCommission = campaignMasterVo.getUserCommissionRate().intValue();
                     } else {
@@ -191,7 +196,7 @@ public class AdCampaignService {
                     request.setUserCommission(userCommission);
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error("# request saver error", e);
                     throw new RuntimeException(e);
                 }
 
@@ -205,6 +210,7 @@ public class AdCampaignService {
     }
 
     public QuizAds markImpression(RptAdImpression impression) throws NoAdException {
+
         AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(impression.campaignCode());
         Optional<RptAdAnswerEntity> optionalRptAdAnswerEntity = rptAdAnswerEntityRepository.findFirstByCampaignCodeAndUserKey(impression.campaignCode(), impression.user());
 
@@ -212,16 +218,25 @@ public class AdCampaignService {
 
         CampaignType campaignType = CampaignType.of(adCampaignMaster.getCampaignType());
 
-        if (campaignType == CampaignType.Quiz01) {
+        if (
+                campaignType == CampaignType.Quiz01
+                || campaignType == CampaignType.Quiz02
+        ) {
+
+            RptAdRequestVo  rptAdRequestVo =  getRptAdRequestByAdRequestId(impression.requestId());
+
+            Integer joinUserCount = qAdRewordRepository.findJoinUserCount(rptAdRequestVo.getGroupCode(), rptAdRequestVo.getCampaignCode());
+
+            Integer reword = rptAdRequestVo.getAdReword();
             saveImpressionLog(impression);
 
-            LandingVo landing = new LandingVo(null, impression.requestId(), APP_SERVER);
+            LandingVo landing = new LandingVo(rptAdRequestVo.getGroupCode(), impression.requestId(), APP_SERVER, impression.user());
 
             landing.setThumb(generateUrl("quiz-list", adCampaignMaster));
             landing.setDetail(generateUrl("quiz-detail-1", adCampaignMaster));
 
-
             landing.setAnswer(adCampaignMaster.getCampaignCode());
+            landing.setReword(adCampaignMaster.getCampaignCode());
 
             landing.setHint_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlPc());
             landing.setHint_ad_pc(adCampaignMaster.getQuiz().getTargetUrlMobile());
@@ -231,6 +246,8 @@ public class AdCampaignService {
 
             return QuizAds.builder()
                     .requestId(impression.requestId())
+                    .reword(reword)
+                    .joinUserCount(joinUserCount)
                     .campaignName(adCampaignMaster.getCampaignName())
                     .campaignCode(adCampaignMaster.getCampaignCode())
                     .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
@@ -240,11 +257,11 @@ public class AdCampaignService {
                     .landing(landing)
                     .build();
         }
+
         throw NO_AD.throwErrors();
     }
 
     public void saveImpressionLog(RptAdImpression impression) {
-
         try {
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> adImpressionTemplate.saveAll(List.of(impression)));
             future.get();
@@ -255,19 +272,36 @@ public class AdCampaignService {
         }
     }
 
-    public String checkAnswer(RptAdAnswer rptAdAnswer) throws NoAdException, AppException {
-        AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(rptAdAnswer.campaignCode());
-
-        String ret = quizRedisService.joinProcess(adCampaignMaster, rptAdAnswer);
-        saveAnswerLog(rptAdAnswer, BigDecimal.ZERO);
-
-        return ret;
+    private Integer getRewordByAdRequestId(String requestId) throws NoAdException {
+        return getRptAdRequestByAdRequestId(requestId).getAdReword();
     }
 
-    private void saveAnswerLog(RptAdAnswer adAnswer, BigDecimal cost) {
+    private RptAdRequestVo getRptAdRequestByAdRequestId(String requestId) throws NoAdException {
+        RptAdRequestEntity rptAdRequestEntity  = rptAdRequestEntityRepository.findFirstByRequestId(requestId).orElseThrow(NO_AD::throwErrors);
+        return rptAdRequestConvert.toDto(rptAdRequestEntity);
+    }
+
+    public AnswerResp checkAnswer(RptAdAnswer rptAdAnswer) throws NoAdException, AppException {
+
+        AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(rptAdAnswer.campaignCode());
+
+        boolean ret = quizRedisService.joinProcess(adCampaignMaster, rptAdAnswer);
+
+        if (ret) {
+            Integer reword = getRewordByAdRequestId(rptAdAnswer.requestId());
+            saveAnswerLog(rptAdAnswer, reword);
+            return new AnswerResp("정답 입니다.", reword);
+        }
+
+        throw AdJoinException.ANSWER_WAIT.throwErrors();
+    }
+
+    private void saveAnswerLog(RptAdAnswer adAnswer, Integer reword) {
         RptAdAnswerVo rptAdAnswerVo = new RptAdAnswerVo();
+
         rptAdAnswerConvert.updateFromDto(adAnswer, rptAdAnswerVo);
-        rptAdAnswerVo.setCost(cost);
+        rptAdAnswerVo.setReword(BigDecimal.valueOf(reword));
+
         try {
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> adAnswerTemplate.saveAll(List.of(rptAdAnswerVo)));
             future.get();
@@ -285,5 +319,11 @@ public class AdCampaignService {
             adClickTemplate.saveAll(List.of(click));
         }
     }
+
+    public PageAds<RewordResp> selectRewords(String groupCode, String campaignCode, int page, int size) throws AppException {
+        Page<RewordResp>  rewordResps = qAdRewordRepository.findAdRewordList(groupCode, campaignCode, PageRequest.of(page - 1, size));
+        return new PageAds<>(rewordResps.getContent(), rewordResps.getTotalPages(), rewordResps.getTotalPages(), rewordResps.getSize());
+    }
+
 
 }

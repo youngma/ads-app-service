@@ -1,9 +1,8 @@
 package com.ads.main.entity.mapper;
 
 import com.ads.main.core.config.convert.GenericMapper;
-import com.ads.main.entity.AdCampaignEntity;
 import com.ads.main.entity.RptAdAnswerEntity;
-import com.ads.main.vo.campaign.RptAdAnswerVo;
+import com.ads.main.vo.report.resp.RptAdAnswerVo;
 import com.ads.main.vo.campaign.req.RptAdAnswer;
 import org.mapstruct.*;
 
@@ -19,9 +18,10 @@ public interface RptAdAnswerConvert extends GenericMapper<RptAdAnswerVo, RptAdAn
     @Override
     List<RptAdAnswerVo> toDtoList(List<RptAdAnswerEntity> e);
 
+    @Mapping(target = "reword",ignore = true)
     @Mapping(target = "userKey", source = "user")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(RptAdAnswer rptAdAnswer, @MappingTarget RptAdAnswerVo adCampaignEntity);
+    void updateFromDto(RptAdAnswer rptAdAnswer, @MappingTarget RptAdAnswerVo rptAdAnswerVo);
 
 
 }

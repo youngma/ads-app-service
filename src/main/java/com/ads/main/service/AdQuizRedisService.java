@@ -81,7 +81,7 @@ public class AdQuizRedisService {
 
 
     // 퀴즈 참여 프로세스
-    public String joinProcess(AdCampaignMasterVo adCampaignMaster, RptAdAnswer rptAdAnswer) throws AppException {
+    public boolean joinProcess(AdCampaignMasterVo adCampaignMaster, RptAdAnswer rptAdAnswer) throws AppException {
 
         log.debug("# AD -> {}", adCampaignMaster);
 
@@ -120,7 +120,7 @@ public class AdQuizRedisService {
 
             joinCountIncrement(quizCode, rptAdAnswer.user());
 
-            return "정답 입니다.";
+            return true;
 
         } catch (InterruptedException e) {
             log.error("# joinCount Error", e);

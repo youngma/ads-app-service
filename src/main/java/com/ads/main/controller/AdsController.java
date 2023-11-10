@@ -12,8 +12,10 @@ import com.ads.main.vo.campaign.req.RptAdAnswer;
 import com.ads.main.vo.campaign.req.RptAdClick;
 import com.ads.main.vo.campaign.req.RptAdImpression;
 import com.ads.main.vo.campaign.req.RptAdRequest;
+import com.ads.main.vo.resp.AnswerResp;
 import com.ads.main.vo.resp.PageAds;
 import com.ads.main.vo.resp.QuizAds;
+import com.ads.main.vo.resp.RewordResp;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotBlank;
@@ -111,7 +113,7 @@ public class AdsController {
 
     // 정답 확인
     @GetMapping("/answer/{request-id}/{ad-code}")
-    public RespVo<String> answer(
+    public RespVo<AnswerResp> answer(
             @PathVariable("request-id") String requestId,
             @PathVariable("ad-code") String adCode,
             @RequestParam("answer") String answer,
@@ -120,9 +122,20 @@ public class AdsController {
             @RequestHeader(HttpHeaders.USER_AGENT) String userAgent
     ) throws NoAdException, AppException {
 
-        RptAdAnswer rptAdAnswer = new RptAdAnswer(requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), user, answer, BigDecimal.ZERO);
+        RptAdAnswer rptAdAnswer = new RptAdAnswer(requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), user, answer);
         log.info("# rptAdAnswer => {}", rptAdAnswer);
         return  new RespVo<>(adCampaignService.checkAnswer(rptAdAnswer));
+    }
+
+    // 리워드 적립 회원 리스트
+    @GetMapping("/reword/{ad-group}/{ad-code}")
+    public RespVo<PageAds<RewordResp>> answer(
+            @PathVariable("ad-group") String adGroup,
+            @PathVariable("ad-code") String adCode,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size
+    ) throws NoAdException, AppException {
+        return  new RespVo<>(adCampaignService.selectRewords(adGroup, adCode, page, size));
     }
 
     // 광고주 페이지 랜딩

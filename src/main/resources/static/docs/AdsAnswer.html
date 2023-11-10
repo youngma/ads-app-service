@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/app/v1/ads/answer/test/YxGBfKJBsG?user-key=KSsiViZbRk&amp;answer=%EC%A0%95%EB%8B%B5' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/app/v1/ads/answer/test/YxGBfKJBsG?user-key=zFTmzIGpgj&amp;answer=%EC%A0%95%EB%8B%B5' -i -X GET \
     -H 'Accept: application/json' \
     -H 'user-agent: mock-mvc'</code></pre>
 </div>
@@ -469,7 +469,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /app/v1/ads/answer/test/YxGBfKJBsG?user-key=KSsiViZbRk&amp;answer=%EC%A0%95%EB%8B%B5 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /app/v1/ads/answer/test/YxGBfKJBsG?user-key=zFTmzIGpgj&amp;answer=%EC%A0%95%EB%8B%B5 HTTP/1.1
 Accept: application/json
 user-agent: mock-mvc
 Host: localhost:8080</code></pre>
@@ -542,10 +542,13 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 37
+Content-Length: 76
 
 {
-  "message" : "정답 입니다."
+  "result" : {
+    "message" : "정답 입니다.",
+    "reword" : 2
+  }
 }</code></pre>
 </div>
 </div>
@@ -569,9 +572,14 @@ Content-Length: 37
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.message</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">정답 결과</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.reword</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">적립 포인트</p></td>
 </tr>
 </tbody>
 </table>

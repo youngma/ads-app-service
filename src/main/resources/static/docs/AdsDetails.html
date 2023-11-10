@@ -538,7 +538,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 1075
+Content-Length: 1219
 
 {
   "result" : {
@@ -550,12 +550,15 @@ Content-Length: 1075
     "quizTitle" : "제목은 1",
     "landing" : {
       "detail" : "http://localhost:8082/api/app/v1/ads/impression/test?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f32613665333038303265323234393163393435653436323338373434643037332e706e67",
-      "answer" : "http://localhost:8082/api/app/v1/ads/answer/test/YxGBfKJBsG",
+      "answer" : "http://localhost:8082/api/app/v1/ads/answer/test/YxGBfKJBsG?user-key=test",
       "hint_ad_pc" : "http://localhost:8082/api/app/v1/ads/click/hint/test?redirect=687474703a2f2f6e617665722e636f6d",
       "hint_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/hint/test?redirect=687474703a2f2f6e617665722e636f6d",
       "answer_ad_pc" : "http://localhost:8082/api/app/v1/ads/click/answer/test?redirect=687474703a2f2f6e617665722e636f6d",
-      "answer_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/answer/test?redirect=687474703a2f2f6e617665722e636f6d"
+      "answer_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/answer/test?redirect=687474703a2f2f6e617665722e636f6d",
+      "reword" : "http://localhost:8082/api/app/v1/ads/reword/brBJZBMxDe/YxGBfKJBsG"
     },
+    "reword" : 2,
+    "joinUserCount" : 19,
     "joined" : false
   }
 }</code></pre>
@@ -601,6 +604,21 @@ Content-Length: 1075
 <td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 문제</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.pointName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">포인트 명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.reword</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">적립 포인트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.joinUserCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여 인원</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.totalParticipationLimit</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">총 참여 가능 인원</p></td>
@@ -644,6 +662,11 @@ Content-Length: 1075
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.answer_ad_mobile</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">정답 랜딩 페이지 (Mobile)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.reword</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">리워드 적립 내역 조회 URL</p></td>
 </tr>
 </tbody>
 </table>

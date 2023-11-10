@@ -19,6 +19,9 @@ public class LandingVo {
     @JsonIgnore
     private String appServerUrl;
 
+    @JsonIgnore
+    private String userKey;
+
     private String campaignCode;
 
     // 광고 요청
@@ -39,10 +42,14 @@ public class LandingVo {
     private String answer_ad_pc;
     private String answer_ad_mobile;
 
-    public LandingVo(String groupCode, String requestId,  String appServerUrl) {
+    // 리워드 적립 회원 조회
+    private String reword;
+
+    public LandingVo(String groupCode, String requestId,  String appServerUrl, String user) {
         this.groupCode = groupCode;
         this.requestId = requestId;
         this.appServerUrl = appServerUrl;
+        this.userKey = user;
     }
 
     public String getThumb() {
@@ -55,7 +62,7 @@ public class LandingVo {
 
     public String getDetail_page() {
         if (this.campaignCode != null) {
-            return this.appServerUrl.concat("/app/v1/ads/detail/"+requestId+"/"+this.campaignCode);
+            return this.appServerUrl.concat("/app/v1/ads/detail/"+requestId+"/"+this.campaignCode).concat("?user-key=").concat(userKey);
         } else {
             return null;
         }
@@ -71,7 +78,15 @@ public class LandingVo {
 
     public String getAnswer() {
         if (this.answer != null) {
-            return this.appServerUrl.concat("/app/v1/ads/answer/"+requestId+"/"+answer);
+            return this.appServerUrl.concat("/app/v1/ads/answer/"+requestId+"/"+answer).concat("?user-key=").concat(userKey);
+        } else {
+            return null;
+        }
+    }
+
+    public String getReword() {
+        if (this.reword != null) {
+            return this.appServerUrl.concat("/app/v1/ads/reword/"+groupCode+"/"+reword);
         } else {
             return null;
         }
@@ -87,10 +102,6 @@ public class LandingVo {
 
     public String getHint_ad_mobile() {
         if (this.hint_ad_mobile != null) {
-
-
-
-
             return this.appServerUrl.concat("/app/v1/ads/click/hint/"+requestId+"?redirect=").concat( HexUtils.toHexString(this.hint_ad_mobile.getBytes()) );
         } else {
             return null;

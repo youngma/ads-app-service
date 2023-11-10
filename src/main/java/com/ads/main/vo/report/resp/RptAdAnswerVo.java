@@ -1,4 +1,4 @@
-package com.ads.main.vo.campaign;
+package com.ads.main.vo.report.resp;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -41,7 +41,7 @@ public class RptAdAnswerVo implements Serializable {
      * 지급 금액
      */
     @NotNull(message = "cost can not null")
-    private BigDecimal cost;
+    private BigDecimal reword;
 
 
     /**
