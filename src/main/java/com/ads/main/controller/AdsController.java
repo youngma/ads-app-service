@@ -37,6 +37,7 @@ import java.net.URISyntaxException;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/app/v1/ads")
+@Validated
 public class AdsController {
 
 
@@ -47,8 +48,8 @@ public class AdsController {
     @GetMapping("/search/{ad-group}")
     public RespVo<PageAds<QuizAds>> getAds(
             @PathVariable("ad-group") String adGroup,
-            @RequestParam("user-key") String user,
-            @RequestParam("join") String join,
+            @RequestParam("user-key") @Validated @NotBlank(message = "사용자 식별키는 필수 값 입니다.") String user,
+            @RequestParam(value = "join", defaultValue = "All") String join,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "20") int size
     ) throws NoAdException, AppException {
@@ -84,7 +85,7 @@ public class AdsController {
     public RespVo<QuizAds> detail(
             @PathVariable("request-id") String requestId,
             @PathVariable("ad-code") String adCode,
-            @RequestParam("user-key") String user,
+            @RequestParam("user-key") @Validated @NotBlank(message = "사용자 식별키는 필수 값 입니다.") String user,
             @RequestHeader(HttpHeaders.USER_AGENT) String userAgent,
             HttpServletRequest request
     ) throws NoAdException {
@@ -120,8 +121,8 @@ public class AdsController {
     public RespVo<AnswerResp> answer(
             @PathVariable("request-id") String requestId,
             @PathVariable("ad-code") String adCode,
-            @RequestParam("answer") String answer,
-            @RequestParam("user-key") String user,
+            @RequestParam(value = "answer") @Validated @NotBlank(message = "정답은 필수 값 입니다.") String answer,
+            @RequestParam("user-key") @Validated @NotBlank(message = "사용자 식별키는 필수 값 입니다.") String user,
             HttpServletRequest request,
             @RequestHeader(HttpHeaders.USER_AGENT) String userAgent
     ) throws NoAdException, AppException {
@@ -169,7 +170,7 @@ public class AdsController {
     public RespVo<String> inquiryByListing(
             @PathVariable("ad-group") String adGroup,
 //            @RequestParam("user-key") String user,
-            @RequestBody AdInquiryReqVo adInquiryReqVo,
+            @RequestBody @Validated AdInquiryReqVo adInquiryReqVo,
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException, URISyntaxException, AppException {
@@ -188,8 +189,7 @@ public class AdsController {
     public RespVo<String> inquiryByDetail(
             @PathVariable("ad-group") String adGroup,
             @PathVariable("ad-code") String adCode,
-//            @RequestParam("user-key") String user,
-            @RequestBody AdInquiryReqVo adInquiryReqVo,
+            @RequestBody @Validated AdInquiryReqVo adInquiryReqVo,
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException, URISyntaxException, AppException {

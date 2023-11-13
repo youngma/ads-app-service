@@ -1,0 +1,1600 @@
+2023-11-13T10:23:06.044+09:00  INFO 53007 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Starting AdsAppServiceApplication using Java 17.0.9 with PID 53007 (/Users/bob/projects/ads/api-service/ads-app-service/build/classes/java/main started by bob in /Users/bob/projects/ads/api-service/ads-app-service)
+2023-11-13T10:23:06.046+09:00 DEBUG 53007 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Running with Spring Boot v3.0.9, Spring v6.0.11
+2023-11-13T10:23:06.047+09:00  INFO 53007 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : The following 1 profile is active: "local"
+2023-11-13T10:23:06.073+09:00  INFO 53007 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-11-13T10:23:06.813+09:00  INFO 53007 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-11-13T10:23:06.814+09:00  INFO 53007 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-13T10:23:07.057+09:00  INFO 53007 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 239 ms. Found 4 JPA repository interfaces.
+2023-11-13T10:23:07.066+09:00  INFO 53007 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-11-13T10:23:07.067+09:00  INFO 53007 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-11-13T10:23:07.078+09:00  INFO 53007 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.AdInquiryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:23:07.078+09:00  INFO 53007 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.PartnerAdGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:23:07.078+09:00  INFO 53007 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.RptAdAnswerEntityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:23:07.079+09:00  INFO 53007 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.RptAdRequestEntityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:23:07.079+09:00  INFO 53007 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2023-11-13T10:23:07.497+09:00  INFO 53007 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-11-13T10:23:07.504+09:00  INFO 53007 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-13T10:23:07.504+09:00  INFO 53007 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-11-13T10:23:07.531+09:00  INFO 53007 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2023-11-13T10:23:07.531+09:00  INFO 53007 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1457 ms
+2023-11-13T10:23:07.580+09:00 DEBUG 53007 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2023-11-13T10:23:07.581+09:00 DEBUG 53007 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2023-11-13T10:23:07.593+09:00 DEBUG 53007 --- [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'serverHttpObservationFilter' configured for use
+2023-11-13T10:23:07.636+09:00  INFO 53007 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-13T10:23:07.775+09:00  INFO 53007 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3d015555
+2023-11-13T10:23:07.776+09:00  INFO 53007 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-13T10:23:07.792+09:00  INFO 53007 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-13T10:23:07.811+09:00  INFO 53007 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-11-13T10:23:07.957+09:00  INFO 53007 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-11-13T10:23:07.958+09:00  WARN 53007 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-11-13T10:23:08.620+09:00  INFO 53007 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-13T10:23:08.624+09:00  INFO 53007 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-13T10:23:08.689+09:00 DEBUG 53007 --- [restartedMain] o.h.stat.internal.StatisticsInitiator    : Statistics initialized [enabled=true]
+2023-11-13T10:23:08.690+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:08.691+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:08.742+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:08.783+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:08.784+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:08.805+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:08.805+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:08.874+09:00  INFO 53007 --- [restartedMain] org.redisson.Version                     : Redisson 3.23.5
+2023-11-13T10:23:09.195+09:00  INFO 53007 --- [redisson-netty-2-5] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2023-11-13T10:23:09.337+09:00  INFO 53007 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+2023-11-13T10:23:09.394+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.396+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.410+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.410+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.412+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.412+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.418+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.422+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.437+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.439+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.495+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.497+09:00  INFO 53007 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:09.599+09:00  WARN 53007 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-13T10:23:09.734+09:00 DEBUG 53007 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2023-11-13T10:23:09.804+09:00 DEBUG 53007 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 10 mappings in 'requestMappingHandlerMapping'
+2023-11-13T10:23:09.819+09:00 DEBUG 53007 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /static/**] in 'resourceHandlerMapping'
+2023-11-13T10:23:09.826+09:00 DEBUG 53007 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2023-11-13T10:23:10.079+09:00  WARN 53007 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2023-11-13T10:23:10.094+09:00  INFO 53007 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-11-13T10:23:10.146+09:00  INFO 53007 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path '/api'
+2023-11-13T10:23:10.158+09:00  INFO 53007 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Started AdsAppServiceApplication in 4.362 seconds (process running for 4.805)
+2023-11-13T10:23:10.312+09:00  INFO 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-13T10:23:10.312+09:00  INFO 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-13T10:23:10.313+09:00 DEBUG 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2023-11-13T10:23:10.313+09:00 DEBUG 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2023-11-13T10:23:10.313+09:00 DEBUG 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2023-11-13T10:23:10.313+09:00 DEBUG 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@5fc3df69
+2023-11-13T10:23:10.313+09:00 DEBUG 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@1600cc4
+2023-11-13T10:23:10.313+09:00 DEBUG 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2023-11-13T10:23:10.313+09:00  INFO 53007 --- [RMI TCP Connection(15)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2023-11-13T10:23:15.260+09:00 DEBUG 53007 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/app/v1/ads/inquiry/TlqOnxSpNneODVa", parameters={}
+2023-11-13T10:23:15.265+09:00 DEBUG 53007 --- [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ads.main.controller.AdsController#inquiryByListing(String, AdInquiryReqVo, HttpServletRequest, HttpServletResponse)
+2023-11-13T10:23:15.297+09:00 DEBUG 53007 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [AdInquiryReqVo(inquiryType=null, groupCode=null, campaignCode=null, user=test, quizTitle=quizTitle,  (truncated)...]
+2023-11-13T10:23:15.344+09:00 DEBUG 53007 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    /* insert com.ads.main.entity.AdInquiryEntity
+        */ insert 
+    into
+        AD_INQUIRY (ANSWER, ANSWER_AT, CAMPAIGN_CODE, GROUP_CODE, INQUIRY_TYPE, INSERTED_AT, INSERTED_ID, QUIZ_TITLE, REQUEST_AT, STATUS, TITLE, UPDATED_AT, UPDATED_ID) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-11-13T10:23:15.351+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [null]
+2023-11-13T10:23:15.351+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [TIMESTAMP] - [null]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [VARCHAR] - [null]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [4] as [VARCHAR] - [TlqOnxSpNneODVa]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [5] as [VARCHAR] - [SERVICE]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [6] as [TIMESTAMP] - [2023-11-13T10:23:15.319564]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [7] as [VARCHAR] - [test]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [8] as [VARCHAR] - [quizTitle]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [9] as [TIMESTAMP] - [2023-11-13T10:23:15.319586]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [10] as [VARCHAR] - [REQUEST]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [11] as [VARCHAR] - [title]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [12] as [TIMESTAMP] - [2023-11-13T10:23:15.319575]
+2023-11-13T10:23:15.352+09:00 TRACE 53007 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [13] as [VARCHAR] - [null]
+2023-11-13T10:23:15.406+09:00 DEBUG 53007 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2023-11-13T10:23:15.408+09:00 DEBUG 53007 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [RespVo[message=등록 되었습니다., value=null]]
+2023-11-13T10:23:15.412+09:00  INFO 53007 --- [http-nio-8082-exec-1] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    8184833 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    6219209 nanoseconds spent preparing 1 JDBC statements;
+    26846917 nanoseconds spent executing 1 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    3322291 nanoseconds spent executing 1 flushes (flushing a total of 1 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:15.413+09:00 DEBUG 53007 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-11-13T10:23:16.143+09:00 DEBUG 53007 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/api/app/v1/ads/inquiry/TlqOnxSpNneODVa", parameters={}
+2023-11-13T10:23:16.145+09:00 DEBUG 53007 --- [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ads.main.controller.AdsController#inquiryByListing(String, AdInquiryReqVo, HttpServletRequest, HttpServletResponse)
+2023-11-13T10:23:16.147+09:00 DEBUG 53007 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [AdInquiryReqVo(inquiryType=null, groupCode=null, campaignCode=null, user=test, quizTitle=quizTitle,  (truncated)...]
+2023-11-13T10:23:16.153+09:00 DEBUG 53007 --- [http-nio-8082-exec-2] org.hibernate.SQL                        : 
+    /* insert com.ads.main.entity.AdInquiryEntity
+        */ insert 
+    into
+        AD_INQUIRY (ANSWER, ANSWER_AT, CAMPAIGN_CODE, GROUP_CODE, INQUIRY_TYPE, INSERTED_AT, INSERTED_ID, QUIZ_TITLE, REQUEST_AT, STATUS, TITLE, UPDATED_AT, UPDATED_ID) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-11-13T10:23:16.154+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [null]
+2023-11-13T10:23:16.154+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [TIMESTAMP] - [null]
+2023-11-13T10:23:16.154+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [VARCHAR] - [null]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [4] as [VARCHAR] - [TlqOnxSpNneODVa]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [5] as [VARCHAR] - [SERVICE]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [6] as [TIMESTAMP] - [2023-11-13T10:23:16.148735]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [7] as [VARCHAR] - [test]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [8] as [VARCHAR] - [quizTitle]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [9] as [TIMESTAMP] - [2023-11-13T10:23:16.148766]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [10] as [VARCHAR] - [REQUEST]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [11] as [VARCHAR] - [title]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [12] as [TIMESTAMP] - [2023-11-13T10:23:16.148752]
+2023-11-13T10:23:16.155+09:00 TRACE 53007 --- [http-nio-8082-exec-2] org.hibernate.orm.jdbc.bind              : binding parameter [13] as [VARCHAR] - [null]
+2023-11-13T10:23:16.164+09:00 DEBUG 53007 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2023-11-13T10:23:16.165+09:00 DEBUG 53007 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [RespVo[message=등록 되었습니다., value=null]]
+2023-11-13T10:23:16.166+09:00  INFO 53007 --- [http-nio-8082-exec-2] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    2596167 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    847042 nanoseconds spent preparing 1 JDBC statements;
+    2086916 nanoseconds spent executing 1 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    241959 nanoseconds spent executing 1 flushes (flushing a total of 1 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:16.166+09:00 DEBUG 53007 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-11-13T10:23:46.916+09:00  INFO 53007 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-13T10:23:46.922+09:00  INFO 53007 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-13T10:23:47.065+09:00  INFO 53007 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-13T10:23:49.418+09:00  INFO 53064 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Starting AdsAppServiceApplication using Java 17.0.9 with PID 53064 (/Users/bob/projects/ads/api-service/ads-app-service/build/classes/java/main started by bob in /Users/bob/projects/ads/api-service/ads-app-service)
+2023-11-13T10:23:49.421+09:00 DEBUG 53064 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Running with Spring Boot v3.0.9, Spring v6.0.11
+2023-11-13T10:23:49.421+09:00  INFO 53064 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : The following 1 profile is active: "local"
+2023-11-13T10:23:49.441+09:00  INFO 53064 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-11-13T10:23:50.044+09:00  INFO 53064 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-11-13T10:23:50.045+09:00  INFO 53064 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-13T10:23:50.208+09:00  INFO 53064 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 159 ms. Found 4 JPA repository interfaces.
+2023-11-13T10:23:50.217+09:00  INFO 53064 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-11-13T10:23:50.218+09:00  INFO 53064 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-11-13T10:23:50.233+09:00  INFO 53064 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.AdInquiryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:23:50.234+09:00  INFO 53064 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.PartnerAdGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:23:50.235+09:00  INFO 53064 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.RptAdAnswerEntityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:23:50.235+09:00  INFO 53064 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.RptAdRequestEntityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:23:50.235+09:00  INFO 53064 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2023-11-13T10:23:50.837+09:00  INFO 53064 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-11-13T10:23:50.843+09:00  INFO 53064 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-13T10:23:50.843+09:00  INFO 53064 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-11-13T10:23:50.883+09:00  INFO 53064 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2023-11-13T10:23:50.883+09:00  INFO 53064 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1441 ms
+2023-11-13T10:23:50.972+09:00 DEBUG 53064 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2023-11-13T10:23:50.972+09:00 DEBUG 53064 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2023-11-13T10:23:50.991+09:00 DEBUG 53064 --- [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'serverHttpObservationFilter' configured for use
+2023-11-13T10:23:51.061+09:00  INFO 53064 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-13T10:23:51.415+09:00  INFO 53064 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1622f988
+2023-11-13T10:23:51.416+09:00  INFO 53064 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-13T10:23:51.439+09:00  INFO 53064 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-13T10:23:51.467+09:00  INFO 53064 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-11-13T10:23:51.647+09:00  INFO 53064 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-11-13T10:23:51.649+09:00  WARN 53064 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-11-13T10:23:52.312+09:00  INFO 53064 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-13T10:23:52.316+09:00  INFO 53064 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-13T10:23:52.381+09:00 DEBUG 53064 --- [restartedMain] o.h.stat.internal.StatisticsInitiator    : Statistics initialized [enabled=true]
+2023-11-13T10:23:52.382+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.383+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.416+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.450+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.451+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.468+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.468+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.552+09:00  INFO 53064 --- [restartedMain] org.redisson.Version                     : Redisson 3.23.5
+2023-11-13T10:23:52.814+09:00  INFO 53064 --- [redisson-netty-2-6] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2023-11-13T10:23:52.873+09:00  INFO 53064 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+2023-11-13T10:23:52.923+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.925+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.941+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.942+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.943+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.944+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.950+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.953+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.963+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.963+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:52.997+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:53.074+09:00  INFO 53064 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:53.127+09:00  WARN 53064 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-13T10:23:53.170+09:00 DEBUG 53064 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2023-11-13T10:23:53.207+09:00 DEBUG 53064 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 10 mappings in 'requestMappingHandlerMapping'
+2023-11-13T10:23:53.220+09:00 DEBUG 53064 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /static/**] in 'resourceHandlerMapping'
+2023-11-13T10:23:53.226+09:00 DEBUG 53064 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2023-11-13T10:23:53.418+09:00  WARN 53064 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2023-11-13T10:23:53.420+09:00  INFO 53064 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-11-13T10:23:53.457+09:00  INFO 53064 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path '/api'
+2023-11-13T10:23:53.465+09:00  INFO 53064 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Started AdsAppServiceApplication in 4.225 seconds (process running for 4.488)
+2023-11-13T10:23:54.185+09:00  INFO 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-13T10:23:54.186+09:00  INFO 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-13T10:23:54.186+09:00 DEBUG 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2023-11-13T10:23:54.187+09:00 DEBUG 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2023-11-13T10:23:54.187+09:00 DEBUG 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2023-11-13T10:23:54.193+09:00 DEBUG 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@4f00d784
+2023-11-13T10:23:54.194+09:00 DEBUG 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@484192a1
+2023-11-13T10:23:54.194+09:00 DEBUG 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2023-11-13T10:23:54.194+09:00  INFO 53064 --- [RMI TCP Connection(6)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2023-11-13T10:23:54.880+09:00 DEBUG 53064 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/app/v1/ads/inquiry/TlqOnxSpNneODVa", parameters={}
+2023-11-13T10:23:54.884+09:00 DEBUG 53064 --- [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ads.main.controller.AdsController#inquiryByListing(String, AdInquiryReqVo, HttpServletRequest, HttpServletResponse)
+2023-11-13T10:23:54.914+09:00 DEBUG 53064 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [AdInquiryReqVo(inquiryType=null, groupCode=null, campaignCode=null, user=test, quizTitle=null, title (truncated)...]
+2023-11-13T10:23:54.932+09:00 DEBUG 53064 --- [http-nio-8082-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Using @ExceptionHandler com.ads.main.core.config.advice.ExceptionAdvice#processValidationError(MethodArgumentNotValidException)
+2023-11-13T10:23:54.935+09:00 DEBUG 53064 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2023-11-13T10:23:54.936+09:00 DEBUG 53064 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [RespVo[message=null, value=[[quizTitle] => 퀴즈 제목은 필수값 입니다. 입력된 값: [null]]]]
+2023-11-13T10:23:54.940+09:00  WARN 53064 --- [http-nio-8082-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public com.ads.main.core.vo.RespVo<java.lang.String> com.ads.main.controller.AdsController.inquiryByListing(java.lang.String,com.ads.main.vo.inquiry.req.AdInquiryReqVo,jakarta.servlet.http.HttpServletRequest,jakarta.servlet.http.HttpServletResponse) throws java.io.IOException,java.net.URISyntaxException,com.ads.main.core.config.exception.AppException: [Field error in object 'adInquiryReqVo' on field 'quizTitle': rejected value [null]; codes [NotNull.adInquiryReqVo.quizTitle,NotNull.quizTitle,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [adInquiryReqVo.quizTitle,quizTitle]; arguments []; default message [quizTitle]]; default message [퀴즈 제목은 필수값 입니다.]] ]
+2023-11-13T10:23:54.941+09:00  INFO 53064 --- [http-nio-8082-exec-1] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:23:54.941+09:00 DEBUG 53064 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
+2023-11-13T10:26:16.535+09:00  INFO 53064 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-13T10:26:16.539+09:00  INFO 53064 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-13T10:26:19.098+09:00  INFO 53176 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Starting AdsAppServiceApplication using Java 17.0.9 with PID 53176 (/Users/bob/projects/ads/api-service/ads-app-service/build/classes/java/main started by bob in /Users/bob/projects/ads/api-service/ads-app-service)
+2023-11-13T10:26:19.098+09:00 DEBUG 53176 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Running with Spring Boot v3.0.9, Spring v6.0.11
+2023-11-13T10:26:19.099+09:00  INFO 53176 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : The following 1 profile is active: "local"
+2023-11-13T10:26:19.127+09:00  INFO 53176 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-11-13T10:26:19.587+09:00  INFO 53176 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-11-13T10:26:19.588+09:00  INFO 53176 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-13T10:26:19.727+09:00  INFO 53176 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 136 ms. Found 4 JPA repository interfaces.
+2023-11-13T10:26:19.734+09:00  INFO 53176 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-11-13T10:26:19.735+09:00  INFO 53176 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-11-13T10:26:19.743+09:00  INFO 53176 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.AdInquiryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:26:19.744+09:00  INFO 53176 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.PartnerAdGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:26:19.744+09:00  INFO 53176 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.RptAdAnswerEntityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:26:19.748+09:00  INFO 53176 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ads.main.repository.jpa.RptAdRequestEntityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-11-13T10:26:19.748+09:00  INFO 53176 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2023-11-13T10:26:20.052+09:00  INFO 53176 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2023-11-13T10:26:20.056+09:00  INFO 53176 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-13T10:26:20.056+09:00  INFO 53176 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-11-13T10:26:20.078+09:00  INFO 53176 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2023-11-13T10:26:20.078+09:00  INFO 53176 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 950 ms
+2023-11-13T10:26:20.122+09:00 DEBUG 53176 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: filterRegistrationBean urls=[/*] order=-2147483647, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2023-11-13T10:26:20.123+09:00 DEBUG 53176 --- [restartedMain] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2023-11-13T10:26:20.135+09:00 DEBUG 53176 --- [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'serverHttpObservationFilter' configured for use
+2023-11-13T10:26:20.173+09:00  INFO 53176 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-13T10:26:20.311+09:00  INFO 53176 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@b2e6d96
+2023-11-13T10:26:20.311+09:00  INFO 53176 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-13T10:26:20.327+09:00  INFO 53176 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-13T10:26:20.344+09:00  INFO 53176 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-11-13T10:26:20.442+09:00  INFO 53176 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-11-13T10:26:20.443+09:00  WARN 53176 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2023-11-13T10:26:20.886+09:00  INFO 53176 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-13T10:26:20.890+09:00  INFO 53176 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-13T10:26:20.945+09:00 DEBUG 53176 --- [restartedMain] o.h.stat.internal.StatisticsInitiator    : Statistics initialized [enabled=true]
+2023-11-13T10:26:20.946+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:20.947+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:20.977+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.003+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.004+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.021+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.021+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.075+09:00  INFO 53176 --- [restartedMain] org.redisson.Version                     : Redisson 3.23.5
+2023-11-13T10:26:21.350+09:00  INFO 53176 --- [redisson-netty-2-6] o.r.c.pool.MasterPubSubConnectionPool    : 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2023-11-13T10:26:21.412+09:00  INFO 53176 --- [redisson-netty-2-19] o.r.c.pool.MasterConnectionPool          : 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+2023-11-13T10:26:21.461+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.462+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.474+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.474+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.475+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.475+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.480+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.482+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.492+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.492+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.524+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.525+09:00  INFO 53176 --- [restartedMain] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:21.572+09:00  WARN 53176 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-13T10:26:21.610+09:00 DEBUG 53176 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2023-11-13T10:26:21.647+09:00 DEBUG 53176 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 10 mappings in 'requestMappingHandlerMapping'
+2023-11-13T10:26:21.662+09:00 DEBUG 53176 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /static/**] in 'resourceHandlerMapping'
+2023-11-13T10:26:21.668+09:00 DEBUG 53176 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2023-11-13T10:26:21.863+09:00  WARN 53176 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2023-11-13T10:26:21.865+09:00  INFO 53176 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-11-13T10:26:21.905+09:00  INFO 53176 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path '/api'
+2023-11-13T10:26:21.913+09:00  INFO 53176 --- [restartedMain] com.ads.main.AdsAppServiceApplication    : Started AdsAppServiceApplication in 3.02 seconds (process running for 3.451)
+2023-11-13T10:26:22.310+09:00  INFO 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-13T10:26:22.310+09:00  INFO 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-13T10:26:22.310+09:00 DEBUG 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2023-11-13T10:26:22.310+09:00 DEBUG 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2023-11-13T10:26:22.310+09:00 DEBUG 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2023-11-13T10:26:22.310+09:00 DEBUG 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@eddcfcf
+2023-11-13T10:26:22.311+09:00 DEBUG 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@27fe576b
+2023-11-13T10:26:22.311+09:00 DEBUG 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2023-11-13T10:26:22.311+09:00  INFO 53176 --- [RMI TCP Connection(4)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-11-13T10:26:35.666+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/app/v1/ads/search/brBJZBMxDe?page=1&size=20&user-key=test1&join=all", parameters={masked}
+2023-11-13T10:26:35.676+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ads.main.controller.AdsController#getAds(String, String, String, int, int)
+2023-11-13T10:26:35.767+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        count(p1_0.GROUP_SEQ) 
+    from
+        PARTNER_AD_GROUP p1_0 
+    where
+        p1_0.GROUP_CODE=? 
+        and p1_0.GROUP_STATUS=?
+2023-11-13T10:26:35.794+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [brBJZBMxDe]
+2023-11-13T10:26:35.795+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:35.809+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: [CRITERIA] select count(p1_0.GROUP_SEQ) from PARTNER_AD_GROUP p1_0 where p1_0.GROUP_CODE=? and p1_0.GROUP_STATUS=?, time: 45ms, rows: 1
+2023-11-13T10:26:35.810+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] c.ads.main.service.AdGroupCacheService   : # repo checkAdGroupCode => brBJZBMxDe
+2023-11-13T10:26:35.815+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        p1_0.GROUP_SEQ,
+        p1_0.AD_TYPE,
+        p1_0.APPROVAL_AT,
+        p1_0.CALL_BACK_URL,
+        p1_0.COMMISSION_RATE,
+        p1_0.GROUP_CODE,
+        p1_0.GROUP_NAME,
+        p1_0.GROUP_STATUS,
+        p1_0.HOLD_AT,
+        p1_0.HOLD_MESSAGE,
+        p1_0.INSERTED_AT,
+        p1_0.INSERTED_ID,
+        p1_0.LOGO_FILE,
+        p1_0.PARTNER_SEQ,
+        p1_0.POINT_ICON_FILE,
+        p1_0.POINT_NAME,
+        p1_0.REJECT_AT,
+        p1_0.REJECT_MESSAGE,
+        p1_0.REQUEST_AT,
+        p1_0.REWORD_RATE,
+        p1_0.UPDATED_AT,
+        p1_0.UPDATED_ID,
+        p1_0.USER_COMMISSION_RATE 
+    from
+        PARTNER_AD_GROUP p1_0 
+    where
+        p1_0.GROUP_CODE=? 
+        and p1_0.GROUP_STATUS=? limit ?
+2023-11-13T10:26:35.815+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [brBJZBMxDe]
+2023-11-13T10:26:35.815+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:35.815+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [INTEGER] - [1]
+2023-11-13T10:26:35.824+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    select
+        f1_0.FILE_SEQ,
+        f1_0.FILE_NAME,
+        f1_0.FILE_TYPE,
+        f1_0.INSERTED_AT,
+        f1_0.INSERTED_ID,
+        f1_0.ORIGIN_NAME,
+        f1_0.UPDATED_AT,
+        f1_0.UPDATED_ID 
+    from
+        FILES f1_0 
+    where
+        f1_0.FILE_SEQ=?
+2023-11-13T10:26:35.824+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [BIGINT] - [118]
+2023-11-13T10:26:35.829+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    select
+        f1_0.FILE_SEQ,
+        f1_0.FILE_NAME,
+        f1_0.FILE_TYPE,
+        f1_0.INSERTED_AT,
+        f1_0.INSERTED_ID,
+        f1_0.ORIGIN_NAME,
+        f1_0.UPDATED_AT,
+        f1_0.UPDATED_ID 
+    from
+        FILES f1_0 
+    where
+        f1_0.FILE_SEQ=?
+2023-11-13T10:26:35.829+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [BIGINT] - [119]
+2023-11-13T10:26:35.832+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: [CRITERIA] select p1_0.GROUP_SEQ,p1_0.AD_TYPE,p1_0.APPROVAL_AT,p1_0.CALL_BACK_URL,p1_0.COMMISSION_RATE,p1_0.GROUP_CODE,p1_0.GROUP_NAME,p1_0.GROUP_STATUS,p1_0.HOLD_AT,p1_0.HOLD_MESSAGE,p1_0.INSERTED_AT,p1_0.INSERTED_ID,p1_0.LOGO_FILE,p1_0.PARTNER_SEQ,p1_0.POINT_ICON_FILE,p1_0.POINT_NAME,p1_0.REJECT_AT,p1_0.REJECT_MESSAGE,p1_0.REQUEST_AT,p1_0.REWORD_RATE,p1_0.UPDATED_AT,p1_0.UPDATED_ID,p1_0.USER_COMMISSION_RATE from PARTNER_AD_GROUP p1_0 where p1_0.GROUP_CODE=? and p1_0.GROUP_STATUS=? limit ?, time: 19ms, rows: 1
+2023-11-13T10:26:35.833+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] c.ads.main.service.AdGroupCacheService   : # repo findCampaignType => brBJZBMxDe
+2023-11-13T10:26:35.962+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    /* select
+        adCampaignMasterEntity 
+    from
+        AdCampaignMasterEntity adCampaignMasterEntity   
+    left join
+        fetch adCampaignMasterEntity.adSmartStoreEntity   
+    left join
+        fetch adCampaignMasterEntity.adSmartStoreEntity.image   
+    left join
+        fetch adCampaignMasterEntity.adQuizEntity   
+    left join
+        fetch adCampaignMasterEntity.adQuizEntity.mainImage   
+    left join
+        fetch adCampaignMasterEntity.adQuizEntity.detailImage1   
+    left join
+        fetch adCampaignMasterEntity.adQuizEntity.detailImage2 
+    where
+        adCampaignMasterEntity.campaignStatus = ?1 
+        and adCampaignMasterEntity.exposureStatus = ?2 
+        and adCampaignMasterEntity.adStartDate < ?3 
+        and adCampaignMasterEntity.adEndDate > ?4 
+    order by
+        adCampaignMasterEntity.seq desc */ select
+            a1_0.SEQ,
+            a1_0.AD_END_DATE,
+            a1_0.AD_PRICE,
+            a3_0.SEQ,
+            a3_0.AD_CAMPAIGN_SEQ,
+            d1_0.FILE_SEQ,
+            d1_0.FILE_NAME,
+            d1_0.FILE_TYPE,
+            d1_0.INSERTED_AT,
+            d1_0.INSERTED_ID,
+            d1_0.ORIGIN_NAME,
+            d1_0.UPDATED_AT,
+            d1_0.UPDATED_ID,
+            d2_0.FILE_SEQ,
+            d2_0.FILE_NAME,
+            d2_0.FILE_TYPE,
+            d2_0.INSERTED_AT,
+            d2_0.INSERTED_ID,
+            d2_0.ORIGIN_NAME,
+            d2_0.UPDATED_AT,
+            d2_0.UPDATED_ID,
+            a3_0.GOODS_CODE,
+            a3_0.INSERTED_AT,
+            a3_0.INSERTED_ID,
+            m1_0.FILE_SEQ,
+            m1_0.FILE_NAME,
+            m1_0.FILE_TYPE,
+            m1_0.INSERTED_AT,
+            m1_0.INSERTED_ID,
+            m1_0.ORIGIN_NAME,
+            m1_0.UPDATED_AT,
+            m1_0.UPDATED_ID,
+            a3_0.QUIZ_ANSWER,
+            a3_0.QUIZ_TITLE,
+            a3_0.TARGET_URL_MOBILE,
+            a3_0.TARGET_URL_PC,
+            a3_0.UPDATED_AT,
+            a3_0.UPDATED_ID,
+            a3_0.USE_HOW,
+            a2_0.SEQ,
+            a2_0.AD_CAMPAIGN_SEQ,
+            a2_0.AD_PRICE,
+            a2_0.GOODS_CODE,
+            a2_0.HOLDING_TIME,
+            i1_0.FILE_SEQ,
+            i1_0.FILE_NAME,
+            i1_0.FILE_TYPE,
+            i1_0.INSERTED_AT,
+            i1_0.INSERTED_ID,
+            i1_0.ORIGIN_NAME,
+            i1_0.UPDATED_AT,
+            i1_0.UPDATED_ID,
+            a2_0.INSERTED_AT,
+            a2_0.INSERTED_ID,
+            a2_0.PAYMENT_TERMS,
+            a2_0.TARGET_URL_MOBILE,
+            a2_0.TARGET_URL_PC,
+            a2_0.TOTAL_BUDGET,
+            a2_0.UPDATED_AT,
+            a2_0.UPDATED_ID,
+            a2_0.USE_HOW,
+            a1_0.AD_START_DATE,
+            a1_0.ADVERTISER_SEQ,
+            a1_0.APPROVAL_AT,
+            a1_0.CAMPAIGN_CODE,
+            a1_0.CAMPAIGN_DESC,
+            a1_0.CAMPAIGN_NAME,
+            a1_0.CAMPAIGN_STATUS,
+            a1_0.CAMPAIGN_TYPE,
+            a1_0.COMMISSION_RATE,
+            a1_0.DAY_PARTICIPATION_LIMIT,
+            a1_0.EXPOSURE_STATUS,
+            a1_0.HOLD_AT,
+            a1_0.HOLD_MESSAGE,
+            a1_0.INSERTED_AT,
+            a1_0.INSERTED_ID,
+            a1_0.REJECT_AT,
+            a1_0.REJECT_MESSAGE,
+            a1_0.REQUEST_AT,
+            a1_0.TOTAL_BUDGET,
+            a1_0.TOTAL_PARTICIPATION_LIMIT,
+            a1_0.UPDATED_AT,
+            a1_0.UPDATED_ID,
+            a1_0.USER_COMMISSION_RATE 
+        from
+            AD_CAMPAIGN_MASTER a1_0 
+        left join
+            AD_SMART_STORE a2_0 
+                on a1_0.SEQ=a2_0.AD_CAMPAIGN_SEQ 
+        left join
+            FILES i1_0 
+                on i1_0.FILE_SEQ=a2_0.IMAGE 
+        left join
+            AD_QUIZ a3_0 
+                on a1_0.SEQ=a3_0.AD_CAMPAIGN_SEQ 
+        left join
+            FILES m1_0 
+                on m1_0.FILE_SEQ=a3_0.MAIN_IMAGE 
+        left join
+            FILES d1_0 
+                on d1_0.FILE_SEQ=a3_0.DETAIL_IMAGE1 
+        left join
+            FILES d2_0 
+                on d2_0.FILE_SEQ=a3_0.DETAIL_IMAGE2 
+        where
+            a1_0.CAMPAIGN_STATUS=? 
+            and a1_0.EXPOSURE_STATUS=? 
+            and a1_0.AD_START_DATE<? 
+            and a1_0.AD_END_DATE>? 
+        order by
+            a1_0.SEQ desc limit ?,
+            ?
+2023-11-13T10:26:35.963+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:35.963+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [BOOLEAN] - [true]
+2023-11-13T10:26:35.963+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [TIMESTAMP] - [2023-11-13T10:26:35.857251]
+2023-11-13T10:26:35.963+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [4] as [TIMESTAMP] - [2023-11-13T10:26:35.857298]
+2023-11-13T10:26:35.963+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [5] as [INTEGER] - [0]
+2023-11-13T10:26:35.963+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [6] as [INTEGER] - [20]
+2023-11-13T10:26:35.981+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: select adCampaignMasterEntity
+from AdCampaignMasterEntity adCampaignMasterEntity
+  left join fetch adCampaignMasterEntity.adSmartStoreEntity
+  left join fetch adCampaignMasterEntity.adSmartStoreEntity.image
+  left join fetch adCampaignMasterEntity.adQuizEntity
+  left join fetch adCampaignMasterEntity.adQuizEntity.mainImage
+  left join fetch adCampaignMasterEntity.adQuizEntity.detailImage1
+  left join fetch adCampaignMasterEntity.adQuizEntity.detailImage2
+where adCampaignMasterEntity.campaignStatus = ?1 and adCampaignMasterEntity.exposureStatus = ?2 and adCampaignMasterEntity.adStartDate < ?3 and adCampaignMasterEntity.adEndDate > ?4
+order by adCampaignMasterEntity.seq desc, time: 19ms, rows: 6
+2023-11-13T10:26:35.987+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    /* select
+        count(adCampaignMasterEntity) 
+    from
+        AdCampaignMasterEntity adCampaignMasterEntity 
+    where
+        adCampaignMasterEntity.campaignStatus = ?1 
+        and adCampaignMasterEntity.exposureStatus = ?2 
+        and adCampaignMasterEntity.adStartDate < ?3 
+        and adCampaignMasterEntity.adEndDate > ?4 */ select
+            count(a1_0.SEQ) 
+        from
+            AD_CAMPAIGN_MASTER a1_0 
+        where
+            a1_0.CAMPAIGN_STATUS=? 
+            and a1_0.EXPOSURE_STATUS=? 
+            and a1_0.AD_START_DATE<? 
+            and a1_0.AD_END_DATE>?
+2023-11-13T10:26:35.987+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:35.987+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [BOOLEAN] - [true]
+2023-11-13T10:26:35.987+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [TIMESTAMP] - [2023-11-13T10:26:35.857251]
+2023-11-13T10:26:35.987+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [4] as [TIMESTAMP] - [2023-11-13T10:26:35.857298]
+2023-11-13T10:26:35.990+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: select count(adCampaignMasterEntity)
+from AdCampaignMasterEntity adCampaignMasterEntity
+where adCampaignMasterEntity.campaignStatus = ?1 and adCampaignMasterEntity.exposureStatus = ?2 and adCampaignMasterEntity.adStartDate < ?3 and adCampaignMasterEntity.adEndDate > ?4, time: 3ms, rows: 1
+2023-11-13T10:26:35.992+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        r1_0.REQUEST_ID,
+        r1_0.ANSWER,
+        r1_0.ANSWER_AT,
+        r1_0.CAMPAIGN_CODE,
+        r1_0.REMOTE_IP,
+        r1_0.REWORD,
+        r1_0.USER_AGENT,
+        r1_0.USER_KEY 
+    from
+        RPT_AD_ANSWER r1_0 
+    where
+        r1_0.CAMPAIGN_CODE in(?,?,?,?,?,?) 
+        and r1_0.USER_KEY=?
+2023-11-13T10:26:35.992+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [khwnHmtbXy]
+2023-11-13T10:26:35.992+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [VARCHAR] - [prKslCvpoZ]
+2023-11-13T10:26:35.992+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [VARCHAR] - [YxGBfKJBsG]
+2023-11-13T10:26:35.992+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [4] as [VARCHAR] - [amknLpzgXT]
+2023-11-13T10:26:35.992+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [5] as [VARCHAR] - [CStNbSbBNq]
+2023-11-13T10:26:35.992+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [6] as [VARCHAR] - [tLamHiNUQj]
+2023-11-13T10:26:35.992+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [7] as [VARCHAR] - [test1]
+2023-11-13T10:26:35.998+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: [CRITERIA] select r1_0.REQUEST_ID,r1_0.ANSWER,r1_0.ANSWER_AT,r1_0.CAMPAIGN_CODE,r1_0.REMOTE_IP,r1_0.REWORD,r1_0.USER_AGENT,r1_0.USER_KEY from RPT_AD_ANSWER r1_0 where r1_0.CAMPAIGN_CODE in(?,?,?,?,?,?) and r1_0.USER_KEY=?, time: 5ms, rows: 1
+2023-11-13T10:26:35.999+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        p1_0.GROUP_SEQ,
+        p1_0.AD_TYPE,
+        p1_0.APPROVAL_AT,
+        p1_0.CALL_BACK_URL,
+        p1_0.COMMISSION_RATE,
+        p1_0.GROUP_CODE,
+        p1_0.GROUP_NAME,
+        p1_0.GROUP_STATUS,
+        p1_0.HOLD_AT,
+        p1_0.HOLD_MESSAGE,
+        p1_0.INSERTED_AT,
+        p1_0.INSERTED_ID,
+        p1_0.LOGO_FILE,
+        p1_0.PARTNER_SEQ,
+        p1_0.POINT_ICON_FILE,
+        p1_0.POINT_NAME,
+        p1_0.REJECT_AT,
+        p1_0.REJECT_MESSAGE,
+        p1_0.REQUEST_AT,
+        p1_0.REWORD_RATE,
+        p1_0.UPDATED_AT,
+        p1_0.UPDATED_ID,
+        p1_0.USER_COMMISSION_RATE 
+    from
+        PARTNER_AD_GROUP p1_0 
+    where
+        p1_0.GROUP_CODE=? 
+        and p1_0.GROUP_STATUS=? limit ?
+2023-11-13T10:26:35.999+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [brBJZBMxDe]
+2023-11-13T10:26:35.999+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:35.999+09:00 TRACE 53176 --- [http-nio-8082-exec-1] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [INTEGER] - [1]
+2023-11-13T10:26:36.001+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: [CRITERIA] select p1_0.GROUP_SEQ,p1_0.AD_TYPE,p1_0.APPROVAL_AT,p1_0.CALL_BACK_URL,p1_0.COMMISSION_RATE,p1_0.GROUP_CODE,p1_0.GROUP_NAME,p1_0.GROUP_STATUS,p1_0.HOLD_AT,p1_0.HOLD_MESSAGE,p1_0.INSERTED_AT,p1_0.INSERTED_ID,p1_0.LOGO_FILE,p1_0.PARTNER_SEQ,p1_0.POINT_ICON_FILE,p1_0.POINT_NAME,p1_0.REJECT_AT,p1_0.REJECT_MESSAGE,p1_0.REQUEST_AT,p1_0.REWORD_RATE,p1_0.UPDATED_AT,p1_0.UPDATED_ID,p1_0.USER_COMMISSION_RATE from PARTNER_AD_GROUP p1_0 where p1_0.GROUP_CODE=? and p1_0.GROUP_STATUS=? limit ?, time: 2ms, rows: 1
+2023-11-13T10:26:36.015+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2023-11-13T10:26:36.026+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [RespVo[message=null, value=PageAds[content=[QuizAds(requestId=GqHjlyQGXYuvCnu, campaignName=1, campa (truncated)...]
+2023-11-13T10:26:36.035+09:00  INFO 53176 --- [http-nio-8082-exec-1] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    20678959 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    28022459 nanoseconds spent preparing 8 JDBC statements;
+    44325251 nanoseconds spent executing 8 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:36.035+09:00 DEBUG 53176 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-11-13T10:26:39.301+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/app/v1/ads/search/brBJZBMxDe?page=1&size=20", parameters={masked}
+2023-11-13T10:26:39.302+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ads.main.controller.AdsController#getAds(String, String, String, int, int)
+2023-11-13T10:26:39.308+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] o.s.web.method.HandlerMethod             : Could not resolve parameter [1] in public com.ads.main.core.vo.RespVo<com.ads.main.vo.resp.PageAds<com.ads.main.vo.resp.QuizAds>> com.ads.main.controller.AdsController.getAds(java.lang.String,java.lang.String,java.lang.String,int,int) throws com.ads.main.core.config.exception.NoAdException,com.ads.main.core.config.exception.AppException: Required request parameter 'user-key' for method parameter type String is not present
+2023-11-13T10:26:39.311+09:00  WARN 53176 --- [http-nio-8082-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'user-key' for method parameter type String is not present]
+2023-11-13T10:26:39.311+09:00  INFO 53176 --- [http-nio-8082-exec-2] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:39.311+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
+2023-11-13T10:26:39.319+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/api/error?page=1&size=20", parameters={masked}
+2023-11-13T10:26:39.320+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ads.main.core.config.advice.GlobalErrorController#error(HttpServletRequest)
+2023-11-13T10:26:39.322+09:00 ERROR 53176 --- [http-nio-8082-exec-2] c.a.m.c.c.advice.GlobalErrorController   : # Error Controller 400, null
+2023-11-13T10:26:39.326+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json]
+2023-11-13T10:26:39.326+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [RespVo[message=Required parameter 'user-key' is not present., value=null]]
+2023-11-13T10:26:39.327+09:00  INFO 53176 --- [http-nio-8082-exec-2] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:39.328+09:00 DEBUG 53176 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 400
+2023-11-13T10:26:48.716+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/app/v1/ads/search/brBJZBMxDe?page=1&size=20&user-key=test", parameters={masked}
+2023-11-13T10:26:48.717+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.ads.main.controller.AdsController#getAds(String, String, String, int, int)
+2023-11-13T10:26:48.721+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        count(p1_0.GROUP_SEQ) 
+    from
+        PARTNER_AD_GROUP p1_0 
+    where
+        p1_0.GROUP_CODE=? 
+        and p1_0.GROUP_STATUS=?
+2023-11-13T10:26:48.724+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [brBJZBMxDe]
+2023-11-13T10:26:48.724+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:48.726+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: [CRITERIA] select count(p1_0.GROUP_SEQ) from PARTNER_AD_GROUP p1_0 where p1_0.GROUP_CODE=? and p1_0.GROUP_STATUS=?, time: 5ms, rows: 1
+2023-11-13T10:26:48.727+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] c.ads.main.service.AdGroupCacheService   : # repo checkAdGroupCode => brBJZBMxDe
+2023-11-13T10:26:48.731+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    /* select
+        adCampaignMasterEntity 
+    from
+        AdCampaignMasterEntity adCampaignMasterEntity   
+    left join
+        fetch adCampaignMasterEntity.adSmartStoreEntity   
+    left join
+        fetch adCampaignMasterEntity.adSmartStoreEntity.image   
+    left join
+        fetch adCampaignMasterEntity.adQuizEntity   
+    left join
+        fetch adCampaignMasterEntity.adQuizEntity.mainImage   
+    left join
+        fetch adCampaignMasterEntity.adQuizEntity.detailImage1   
+    left join
+        fetch adCampaignMasterEntity.adQuizEntity.detailImage2 
+    where
+        adCampaignMasterEntity.campaignStatus = ?1 
+        and adCampaignMasterEntity.exposureStatus = ?2 
+        and adCampaignMasterEntity.adStartDate < ?3 
+        and adCampaignMasterEntity.adEndDate > ?4 
+    order by
+        adCampaignMasterEntity.seq desc */ select
+            a1_0.SEQ,
+            a1_0.AD_END_DATE,
+            a1_0.AD_PRICE,
+            a3_0.SEQ,
+            a3_0.AD_CAMPAIGN_SEQ,
+            d1_0.FILE_SEQ,
+            d1_0.FILE_NAME,
+            d1_0.FILE_TYPE,
+            d1_0.INSERTED_AT,
+            d1_0.INSERTED_ID,
+            d1_0.ORIGIN_NAME,
+            d1_0.UPDATED_AT,
+            d1_0.UPDATED_ID,
+            d2_0.FILE_SEQ,
+            d2_0.FILE_NAME,
+            d2_0.FILE_TYPE,
+            d2_0.INSERTED_AT,
+            d2_0.INSERTED_ID,
+            d2_0.ORIGIN_NAME,
+            d2_0.UPDATED_AT,
+            d2_0.UPDATED_ID,
+            a3_0.GOODS_CODE,
+            a3_0.INSERTED_AT,
+            a3_0.INSERTED_ID,
+            m1_0.FILE_SEQ,
+            m1_0.FILE_NAME,
+            m1_0.FILE_TYPE,
+            m1_0.INSERTED_AT,
+            m1_0.INSERTED_ID,
+            m1_0.ORIGIN_NAME,
+            m1_0.UPDATED_AT,
+            m1_0.UPDATED_ID,
+            a3_0.QUIZ_ANSWER,
+            a3_0.QUIZ_TITLE,
+            a3_0.TARGET_URL_MOBILE,
+            a3_0.TARGET_URL_PC,
+            a3_0.UPDATED_AT,
+            a3_0.UPDATED_ID,
+            a3_0.USE_HOW,
+            a2_0.SEQ,
+            a2_0.AD_CAMPAIGN_SEQ,
+            a2_0.AD_PRICE,
+            a2_0.GOODS_CODE,
+            a2_0.HOLDING_TIME,
+            i1_0.FILE_SEQ,
+            i1_0.FILE_NAME,
+            i1_0.FILE_TYPE,
+            i1_0.INSERTED_AT,
+            i1_0.INSERTED_ID,
+            i1_0.ORIGIN_NAME,
+            i1_0.UPDATED_AT,
+            i1_0.UPDATED_ID,
+            a2_0.INSERTED_AT,
+            a2_0.INSERTED_ID,
+            a2_0.PAYMENT_TERMS,
+            a2_0.TARGET_URL_MOBILE,
+            a2_0.TARGET_URL_PC,
+            a2_0.TOTAL_BUDGET,
+            a2_0.UPDATED_AT,
+            a2_0.UPDATED_ID,
+            a2_0.USE_HOW,
+            a1_0.AD_START_DATE,
+            a1_0.ADVERTISER_SEQ,
+            a1_0.APPROVAL_AT,
+            a1_0.CAMPAIGN_CODE,
+            a1_0.CAMPAIGN_DESC,
+            a1_0.CAMPAIGN_NAME,
+            a1_0.CAMPAIGN_STATUS,
+            a1_0.CAMPAIGN_TYPE,
+            a1_0.COMMISSION_RATE,
+            a1_0.DAY_PARTICIPATION_LIMIT,
+            a1_0.EXPOSURE_STATUS,
+            a1_0.HOLD_AT,
+            a1_0.HOLD_MESSAGE,
+            a1_0.INSERTED_AT,
+            a1_0.INSERTED_ID,
+            a1_0.REJECT_AT,
+            a1_0.REJECT_MESSAGE,
+            a1_0.REQUEST_AT,
+            a1_0.TOTAL_BUDGET,
+            a1_0.TOTAL_PARTICIPATION_LIMIT,
+            a1_0.UPDATED_AT,
+            a1_0.UPDATED_ID,
+            a1_0.USER_COMMISSION_RATE 
+        from
+            AD_CAMPAIGN_MASTER a1_0 
+        left join
+            AD_SMART_STORE a2_0 
+                on a1_0.SEQ=a2_0.AD_CAMPAIGN_SEQ 
+        left join
+            FILES i1_0 
+                on i1_0.FILE_SEQ=a2_0.IMAGE 
+        left join
+            AD_QUIZ a3_0 
+                on a1_0.SEQ=a3_0.AD_CAMPAIGN_SEQ 
+        left join
+            FILES m1_0 
+                on m1_0.FILE_SEQ=a3_0.MAIN_IMAGE 
+        left join
+            FILES d1_0 
+                on d1_0.FILE_SEQ=a3_0.DETAIL_IMAGE1 
+        left join
+            FILES d2_0 
+                on d2_0.FILE_SEQ=a3_0.DETAIL_IMAGE2 
+        where
+            a1_0.CAMPAIGN_STATUS=? 
+            and a1_0.EXPOSURE_STATUS=? 
+            and a1_0.AD_START_DATE<? 
+            and a1_0.AD_END_DATE>? 
+        order by
+            a1_0.SEQ desc limit ?,
+            ?
+2023-11-13T10:26:48.732+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:48.732+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [BOOLEAN] - [true]
+2023-11-13T10:26:48.732+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [TIMESTAMP] - [2023-11-13T10:26:48.728842]
+2023-11-13T10:26:48.733+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [4] as [TIMESTAMP] - [2023-11-13T10:26:48.728863]
+2023-11-13T10:26:48.733+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [5] as [INTEGER] - [0]
+2023-11-13T10:26:48.733+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [6] as [INTEGER] - [20]
+2023-11-13T10:26:48.744+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: select adCampaignMasterEntity
+from AdCampaignMasterEntity adCampaignMasterEntity
+  left join fetch adCampaignMasterEntity.adSmartStoreEntity
+  left join fetch adCampaignMasterEntity.adSmartStoreEntity.image
+  left join fetch adCampaignMasterEntity.adQuizEntity
+  left join fetch adCampaignMasterEntity.adQuizEntity.mainImage
+  left join fetch adCampaignMasterEntity.adQuizEntity.detailImage1
+  left join fetch adCampaignMasterEntity.adQuizEntity.detailImage2
+where adCampaignMasterEntity.campaignStatus = ?1 and adCampaignMasterEntity.exposureStatus = ?2 and adCampaignMasterEntity.adStartDate < ?3 and adCampaignMasterEntity.adEndDate > ?4
+order by adCampaignMasterEntity.seq desc, time: 14ms, rows: 6
+2023-11-13T10:26:48.746+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    /* select
+        count(adCampaignMasterEntity) 
+    from
+        AdCampaignMasterEntity adCampaignMasterEntity 
+    where
+        adCampaignMasterEntity.campaignStatus = ?1 
+        and adCampaignMasterEntity.exposureStatus = ?2 
+        and adCampaignMasterEntity.adStartDate < ?3 
+        and adCampaignMasterEntity.adEndDate > ?4 */ select
+            count(a1_0.SEQ) 
+        from
+            AD_CAMPAIGN_MASTER a1_0 
+        where
+            a1_0.CAMPAIGN_STATUS=? 
+            and a1_0.EXPOSURE_STATUS=? 
+            and a1_0.AD_START_DATE<? 
+            and a1_0.AD_END_DATE>?
+2023-11-13T10:26:48.747+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:48.747+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [BOOLEAN] - [true]
+2023-11-13T10:26:48.747+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [TIMESTAMP] - [2023-11-13T10:26:48.728842]
+2023-11-13T10:26:48.747+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [4] as [TIMESTAMP] - [2023-11-13T10:26:48.728863]
+2023-11-13T10:26:48.750+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: select count(adCampaignMasterEntity)
+from AdCampaignMasterEntity adCampaignMasterEntity
+where adCampaignMasterEntity.campaignStatus = ?1 and adCampaignMasterEntity.exposureStatus = ?2 and adCampaignMasterEntity.adStartDate < ?3 and adCampaignMasterEntity.adEndDate > ?4, time: 3ms, rows: 1
+2023-11-13T10:26:48.751+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        r1_0.REQUEST_ID,
+        r1_0.ANSWER,
+        r1_0.ANSWER_AT,
+        r1_0.CAMPAIGN_CODE,
+        r1_0.REMOTE_IP,
+        r1_0.REWORD,
+        r1_0.USER_AGENT,
+        r1_0.USER_KEY 
+    from
+        RPT_AD_ANSWER r1_0 
+    where
+        r1_0.CAMPAIGN_CODE in(?,?,?,?,?,?) 
+        and r1_0.USER_KEY=?
+2023-11-13T10:26:48.752+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [khwnHmtbXy]
+2023-11-13T10:26:48.752+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [VARCHAR] - [prKslCvpoZ]
+2023-11-13T10:26:48.752+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [VARCHAR] - [YxGBfKJBsG]
+2023-11-13T10:26:48.752+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [4] as [VARCHAR] - [amknLpzgXT]
+2023-11-13T10:26:48.752+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [5] as [VARCHAR] - [CStNbSbBNq]
+2023-11-13T10:26:48.752+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [6] as [VARCHAR] - [tLamHiNUQj]
+2023-11-13T10:26:48.752+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [7] as [VARCHAR] - [test]
+2023-11-13T10:26:48.756+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: [CRITERIA] select r1_0.REQUEST_ID,r1_0.ANSWER,r1_0.ANSWER_AT,r1_0.CAMPAIGN_CODE,r1_0.REMOTE_IP,r1_0.REWORD,r1_0.USER_AGENT,r1_0.USER_KEY from RPT_AD_ANSWER r1_0 where r1_0.CAMPAIGN_CODE in(?,?,?,?,?,?) and r1_0.USER_KEY=?, time: 5ms, rows: 2
+2023-11-13T10:26:48.758+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    /* <criteria> */ select
+        p1_0.GROUP_SEQ,
+        p1_0.AD_TYPE,
+        p1_0.APPROVAL_AT,
+        p1_0.CALL_BACK_URL,
+        p1_0.COMMISSION_RATE,
+        p1_0.GROUP_CODE,
+        p1_0.GROUP_NAME,
+        p1_0.GROUP_STATUS,
+        p1_0.HOLD_AT,
+        p1_0.HOLD_MESSAGE,
+        p1_0.INSERTED_AT,
+        p1_0.INSERTED_ID,
+        p1_0.LOGO_FILE,
+        p1_0.PARTNER_SEQ,
+        p1_0.POINT_ICON_FILE,
+        p1_0.POINT_NAME,
+        p1_0.REJECT_AT,
+        p1_0.REJECT_MESSAGE,
+        p1_0.REQUEST_AT,
+        p1_0.REWORD_RATE,
+        p1_0.UPDATED_AT,
+        p1_0.UPDATED_ID,
+        p1_0.USER_COMMISSION_RATE 
+    from
+        PARTNER_AD_GROUP p1_0 
+    where
+        p1_0.GROUP_CODE=? 
+        and p1_0.GROUP_STATUS=? limit ?
+2023-11-13T10:26:48.758+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [VARCHAR] - [brBJZBMxDe]
+2023-11-13T10:26:48.759+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [2] as [VARCHAR] - [APPROVAL]
+2023-11-13T10:26:48.759+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [3] as [INTEGER] - [1]
+2023-11-13T10:26:48.761+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    select
+        f1_0.FILE_SEQ,
+        f1_0.FILE_NAME,
+        f1_0.FILE_TYPE,
+        f1_0.INSERTED_AT,
+        f1_0.INSERTED_ID,
+        f1_0.ORIGIN_NAME,
+        f1_0.UPDATED_AT,
+        f1_0.UPDATED_ID 
+    from
+        FILES f1_0 
+    where
+        f1_0.FILE_SEQ=?
+2023-11-13T10:26:48.762+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [BIGINT] - [118]
+2023-11-13T10:26:48.763+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] org.hibernate.SQL                        : 
+    select
+        f1_0.FILE_SEQ,
+        f1_0.FILE_NAME,
+        f1_0.FILE_TYPE,
+        f1_0.INSERTED_AT,
+        f1_0.INSERTED_ID,
+        f1_0.ORIGIN_NAME,
+        f1_0.UPDATED_AT,
+        f1_0.UPDATED_ID 
+    from
+        FILES f1_0 
+    where
+        f1_0.FILE_SEQ=?
+2023-11-13T10:26:48.763+09:00 TRACE 53176 --- [http-nio-8082-exec-3] org.hibernate.orm.jdbc.bind              : binding parameter [1] as [BIGINT] - [119]
+2023-11-13T10:26:48.766+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] o.h.stat.internal.StatisticsImpl         : HHH000117: HQL: [CRITERIA] select p1_0.GROUP_SEQ,p1_0.AD_TYPE,p1_0.APPROVAL_AT,p1_0.CALL_BACK_URL,p1_0.COMMISSION_RATE,p1_0.GROUP_CODE,p1_0.GROUP_NAME,p1_0.GROUP_STATUS,p1_0.HOLD_AT,p1_0.HOLD_MESSAGE,p1_0.INSERTED_AT,p1_0.INSERTED_ID,p1_0.LOGO_FILE,p1_0.PARTNER_SEQ,p1_0.POINT_ICON_FILE,p1_0.POINT_NAME,p1_0.REJECT_AT,p1_0.REJECT_MESSAGE,p1_0.REQUEST_AT,p1_0.REWORD_RATE,p1_0.UPDATED_AT,p1_0.UPDATED_ID,p1_0.USER_COMMISSION_RATE from PARTNER_AD_GROUP p1_0 where p1_0.GROUP_CODE=? and p1_0.GROUP_STATUS=? limit ?, time: 7ms, rows: 1
+2023-11-13T10:26:48.767+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2023-11-13T10:26:48.768+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [RespVo[message=null, value=PageAds[content=[QuizAds(requestId=KeomkAbkYDnNsOF, campaignName=1, campa (truncated)...]
+2023-11-13T10:26:48.769+09:00  INFO 53176 --- [http-nio-8082-exec-3] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    2302792 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    3981166 nanoseconds spent preparing 7 JDBC statements;
+    17880252 nanoseconds spent executing 7 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2023-11-13T10:26:48.769+09:00 DEBUG 53176 --- [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
