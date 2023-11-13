@@ -457,9 +457,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/app/v1/ads/answer/test-request/YxGBfKJBsG?user-key=lpZVZXkZyj&amp;answer=%EC%A0%95%EB%8B%B5' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/app/v1/ads/inquiry/brBJZBMxDe/YxGBfKJBsG' -i -X POST \
+    -H 'Content-Type: application/json' \
     -H 'Accept: application/json' \
-    -H 'user-agent: mock-mvc'</code></pre>
+    -H 'user-agent: mock-mvc' \
+    -d '{
+  "user" : "userKey",
+  "quizTitle" : "Quiz-title",
+  "title" : "Title"
+}'</code></pre>
 </div>
 </div>
 </div>
@@ -469,10 +475,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /app/v1/ads/answer/test-request/YxGBfKJBsG?user-key=lpZVZXkZyj&amp;answer=%EC%A0%95%EB%8B%B5 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /app/v1/ads/inquiry/brBJZBMxDe/YxGBfKJBsG HTTP/1.1
+Content-Type: application/json
 Accept: application/json
 user-agent: mock-mvc
-Host: localhost:8080</code></pre>
+Content-Length: 75
+Host: localhost:8080
+
+{
+  "user" : "userKey",
+  "quizTitle" : "Quiz-title",
+  "title" : "Title"
+}</code></pre>
 </div>
 </div>
 </div>
@@ -481,7 +495,7 @@ Host: localhost:8080</code></pre>
 <h2 id="_path_parameters">PATH PARAMETERS</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /app/v1/ads/answer/{request-id}/{ad-code}</caption>
+<caption class="title">Table 1. /app/v1/ads/inquiry/{ad-group}/{ad-code}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -494,8 +508,8 @@ Host: localhost:8080</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>request-id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">광고 요청 코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-group</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">광고 지면 코드</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-code</code></p></td>
@@ -506,30 +520,17 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_query_parameters">QUERY PARAMETERS</h2>
+<h2 id="_request_body">REQUEST BODY</h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>user-key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">파트너사 APP USER 식별키</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정답</p></td>
-</tr>
-</tbody>
-</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-json" data-lang="json">{
+  "user" : "userKey",
+  "quizTitle" : "Quiz-title",
+  "title" : "Title"
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -542,13 +543,10 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 76
+Content-Length: 43
 
 {
-  "result" : {
-    "message" : "정답 입니다.",
-    "reword" : 2
-  }
+  "message" : "등록 되었습니다."
 }</code></pre>
 </div>
 </div>
@@ -572,14 +570,9 @@ Content-Length: 76
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">정답 결과</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.reword</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">적립 포인트</p></td>
 </tr>
 </tbody>
 </table>
@@ -589,7 +582,7 @@ Content-Length: 76
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-11-07 11:04:09 +0900
+Last updated 2023-11-13 10:47:26 +0900
 </div>
 </div>
 </body>

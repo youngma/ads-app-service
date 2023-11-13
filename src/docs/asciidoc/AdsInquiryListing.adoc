@@ -1,0 +1,36 @@
+= Rest Docs API Document
+
+[[introduction]]
+== 소개
+퀴즈 광고 검색 API
+
+:domainpath: ./src/docs
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== CURL
+include::{snippets}/ads-inquiry-listing/curl-request.adoc[]
+
+== REQUEST
+
+include::{snippets}/ads-inquiry-listing//http-request.adoc[]
+
+== PATH PARAMETERS
+
+include::{snippets}/ads-inquiry-listing//path-parameters.adoc[]
+
+
+== REQUEST BODY
+
+include::{snippets}/ads-inquiry-listing//request-body.adoc[]
+
+== RESPONSE
+
+include::{snippets}/ads-inquiry-listing//http-response.adoc[]
+
+== RESPONSE Fields
+
+include::{snippets}/ads-inquiry-listing//response-fields.adoc[]
+

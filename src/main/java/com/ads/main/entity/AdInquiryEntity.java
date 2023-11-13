@@ -95,6 +95,12 @@ public class AdInquiryEntity extends BaseEntity implements Serializable {
     @Column(name = "ANSWER_AT")
     private LocalDateTime answerAt;
 
+    /**
+     * 전화 번호
+     */
+    @Column(name = "PHONE")
+    private String phone;
+
 
     public static AdInquiryEntity inquiry(AdInquiryReqVo inquiryReqVo) {
         AdInquiryEntity adInquiryEntity = new AdInquiryEntity();
@@ -103,6 +109,7 @@ public class AdInquiryEntity extends BaseEntity implements Serializable {
         adInquiryEntity.setGroupCode(inquiryReqVo.getGroupCode());
         adInquiryEntity.setQuizTitle(inquiryReqVo.getQuizTitle());
         adInquiryEntity.setTitle(inquiryReqVo.getTitle());
+        adInquiryEntity.setPhone(inquiryReqVo.getPhone());
         adInquiryEntity.setInsertedId(inquiryReqVo.getUser());
         adInquiryEntity.setRequestAt(LocalDateTime.now());
         adInquiryEntity.setStatus(InquiryStatus.Request);

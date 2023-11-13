@@ -2,6 +2,8 @@ package com.ads.main.vo.inquiry.req;
 
 import com.ads.main.core.enums.inquiry.InquiryStatus;
 import com.ads.main.core.enums.inquiry.InquiryType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -11,6 +13,7 @@ import java.util.Date;
 
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdInquiryReqVo implements Serializable {
 
     private InquiryType inquiryType;
@@ -32,11 +35,12 @@ public class AdInquiryReqVo implements Serializable {
     /**
      * 문의 사항 제목
      */
-    @NotNull
     @NotNull(message = "문의 사항 제목은 필수값 입니다.")
     private String title;
 
 
     private InquiryStatus status;
 
+    @NotNull(message = "전화번호는 은 필수값 입니다.")
+    private String phone;
 }

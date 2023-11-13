@@ -1,8 +1,10 @@
 package com.ads.main;
 
+import com.ads.main.vo.inquiry.req.AdInquiryReqVo;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,8 +29,7 @@ import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -273,7 +274,7 @@ public class AdsAppApiTest {
                                 , preprocessResponse(prettyPrint())
                                 , pathParameters(
                                         parameterWithName("request-id").description("광고 요청 코드"),
-                                        parameterWithName("ad-code").description("광고 지면 코드")
+                                        parameterWithName("ad-code").description("광고 코드")
                                 )
                                 ,queryParameters(
                                         parameterWithName("user-key").description("파트너사 APP USER 식별키"),
@@ -297,7 +298,7 @@ public class AdsAppApiTest {
                                                 .description("요청한 퀴즈 광고의 정답 확인 후 리워드 금액을 반환한다.")
                                                 .pathParameters(
                                                         parameterWithName("request-id").description("광고 요청 코드"),
-                                                        parameterWithName("ad-code").description("광고 지면 코드")
+                                                        parameterWithName("ad-code").description("광고 코드")
                                                 )
                                                 .queryParameters(
                                                         parameterWithName("user-key").description("파트너사 APP USER 식별키"),
@@ -383,6 +384,158 @@ public class AdsAppApiTest {
                                                         fieldWithPath("result.totalPages").description("현제 페이지 수").type(JsonFieldType.NUMBER),
                                                         fieldWithPath("result.totalElements").description("총 광고 수").type(JsonFieldType.NUMBER),
                                                         fieldWithPath("result.size").description("페이지 당 광고수").type(JsonFieldType.NUMBER)
+                                                )
+                                                .build()
+                                )
+                        )
+                );
+//
+    }
+
+
+    @Test
+    @DisplayName("광고 문의 하기 ( 리스팅 )")
+    public void QuizAdsInquiryByListing() throws Exception {
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        AdInquiryReqVo adInquiryReqVo = new AdInquiryReqVo();
+        adInquiryReqVo.setQuizTitle("Quiz-title");
+        adInquiryReqVo.setTitle("Title");
+        adInquiryReqVo.setUser("userKey");
+        adInquiryReqVo.setPhone("010-0000-0000");
+
+
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders.post("/app/v1/ads/inquiry/{ad-group}", groupCode)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(adInquiryReqVo))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("user-agent", "mock-mvc")
+                )
+
+                .andDo(print())
+                .andExpect(status().isOk())
+                // restdoc
+                .andDo(
+                        MockMvcRestDocumentationWrapper.document("ads-inquiry-listing"
+                                , preprocessResponse(prettyPrint())
+                                , pathParameters(
+                                        parameterWithName("ad-group").description("광고 지면 코드")
+                                )
+                                , requestFields (
+                                    fieldWithPath("quizTitle").description("퀴즈 제목"),
+                                    fieldWithPath("title").description("문의하기 내용"),
+                                    fieldWithPath("user").description("파트너사 APP USER 식별키"),
+                                    fieldWithPath("phone").description("전화번호")
+                                )
+                                ,responseFields(
+                                        fieldWithPath("message").description("정답 결과").type(JsonFieldType.STRING)
+                                )
+                        )
+                )
+//                     swagger
+                .andDo(
+                        document("ads-inquiry-listing"
+                                , preprocessRequest(prettyPrint())
+                                , preprocessResponse(prettyPrint())
+                                , resource(
+                                        ResourceSnippetParameters.builder()
+                                                .tag("퀴즈 광고 문의 하기(리스팅)")
+                                                .summary("퀴즈 광고 문의 하기(리스팅)")
+                                                .description("퀴즈 광고 문의 하기(리스팅)")
+                                                .pathParameters(
+                                                        parameterWithName("ad-group").description("광고 지면 코드")
+                                                )
+                                                .requestFields (
+                                                        fieldWithPath("quizTitle").description("퀴즈 제목"),
+                                                        fieldWithPath("title").description("문의하기 내용"),
+                                                        fieldWithPath("user").description("파트너사 APP USER 식별키"),
+                                                        fieldWithPath("phone").description("전화번호")
+                                                )
+                                                .responseSchema(
+                                                        Schema.schema("QuizAnswerRespVo")
+                                                )
+                                                .responseFields(
+                                                        fieldWithPath("message").description("문의 사항 처리 결과").type(JsonFieldType.STRING)
+                                                )
+                                                .build()
+                                )
+                        )
+                );
+//
+    }
+
+    @Test
+    @DisplayName("광고 문의 하기 ( 상세 )")
+    public void QuizAdsInquiryByDetail() throws Exception {
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        AdInquiryReqVo adInquiryReqVo = new AdInquiryReqVo();
+        adInquiryReqVo.setQuizTitle("Quiz-title");
+        adInquiryReqVo.setTitle("Title");
+        adInquiryReqVo.setUser("userKey");
+        adInquiryReqVo.setPhone("010-0000-0000");
+
+
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders.post("/app/v1/ads/inquiry/{ad-group}/{ad-code}", groupCode, adCode)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(adInquiryReqVo))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("user-agent", "mock-mvc")
+                )
+
+                .andDo(print())
+                .andExpect(status().isOk())
+                // restdoc
+                .andDo(
+                        MockMvcRestDocumentationWrapper.document("ads-inquiry-detail"
+                                , preprocessResponse(prettyPrint())
+                                , pathParameters(
+                                        parameterWithName("ad-group").description("광고 지면 코드"),
+                                        parameterWithName("ad-code").description("광고 코드")
+                                )
+                                , requestFields (
+                                        fieldWithPath("quizTitle").description("퀴즈 제목"),
+                                        fieldWithPath("title").description("문의하기 내용"),
+                                        fieldWithPath("user").description("파트너사 APP USER 식별키"),
+                                        fieldWithPath("phone").description("전화번호")
+
+                                )
+                                ,responseFields(
+                                        fieldWithPath("message").description("정답 결과").type(JsonFieldType.STRING)
+                                )
+                        )
+                )
+//                     swagger
+                .andDo(
+                        document("ads-inquiry-detail"
+                                , preprocessRequest(prettyPrint())
+                                , preprocessResponse(prettyPrint())
+                                , resource(
+                                        ResourceSnippetParameters.builder()
+                                                .tag("퀴즈 광고 문의 하기(리스팅)")
+                                                .summary("퀴즈 광고 문의 하기(리스팅)")
+                                                .description("퀴즈 광고 문의 하기(리스팅)")
+                                                .pathParameters(
+                                                        parameterWithName("ad-group").description("광고 지면 코드"),
+                                                        parameterWithName("ad-code").description("광고 코드")
+                                                )
+                                                .requestFields (
+                                                        fieldWithPath("quizTitle").description("퀴즈 제목"),
+                                                        fieldWithPath("title").description("문의하기 내용"),
+                                                        fieldWithPath("user").description("파트너사 APP USER 식별키"),
+                                                        fieldWithPath("phone").description("전화번호")
+                                                )
+                                                .responseSchema(
+                                                        Schema.schema("QuizAnswerRespVo")
+                                                )
+                                                .responseFields(
+                                                        fieldWithPath("message").description("문의 사항 처리 결과").type(JsonFieldType.STRING)
                                                 )
                                                 .build()
                                 )
