@@ -147,7 +147,7 @@ public class AdCampaignService {
 
         }).toList();
 
-        return new PageAds<>(quizAds, vos.getTotalPages(), vos.getTotalPages(), vos.getSize());
+        return new PageAds<>(quizAds, vos.getTotalPages(), vos.getTotalElements(), vos.getSize());
     }
 
     private String generateUrl(String type, AdCampaignMasterVo ads) {
@@ -322,7 +322,7 @@ public class AdCampaignService {
 
     public PageAds<RewordResp> selectRewords(String groupCode, String campaignCode, int page, int size) throws AppException {
         Page<RewordResp>  rewordResps = qAdRewordRepository.findAdRewordList(groupCode, campaignCode, PageRequest.of(page - 1, size));
-        return new PageAds<>(rewordResps.getContent(), rewordResps.getTotalPages(), rewordResps.getTotalPages(), rewordResps.getSize());
+        return new PageAds<>(rewordResps.getContent(), rewordResps.getTotalPages(), rewordResps.getTotalElements(), rewordResps.getSize());
     }
 
 

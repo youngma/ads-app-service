@@ -42,6 +42,13 @@ public class AdsAppApiTest {
 
     private MockMvc mockMvc;
 
+
+    String groupCode = "brBJZBMxDe";
+    String adCode = "YxGBfKJBsG";
+
+    String requestId = "test-request";
+    String userKey = "test-user";
+
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
@@ -55,12 +62,12 @@ public class AdsAppApiTest {
     public void SearchQuizAds() throws Exception {
 
         MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
-        info.add("user-key", "test");
+        info.add("user-key", userKey);
         info.add("join", "all");
         info.add("page", "1");
         info.add("size", "10");
 
-            String groupCode = "brBJZBMxDe";
+
             this.mockMvc.perform(
                     RestDocumentationRequestBuilders.get("/app/v1/ads/search/{group-code}", groupCode)
                     .queryParams(info)
@@ -149,12 +156,8 @@ public class AdsAppApiTest {
     public void QuizAdsDetails() throws Exception {
 
 
-        String requestId = "test";
-        String adCode = "YxGBfKJBsG";
-
         MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
-        info.add("user-key", "test");
-
+        info.add("user-key", userKey);
 
         this.mockMvc.perform(
                         RestDocumentationRequestBuilders.get("/app/v1/ads/detail/{request-id}/{ad-code}", requestId, adCode)
@@ -248,12 +251,8 @@ public class AdsAppApiTest {
     public void QuizAdsAnswer() throws Exception {
 
 
-        String requestId = "test";
-        String adCode = "YxGBfKJBsG";
-
         String userKey = RandomStringUtils.randomAlphabetic(10);
         String answer = "정답";
-
 
         MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
         info.add("user-key", userKey);
@@ -293,9 +292,9 @@ public class AdsAppApiTest {
                                 , preprocessResponse(prettyPrint())
                                 , resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("퀴즈 광고 상세")
-                                                .summary("퀴즈 광고 상세 정보")
-                                                .description("요청한 퀴즈 광고의 상세 정보를 제공 한다.")
+                                                .tag("퀴즈 광고 정답 확인")
+                                                .summary("퀴즈 광고 정답 확인")
+                                                .description("요청한 퀴즈 광고의 정답 확인 후 리워드 금액을 반환한다.")
                                                 .pathParameters(
                                                         parameterWithName("request-id").description("광고 요청 코드"),
                                                         parameterWithName("ad-code").description("광고 지면 코드")
@@ -310,6 +309,80 @@ public class AdsAppApiTest {
                                                 .responseFields(
                                                         fieldWithPath("result.message").description("정답 결과").type(JsonFieldType.STRING),
                                                         fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
+                                                )
+                                                .build()
+                                )
+                        )
+                );
+//
+    }
+
+
+    @Test
+    @DisplayName("광고 적립금 내역")
+    public void QuizAdsReword() throws Exception {
+
+        MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
+        info.add("page", "1");
+        info.add("size", "10");
+
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/app/v1/ads/reword/{group-code}/{ad-code}", groupCode, adCode)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .queryParams(info)
+                                .header("user-agent", "mock-mvc")
+                )
+
+                .andDo(print())
+                .andExpect(status().isOk())
+                // restdoc
+                .andDo(
+                        MockMvcRestDocumentationWrapper.document("ads-reword"
+                                , preprocessResponse(prettyPrint())
+                                , pathParameters(
+                                        parameterWithName("group-code").description("지면 코드"),
+                                        parameterWithName("ad-code").description("광고 코드")
+                                )
+                                ,queryParameters(
+                                        parameterWithName("page").description("페이지"),
+                                        parameterWithName("size").description("페이지당 광고 ")
+                                )
+                                ,responseFields(
+                                        fieldWithPath("result.content.[].user").description("정답 결과").type(JsonFieldType.STRING),
+                                        fieldWithPath("result.content.[].reword").description("적립 포인트").type(JsonFieldType.NUMBER),
+                                        fieldWithPath("result.totalPages").description("현제 페이지 수").type(JsonFieldType.NUMBER),
+                                        fieldWithPath("result.totalElements").description("총 광고 수").type(JsonFieldType.NUMBER),
+                                        fieldWithPath("result.size").description("페이지 당 광고수").type(JsonFieldType.NUMBER)
+                                )
+                        )
+                )
+//                     swagger
+                .andDo(
+                        document("ads-reword"
+                                , preprocessRequest(prettyPrint())
+                                , preprocessResponse(prettyPrint())
+                                , resource(
+                                        ResourceSnippetParameters.builder()
+                                                .tag("퀴즈 광고 리워드 내역")
+                                                .summary("퀴즈 광고 리워드 내역")
+                                                .description("요청한 퀴즈 광고 적립 유저의 현황을 제공 한다.")
+                                                .pathParameters(
+                                                        parameterWithName("group-code").description("지면 코드"),
+                                                        parameterWithName("ad-code").description("광고 코드")
+                                                )
+                                                .queryParameters(
+                                                        parameterWithName("page").description("페이지"),
+                                                        parameterWithName("size").description("페이지당 광고 ")
+                                                )
+                                                .responseSchema(
+                                                        Schema.schema("QuizRespRespVo")
+                                                )
+                                                .responseFields(
+                                                        fieldWithPath("result.content.[].user").description("정답 결과").type(JsonFieldType.STRING),
+                                                        fieldWithPath("result.content.[].reword").description("적립 포인트").type(JsonFieldType.NUMBER),
+                                                        fieldWithPath("result.totalPages").description("현제 페이지 수").type(JsonFieldType.NUMBER),
+                                                        fieldWithPath("result.totalElements").description("총 광고 수").type(JsonFieldType.NUMBER),
+                                                        fieldWithPath("result.size").description("페이지 당 광고수").type(JsonFieldType.NUMBER)
                                                 )
                                                 .build()
                                 )

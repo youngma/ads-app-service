@@ -83,12 +83,6 @@ public class RptAdRequestEntity implements Serializable {
     private Integer partnerCommission;
 
     /**
-     * 지급 포인트(원)
-     */
-    @Column(name = "AD_POINT")
-    private Integer adPoint;
-
-    /**
      * 지급 포인트(파트너 포인트 기준)
      */
     @Column(name = "AD_REWORD")

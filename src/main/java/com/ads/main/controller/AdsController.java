@@ -3,15 +3,18 @@ package com.ads.main.controller;
 
 import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.config.exception.NoAdException;
+import com.ads.main.core.enums.inquiry.InquiryType;
 import com.ads.main.core.security.config.dto.Role;
 import com.ads.main.core.utils.AppUtils;
 import com.ads.main.core.vo.RespVo;
 import com.ads.main.service.AdCampaignService;
 import com.ads.main.service.AdGroupCacheService;
+import com.ads.main.service.AdInquiryService;
 import com.ads.main.vo.campaign.req.RptAdAnswer;
 import com.ads.main.vo.campaign.req.RptAdClick;
 import com.ads.main.vo.campaign.req.RptAdImpression;
 import com.ads.main.vo.campaign.req.RptAdRequest;
+import com.ads.main.vo.inquiry.req.AdInquiryReqVo;
 import com.ads.main.vo.resp.AnswerResp;
 import com.ads.main.vo.resp.PageAds;
 import com.ads.main.vo.resp.QuizAds;
@@ -39,6 +42,7 @@ public class AdsController {
 
     private final AdCampaignService adCampaignService;
     private final AdGroupCacheService adGroupService;
+    private final AdInquiryService adInquiryService;
 
     @GetMapping("/search/{ad-group}")
     public RespVo<PageAds<QuizAds>> getAds(
@@ -159,4 +163,45 @@ public class AdsController {
 
     }
 
+
+    // 문의 하기(리스팅)
+    @PostMapping("/inquiry/{ad-group}")
+    public RespVo<String> inquiryByListing(
+            @PathVariable("ad-group") String adGroup,
+//            @RequestParam("user-key") String user,
+            @RequestBody AdInquiryReqVo adInquiryReqVo,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException, URISyntaxException, AppException {
+
+        adInquiryReqVo.setInquiryType(InquiryType.Service);
+        adInquiryReqVo.setGroupCode(adGroup);
+//        adInquiryReqVo.setUser(user);
+
+        adInquiryService.save(adInquiryReqVo);
+
+        return  new RespVo<>("등록 되었습니다.");
+    }
+
+    // 문의 하기(캠페인 상세)
+    @PostMapping("/inquiry/{ad-group}/{ad-code}")
+    public RespVo<String> inquiryByDetail(
+            @PathVariable("ad-group") String adGroup,
+            @PathVariable("ad-code") String adCode,
+//            @RequestParam("user-key") String user,
+            @RequestBody AdInquiryReqVo adInquiryReqVo,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException, URISyntaxException, AppException {
+
+        adInquiryReqVo.setInquiryType(InquiryType.Quiz);
+        adInquiryReqVo.setGroupCode(adGroup);
+        adInquiryReqVo.setCampaignCode(adCode);
+//        adInquiryReqVo.setUser(user);
+
+        adInquiryService.save(adInquiryReqVo);
+
+        return  new RespVo<>("등록 되었습니다.");
+
+    }
 }

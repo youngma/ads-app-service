@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/app/v1/ads/detail/test-request/YxGBfKJBsG?user-key=test-user' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/app/v1/ads/reword/brBJZBMxDe/YxGBfKJBsG?page=1&amp;size=10' -i -X GET \
     -H 'Accept: application/json' \
     -H 'user-agent: mock-mvc'</code></pre>
 </div>
@@ -469,7 +469,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /app/v1/ads/detail/test-request/YxGBfKJBsG?user-key=test-user HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /app/v1/ads/reword/brBJZBMxDe/YxGBfKJBsG?page=1&amp;size=10 HTTP/1.1
 Accept: application/json
 user-agent: mock-mvc
 Host: localhost:8080</code></pre>
@@ -481,7 +481,7 @@ Host: localhost:8080</code></pre>
 <h2 id="_path_parameters">PATH PARAMETERS</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /app/v1/ads/detail/{request-id}/{ad-code}</caption>
+<caption class="title">Table 1. /app/v1/ads/reword/{group-code}/{ad-code}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -494,12 +494,12 @@ Host: localhost:8080</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>request-id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">광고 요청 코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>group-code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지면 코드</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-code</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">광고 지면 코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">광고 코드</p></td>
 </tr>
 </tbody>
 </table>
@@ -521,8 +521,12 @@ Host: localhost:8080</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>user-key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">파트너사 APP USER 식별키</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지당 광고</p></td>
 </tr>
 </tbody>
 </table>
@@ -538,28 +542,20 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 1279
+Content-Length: 219
 
 {
   "result" : {
-    "requestId" : "test-request",
-    "campaignName" : "캠페인 명",
-    "campaignCode" : "YxGBfKJBsG",
-    "totalParticipationLimit" : 100000,
-    "dayParticipationLimit" : 100,
-    "quizTitle" : "제목은 1",
-    "landing" : {
-      "detail" : "http://localhost:8082/api/app/v1/ads/impression/test-request?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f32613665333038303265323234393163393435653436323338373434643037332e706e67",
-      "answer" : "http://localhost:8082/api/app/v1/ads/answer/test-request/YxGBfKJBsG?user-key=test-user",
-      "hint_ad_pc" : "http://localhost:8082/api/app/v1/ads/click/hint/test-request?redirect=687474703a2f2f6e617665722e636f6d",
-      "hint_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/hint/test-request?redirect=687474703a2f2f6e617665722e636f6d",
-      "answer_ad_pc" : "http://localhost:8082/api/app/v1/ads/click/answer/test-request?redirect=687474703a2f2f6e617665722e636f6d",
-      "answer_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/answer/test-request?redirect=687474703a2f2f6e617665722e636f6d",
-      "reword" : "http://localhost:8082/api/app/v1/ads/reword/brBJZBMxDe/YxGBfKJBsG"
-    },
-    "reword" : 2,
-    "joinUserCount" : 2,
-    "joined" : false
+    "content" : [ {
+      "user" : "ntdZMOrvTA",
+      "reword" : 2
+    }, {
+      "user" : "vifoYyUPNL",
+      "reword" : 2
+    } ],
+    "totalPages" : 1,
+    "totalElements" : 1,
+    "size" : 10
   }
 }</code></pre>
 </div>
@@ -584,89 +580,29 @@ Content-Length: 1279
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.requestId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content.[].user</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">광고 요청 키</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정답 결과</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.campaignName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">광고 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.campaignCode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">광고 코드</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.quizTitle</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">퀴즈 문제</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.pointName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">포인트 명</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.reword</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.content.[].reword</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">적립 포인트</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.joinUserCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.totalPages</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">참여 인원</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현제 페이지 수</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.totalParticipationLimit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.totalElements</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">총 참여 가능 인원</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">총 광고 수</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.dayParticipationLimit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.size</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">일별 참여 가능 인원</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.joined</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">참여 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.detail</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상세 이미지</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.answer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정답 호출 Endpoint</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.hint_ad_pc</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">힌트 랜딩 페이지 (PC)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.hint_ad_mobile</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">힌트 랜딩 페이지 (Mobile)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.answer_ad_pc</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정답 랜딩 페이지 (PC)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.answer_ad_mobile</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">정답 랜딩 페이지 (Mobile)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result.landing.reword</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">리워드 적립 내역 조회 URL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 당 광고수</p></td>
 </tr>
 </tbody>
 </table>
@@ -676,7 +612,7 @@ Content-Length: 1279
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-11-07 14:27:49 +0900
+Last updated 2023-11-10 12:43:54 +0900
 </div>
 </div>
 </body>

@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/app/v1/ads/search/brBJZBMxDe?user-key=test&amp;join=all&amp;page=1&amp;size=10' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/app/v1/ads/search/brBJZBMxDe?user-key=test-user&amp;join=all&amp;page=1&amp;size=10' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
@@ -468,7 +468,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /app/v1/ads/search/brBJZBMxDe?user-key=test&amp;join=all&amp;page=1&amp;size=10 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /app/v1/ads/search/brBJZBMxDe?user-key=test-user&amp;join=all&amp;page=1&amp;size=10 HTTP/1.1
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -544,94 +544,94 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 4290
+Content-Length: 4322
 
 {
   "result" : {
     "content" : [ {
-      "requestId" : "gfjijLmddXNXGEX",
+      "requestId" : "oMUhDVyzxmvwJUf",
       "campaignName" : "1",
       "campaignCode" : "CStNbSbBNq",
       "totalParticipationLimit" : 10000,
       "dayParticipationLimit" : 100,
       "quizTitle" : "1",
       "landing" : {
-        "thumb" : "http://localhost:8082/api/app/v1/ads/request/gfjijLmddXNXGEX/brBJZBMxDe/CStNbSbBNq?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f30626231663434393261346434386332613539656232313138306262383866342e706e67",
-        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/gfjijLmddXNXGEX/CStNbSbBNq?user-key=test"
+        "thumb" : "http://localhost:8082/api/app/v1/ads/request/oMUhDVyzxmvwJUf/brBJZBMxDe/CStNbSbBNq?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f30626231663434393261346434386332613539656232313138306262383866342e706e67",
+        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/oMUhDVyzxmvwJUf/CStNbSbBNq?user-key=test-user"
       },
       "reword" : 138,
       "pointName" : "포포",
-      "joined" : true
+      "joined" : false
     }, {
-      "requestId" : "FantrcxyoIpNgDN",
+      "requestId" : "ULHwuHNbWIccFWO",
       "campaignName" : "1",
       "campaignCode" : "prKslCvpoZ",
       "totalParticipationLimit" : 10,
       "dayParticipationLimit" : 10,
       "quizTitle" : "1",
       "landing" : {
-        "thumb" : "http://localhost:8082/api/app/v1/ads/request/FantrcxyoIpNgDN/brBJZBMxDe/prKslCvpoZ?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f64363964343533663365356434313562626561396464396431306134303761312e706e67",
-        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/FantrcxyoIpNgDN/prKslCvpoZ?user-key=test"
+        "thumb" : "http://localhost:8082/api/app/v1/ads/request/ULHwuHNbWIccFWO/brBJZBMxDe/prKslCvpoZ?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f64363964343533663365356434313562626561396464396431306134303761312e706e67",
+        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/ULHwuHNbWIccFWO/prKslCvpoZ?user-key=test-user"
       },
       "reword" : 980,
       "pointName" : "포포",
       "joined" : false
     }, {
-      "requestId" : "WMYJcIOYhxNzlOQ",
+      "requestId" : "teswZUzXAggAGBN",
       "campaignName" : "1",
       "campaignCode" : "amknLpzgXT",
       "totalParticipationLimit" : 1000,
       "dayParticipationLimit" : 100,
       "quizTitle" : "1",
       "landing" : {
-        "thumb" : "http://localhost:8082/api/app/v1/ads/request/WMYJcIOYhxNzlOQ/brBJZBMxDe/amknLpzgXT?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f63323063333266613130623434396265613866373964376132643436623834622e706e67",
-        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/WMYJcIOYhxNzlOQ/amknLpzgXT?user-key=test"
+        "thumb" : "http://localhost:8082/api/app/v1/ads/request/teswZUzXAggAGBN/brBJZBMxDe/amknLpzgXT?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f63323063333266613130623434396265613866373964376132643436623834622e706e67",
+        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/teswZUzXAggAGBN/amknLpzgXT?user-key=test-user"
       },
       "reword" : 107811,
       "pointName" : "포포",
       "joined" : false
     }, {
-      "requestId" : "CQQrYKgLELMzuAc",
+      "requestId" : "bzzaaZKRqqtSNFE",
       "campaignName" : "1",
       "campaignCode" : "khwnHmtbXy",
       "totalParticipationLimit" : 1000,
       "dayParticipationLimit" : 10,
       "quizTitle" : "12",
       "landing" : {
-        "thumb" : "http://localhost:8082/api/app/v1/ads/request/CQQrYKgLELMzuAc/brBJZBMxDe/khwnHmtbXy?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f39656334656133383663653634376264383437323736363162303363643634632e706e67",
-        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/CQQrYKgLELMzuAc/khwnHmtbXy?user-key=test"
+        "thumb" : "http://localhost:8082/api/app/v1/ads/request/bzzaaZKRqqtSNFE/brBJZBMxDe/khwnHmtbXy?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f39656334656133383663653634376264383437323736363162303363643634632e706e67",
+        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/bzzaaZKRqqtSNFE/khwnHmtbXy?user-key=test-user"
       },
       "reword" : 98,
       "pointName" : "포포",
       "joined" : false
     }, {
-      "requestId" : "UczorTqQQwcnYWn",
+      "requestId" : "YZLkIJEUyRQxvFv",
       "campaignName" : "캠페인 명",
       "campaignCode" : "YxGBfKJBsG",
       "totalParticipationLimit" : 100000,
       "dayParticipationLimit" : 100,
       "quizTitle" : "제목은 1",
       "landing" : {
-        "thumb" : "http://localhost:8082/api/app/v1/ads/request/UczorTqQQwcnYWn/brBJZBMxDe/YxGBfKJBsG?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f34363662626438653733386134346564386535663536316164656162633132622e706e67",
-        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/UczorTqQQwcnYWn/YxGBfKJBsG?user-key=test"
+        "thumb" : "http://localhost:8082/api/app/v1/ads/request/YZLkIJEUyRQxvFv/brBJZBMxDe/YxGBfKJBsG?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f34363662626438653733386134346564386535663536316164656162633132622e706e67",
+        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/YZLkIJEUyRQxvFv/YxGBfKJBsG?user-key=test-user"
       },
       "reword" : 98,
       "pointName" : "포포",
       "joined" : false
     }, {
-      "requestId" : "MORRukiqjvAuzdN",
+      "requestId" : "XoKIuIiFHibpcgJ",
       "campaignName" : "정탑형 퀴즈(100)",
       "campaignCode" : "tLamHiNUQj",
       "totalParticipationLimit" : 1000,
       "dayParticipationLimit" : 100,
       "quizTitle" : "제목.",
       "landing" : {
-        "thumb" : "http://localhost:8082/api/app/v1/ads/request/MORRukiqjvAuzdN/brBJZBMxDe/tLamHiNUQj?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f62396232386635383761393534653537393337326466323639353039393531612e706e67",
-        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/MORRukiqjvAuzdN/tLamHiNUQj?user-key=test"
+        "thumb" : "http://localhost:8082/api/app/v1/ads/request/XoKIuIiFHibpcgJ/brBJZBMxDe/tLamHiNUQj?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f62396232386635383761393534653537393337326466323639353039393531612e706e67",
+        "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/XoKIuIiFHibpcgJ/tLamHiNUQj?user-key=test-user"
       },
       "reword" : 0,
       "pointName" : "포포",
-      "joined" : true
+      "joined" : false
     } ],
     "totalPages" : 1,
     "totalElements" : 1,

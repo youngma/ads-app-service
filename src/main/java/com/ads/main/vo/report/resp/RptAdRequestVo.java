@@ -73,11 +73,6 @@ public class RptAdRequestVo implements Serializable {
     private Integer partnerCommission;
 
 
-    /**
-     * 파트너 노출 포인트
-     */
-    private Integer adPoint;
-
 
     /**
      * 파트너 노출 포인트
