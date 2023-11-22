@@ -90,9 +90,10 @@ public class QAdvertiserCampaignMasterRepository {
     public Optional<AdCampaignMasterEntity> findAdCampaign(String campaignCode) {
 
         return Optional.ofNullable(jpaQueryFactory.select(
-                        adCampaignMasterEntity
+                    adCampaignMasterEntity
                 )
                 .from(adCampaignMasterEntity)
+                .leftJoin(adCampaignMasterEntity.advertiserEntity).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adSmartStoreEntity).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adSmartStoreEntity.image).fetchJoin()
                 .leftJoin(adCampaignMasterEntity.adQuizEntity).fetchJoin()

@@ -19,6 +19,8 @@ public class AdCampaignMasterVo implements Serializable {
     private Long seq;
 
 
+    private AdvertiserVo advertiser;
+
     /**
      * 캠페인 명
      */
@@ -68,6 +70,9 @@ public class AdCampaignMasterVo implements Serializable {
      * 수수로 비율
      */
     private BigDecimal commissionRate;
+
+    private String ifAdCode;
+
 
     /**
      * 수수로 비율(사용자)

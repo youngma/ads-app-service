@@ -185,6 +185,7 @@ public class AdsAppApiTest {
                                         , fieldWithPath("result.campaignName").description("광고 제목").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.campaignCode").description("광고 코드").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
+                                        , fieldWithPath("result.useHow").description("퀴즈 참여 방법").type(JsonFieldType.STRING)
                                         , fieldWithPath("result.pointName").description("포인트 명").type(JsonFieldType.STRING).optional()
                                         , fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
                                         , fieldWithPath("result.joinUserCount").description("참여 인원").type(JsonFieldType.NUMBER)
@@ -226,6 +227,7 @@ public class AdsAppApiTest {
                                                         , fieldWithPath("result.campaignName").description("광고 제목").type(JsonFieldType.STRING)
                                                         , fieldWithPath("result.campaignCode").description("광고 코드").type(JsonFieldType.STRING)
                                                         , fieldWithPath("result.quizTitle").description("퀴즈 문제").type(JsonFieldType.STRING)
+                                                        , fieldWithPath("result.useHow").description("퀴즈 참여 방법").type(JsonFieldType.STRING)
                                                         , fieldWithPath("result.pointName").description("포인트 명").type(JsonFieldType.STRING).optional()
                                                         , fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
                                                         , fieldWithPath("result.joinUserCount").description("참여 인원").type(JsonFieldType.NUMBER)
@@ -349,6 +351,7 @@ public class AdsAppApiTest {
                                         parameterWithName("size").description("페이지당 광고 ")
                                 )
                                 ,responseFields(
+                                        fieldWithPath("result.content.[].date").description("포인트 발급 시간").type(JsonFieldType.STRING),
                                         fieldWithPath("result.content.[].user").description("정답 결과").type(JsonFieldType.STRING),
                                         fieldWithPath("result.content.[].reword").description("적립 포인트").type(JsonFieldType.NUMBER),
                                         fieldWithPath("result.totalPages").description("현제 페이지 수").type(JsonFieldType.NUMBER),
@@ -379,7 +382,8 @@ public class AdsAppApiTest {
                                                         Schema.schema("QuizRespRespVo")
                                                 )
                                                 .responseFields(
-                                                        fieldWithPath("result.content.[].user").description("정답 결과").type(JsonFieldType.STRING),
+                                                        fieldWithPath("result.content.[].date").description("포인트 발급 시간").type(JsonFieldType.STRING),
+                                                        fieldWithPath("result.content.[].user").description("정답 유저키").type(JsonFieldType.STRING),
                                                         fieldWithPath("result.content.[].reword").description("적립 포인트").type(JsonFieldType.NUMBER),
                                                         fieldWithPath("result.totalPages").description("현제 페이지 수").type(JsonFieldType.NUMBER),
                                                         fieldWithPath("result.totalElements").description("총 광고 수").type(JsonFieldType.NUMBER),

@@ -1,12 +1,14 @@
 package com.ads.main.controller;
 
 
+import com.ads.main.core.config.exception.AdAnswerException;
 import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.core.enums.inquiry.InquiryType;
 import com.ads.main.core.security.config.dto.Role;
 import com.ads.main.core.utils.AppUtils;
 import com.ads.main.core.vo.RespVo;
+import com.ads.main.enums.AdJoinException;
 import com.ads.main.service.AdCampaignService;
 import com.ads.main.service.AdGroupCacheService;
 import com.ads.main.service.AdInquiryService;
@@ -66,11 +68,12 @@ public class AdsController {
             @PathVariable("ad-code") String adCode,
             @RequestHeader(HttpHeaders.USER_AGENT) String userAgent,
             @Validated @NotBlank @RequestParam("redirect") String redirect,
+            @RequestParam("user-key") String userKey,
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
 
-        RptAdRequest rptAdRequest = new RptAdRequest(adGroup, requestId, adCode, userAgent,  AppUtils.etRemoteAddr(request));
+        RptAdRequest rptAdRequest = new RptAdRequest(adGroup, requestId, adCode, userKey, userAgent,  AppUtils.etRemoteAddr(request));
         log.info("# rptAdRequest => {}", rptAdRequest);
 
         adCampaignService.markRequest(rptAdRequest);
@@ -125,7 +128,7 @@ public class AdsController {
             @RequestParam("user-key") @Validated @NotBlank(message = "사용자 식별키는 필수 값 입니다.") String user,
             HttpServletRequest request,
             @RequestHeader(HttpHeaders.USER_AGENT) String userAgent
-    ) throws NoAdException, AppException {
+    ) throws NoAdException, AppException, AdAnswerException {
 
         RptAdAnswer rptAdAnswer = new RptAdAnswer(requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), user, answer);
         log.info("# rptAdAnswer => {}", rptAdAnswer);

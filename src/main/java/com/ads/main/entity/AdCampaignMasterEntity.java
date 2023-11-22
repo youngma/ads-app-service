@@ -132,6 +132,13 @@ public class AdCampaignMasterEntity  extends BaseEntity implements Serializable 
     private BigDecimal adPrice;
 
     /**
+     * 광고 연동코드
+     */
+    @Column(name = "IF_AD_CODE")
+    private String ifAdCode;
+
+
+    /**
      * 사용자 수수료 비율
      */
     @Column(name = "USER_COMMISSION_RATE", nullable = false)

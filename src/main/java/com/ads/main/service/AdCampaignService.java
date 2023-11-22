@@ -1,6 +1,10 @@
 package com.ads.main.service;
 
 
+import com.ads.main.core.clients.AppClientFactory;
+import com.ads.main.core.clients.DOMAIN;
+import com.ads.main.core.clients.api.MobonApi;
+import com.ads.main.core.config.exception.AdAnswerException;
 import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.core.enums.campaign.CampaignType;
@@ -23,6 +27,7 @@ import com.ads.main.repository.template.AdClickTemplate;
 import com.ads.main.repository.template.AdImpressionTemplate;
 import com.ads.main.repository.template.AdRequestTemplate;
 import com.ads.main.vo.adGroup.resp.PartnerAdGroupVo;
+import com.ads.main.vo.inf.mobi.MobiAds;
 import com.ads.main.vo.report.resp.RptAdAnswerVo;
 import com.ads.main.vo.campaign.req.RptAdAnswer;
 import com.ads.main.vo.campaign.req.RptAdClick;
@@ -31,6 +36,9 @@ import com.ads.main.vo.campaign.req.RptAdRequest;
 import com.ads.main.vo.campaign.resp.AdCampaignMasterVo;
 import com.ads.main.vo.report.resp.RptAdRequestVo;
 import com.ads.main.vo.resp.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,9 +47,11 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -55,8 +65,7 @@ import static com.ads.main.enums.AdException.NO_AD;
 @RequiredArgsConstructor
 public class AdCampaignService {
 
-
-
+    private final AppClientFactory appClientFactory;
 
     // 광고 이미지 서버
     @Value("${app.file-server}")
@@ -90,9 +99,17 @@ public class AdCampaignService {
     private final RptAdRequestConvert rptAdRequestConvert;
     private PageMapper<AdCampaignMasterVo, AdCampaignMasterEntity> pageMapper;
 
+    private MobonApi mobonApi;
+    private ObjectMapper objectMapper;
+
     @PostConstruct
     private void initPageMappers() {
         pageMapper =  new PageMapper<>(adCampaignMasterConvert);
+        mobonApi = appClientFactory.load(DOMAIN.MOBON_API);
+        objectMapper = new ObjectMapper();
+
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+
     }
 
 
@@ -170,6 +187,7 @@ public class AdCampaignService {
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
 
                 try {
+
                     PartnerAdGroupVo partnerAdGroupVo = adGroupService.searchByGroupCode(request.getGroupCode());
                     AdCampaignMasterVo campaignMasterVo = quizRedisService.findCampaignByCode(request.getCampaignCode());
 
@@ -219,43 +237,125 @@ public class AdCampaignService {
         CampaignType campaignType = CampaignType.of(adCampaignMaster.getCampaignType());
 
         if (
-                campaignType == CampaignType.Quiz01
-                || campaignType == CampaignType.Quiz02
+            adCampaignMaster.getAdvertiser().getIfCode() != null
+            && adCampaignMaster.getIfAdCode() != null
+            && !adCampaignMaster.getAdvertiser().getIfCode().isBlank()
+            && !adCampaignMaster.getIfAdCode().isBlank()
         ) {
+            log.info("# 여기서 광고를 호출 합니다.");
+            return interfaceAdvertising(impression, adCampaignMaster, optionalRptAdAnswerEntity.isPresent());
+        } else {
+            if (
+                    campaignType == CampaignType.Quiz01 || campaignType == CampaignType.Quiz02
+            ) {
+                return manualAdvertising(impression, adCampaignMaster, optionalRptAdAnswerEntity.isPresent());
+            }
+        }
 
-            RptAdRequestVo  rptAdRequestVo =  getRptAdRequestByAdRequestId(impression.requestId());
+        throw NO_AD.throwErrors();
+    }
 
-            Integer joinUserCount = qAdRewordRepository.findJoinUserCount(rptAdRequestVo.getGroupCode(), rptAdRequestVo.getCampaignCode());
+    private QuizAds manualAdvertising(RptAdImpression impression, AdCampaignMasterVo adCampaignMaster, boolean isJoined) throws NoAdException {
 
-            Integer reword = rptAdRequestVo.getAdReword();
-            saveImpressionLog(impression);
+        RptAdRequestVo  rptAdRequestVo =  getRptAdRequestByAdRequestId(impression.requestId());
 
-            LandingVo landing = new LandingVo(rptAdRequestVo.getGroupCode(), impression.requestId(), APP_SERVER, impression.user());
+        Integer joinUserCount = qAdRewordRepository.findJoinUserCount(rptAdRequestVo.getGroupCode(), rptAdRequestVo.getCampaignCode());
 
-            landing.setThumb(generateUrl("quiz-list", adCampaignMaster));
-            landing.setDetail(generateUrl("quiz-detail-1", adCampaignMaster));
+        Integer reword = rptAdRequestVo.getAdReword();
+        saveImpressionLog(impression);
 
-            landing.setAnswer(adCampaignMaster.getCampaignCode());
-            landing.setReword(adCampaignMaster.getCampaignCode());
+        LandingVo landing = new LandingVo(rptAdRequestVo.getGroupCode(), impression.requestId(), APP_SERVER, impression.user());
 
-            landing.setHint_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlPc());
-            landing.setHint_ad_pc(adCampaignMaster.getQuiz().getTargetUrlMobile());
+        landing.setThumb(generateUrl("quiz-list", adCampaignMaster));
+        landing.setDetail(generateUrl("quiz-detail-1", adCampaignMaster));
 
-            landing.setAnswer_ad_pc(adCampaignMaster.getQuiz().getTargetUrlPc());
-            landing.setAnswer_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlMobile());
+        landing.setAnswer(adCampaignMaster.getCampaignCode());
+        landing.setReword(adCampaignMaster.getCampaignCode());
 
-            return QuizAds.builder()
-                    .requestId(impression.requestId())
-                    .reword(reword)
-                    .joinUserCount(joinUserCount)
-                    .campaignName(adCampaignMaster.getCampaignName())
-                    .campaignCode(adCampaignMaster.getCampaignCode())
-                    .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
-                    .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
-                    .isJoined(optionalRptAdAnswerEntity.isPresent())
-                    .quizTitle(adCampaignMaster.getQuiz().getQuizTitle())
-                    .landing(landing)
-                    .build();
+        landing.setHint_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlPc());
+        landing.setHint_ad_pc(adCampaignMaster.getQuiz().getTargetUrlMobile());
+
+        landing.setAnswer_ad_pc(adCampaignMaster.getQuiz().getTargetUrlPc());
+        landing.setAnswer_ad_mobile(adCampaignMaster.getQuiz().getTargetUrlMobile());
+
+        return QuizAds.builder()
+                .requestId(impression.requestId())
+                .reword(reword)
+                .joinUserCount(joinUserCount)
+                .campaignName(adCampaignMaster.getCampaignName())
+                .campaignCode(adCampaignMaster.getCampaignCode())
+                .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
+                .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
+                .isJoined(isJoined)
+                .quizTitle(adCampaignMaster.getQuiz().getQuizTitle())
+                .useHow(adCampaignMaster.getQuiz().getUseHow())
+                .landing(landing)
+                .build();
+    }
+
+    public QuizAds interfaceAdvertising(RptAdImpression impression, AdCampaignMasterVo adCampaignMaster, boolean isJoined) throws NoAdException {
+
+        String ifAdCode = adCampaignMaster.getIfAdCode();
+        String ifCode = adCampaignMaster.getAdvertiser().getIfCode();
+
+        log.info("# {}, {}", ifAdCode, ifCode);
+
+        if ("MOBI".equals(ifCode)) {
+
+            HashMap<String, String> headers = new HashMap<>();
+            headers.put(HttpHeaders.USER_AGENT, impression.userAgent());
+
+            String content =  mobonApi.search(headers, ifAdCode, "1","1","99", "Y");
+            log.info("# {}", content);
+            if (content != null) {
+
+                try {
+                    MobiAds mobiAds = objectMapper.readValue(content, MobiAds.class);
+
+                    RptAdRequestVo  rptAdRequestVo =  getRptAdRequestByAdRequestId(impression.requestId());
+
+                    Integer joinUserCount = qAdRewordRepository.findJoinUserCount(rptAdRequestVo.getGroupCode(), rptAdRequestVo.getCampaignCode());
+
+                    Integer reword = rptAdRequestVo.getAdReword();
+                    saveImpressionLog(impression);
+
+                    LandingVo landing = new LandingVo(rptAdRequestVo.getGroupCode(), impression.requestId(), APP_SERVER, impression.user());
+
+
+                    String detailImage = mobiAds.getClient().get(0).getData().get(0).getMimg_850_800();
+                    String randing = mobiAds.getClient().get(0).getData().get(0).getSite_url();
+
+                    landing.setThumb(generateUrl("quiz-list", adCampaignMaster));
+                    landing.setDetail(detailImage);
+
+                    landing.setAnswer(adCampaignMaster.getCampaignCode());
+                    landing.setReword(adCampaignMaster.getCampaignCode());
+
+                    landing.setHint_ad_mobile(randing);
+                    landing.setHint_ad_pc(randing);
+
+                    landing.setAnswer_ad_pc(randing);
+                    landing.setAnswer_ad_mobile(randing);
+
+                    return QuizAds.builder()
+                            .requestId(impression.requestId())
+                            .reword(reword)
+                            .joinUserCount(joinUserCount)
+                            .campaignName(adCampaignMaster.getCampaignName())
+                            .campaignCode(adCampaignMaster.getCampaignCode())
+                            .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
+                            .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
+                            .isJoined(isJoined)
+                            .quizTitle(adCampaignMaster.getQuiz().getQuizTitle())
+                            .useHow(adCampaignMaster.getQuiz().getUseHow())
+                            .landing(landing)
+                            .build();
+
+                } catch (Exception e) {
+                    log.debug("# MOBI AD IF ERROR => {}", e);
+                    throw NO_AD.throwErrors();
+                }
+            }
         }
 
         throw NO_AD.throwErrors();
@@ -281,7 +381,7 @@ public class AdCampaignService {
         return rptAdRequestConvert.toDto(rptAdRequestEntity);
     }
 
-    public AnswerResp checkAnswer(RptAdAnswer rptAdAnswer) throws NoAdException, AppException {
+    public AnswerResp checkAnswer(RptAdAnswer rptAdAnswer) throws NoAdException, AdAnswerException {
 
         AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(rptAdAnswer.campaignCode());
 
@@ -290,7 +390,7 @@ public class AdCampaignService {
         if (ret) {
             Integer reword = getRewordByAdRequestId(rptAdAnswer.requestId());
             saveAnswerLog(rptAdAnswer, reword);
-            return new AnswerResp("정답 입니다.", reword);
+            return new AnswerResp(true, "정답 입니다.", reword);
         }
 
         throw AdJoinException.ANSWER_WAIT.throwErrors();

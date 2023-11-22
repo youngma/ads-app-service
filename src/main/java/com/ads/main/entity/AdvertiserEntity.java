@@ -1,11 +1,6 @@
 package com.ads.main.entity;
 
 import com.ads.main.core.config.jpa.BaseEntity;
-import com.ads.main.entity.AdCampaignMasterEntity;
-import com.ads.main.entity.AdvertiserAccountEntity;
-import com.ads.main.entity.AdvertiserUserEntity;
-import com.ads.main.entity.FilesEntity;
-import com.ads.main.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -57,15 +52,6 @@ public class AdvertiserEntity extends BaseEntity implements Serializable {
 
 
     /**
-     * 사업자 등록증 파일
-     */
-//    private String businessRegistrationFile;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "BUSINESS_REGISTRATION_FILE", referencedColumnName = "FILE_SEQ")
-    private FilesEntity filesEntity;
-
-
-    /**
      * 사업자 전화 번호
      */
     @Column(name = "PHONE_NUMBER")
@@ -90,6 +76,12 @@ public class AdvertiserEntity extends BaseEntity implements Serializable {
      */
     @Column(name = "ADVERTISER_NAME", nullable = false)
     private String advertiserName;
+
+    /**
+     * 광고 연동 코드
+     */
+    @Column(name = "IF_CODE", nullable = false)
+    private String ifCode;
 
 
     @OneToMany(mappedBy = "advertiserEntity")

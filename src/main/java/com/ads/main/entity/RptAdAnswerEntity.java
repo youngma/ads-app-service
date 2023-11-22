@@ -11,6 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -77,7 +78,7 @@ public class RptAdAnswerEntity implements Serializable {
      */
     @Column(name = "ANSWER_AT", nullable = false)
     @CreatedDate
-    private Date answerAt;
+    private LocalDateTime answerAt;
 
     @Override
     public final boolean equals(Object o) {

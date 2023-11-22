@@ -54,7 +54,7 @@ public class LandingVo {
 
     public String getThumb() {
         if (this.campaignCode != null) {
-            return this.appServerUrl.concat("/app/v1/ads/request/"+requestId+"/"+groupCode+"/"+this.campaignCode+"?redirect=").concat(HexUtils.toHexString(this.thumb.getBytes()));
+            return this.appServerUrl.concat("/app/v1/ads/request/"+requestId+"/"+groupCode+"/"+this.campaignCode+"?redirect=").concat(HexUtils.toHexString(this.thumb.getBytes())).concat("&user-key=").concat(userKey);
         } else {
             return null;
         }

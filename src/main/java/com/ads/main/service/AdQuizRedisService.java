@@ -1,11 +1,15 @@
 package com.ads.main.service;
 
+import com.ads.main.core.config.exception.AdAnswerException;
 import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.core.enums.campaign.CampaignType;
+import com.ads.main.entity.AdCampaignMasterEntity;
+import com.ads.main.entity.mapper.AdCampaignMasterConvert;
 import com.ads.main.enums.AdException;
 import com.ads.main.enums.AdGroupException;
 import com.ads.main.enums.AdJoinException;
+import com.ads.main.repository.querydsl.QAdvertiserCampaignMasterRepository;
 import com.ads.main.vo.campaign.req.RptAdAnswer;
 import com.ads.main.vo.campaign.resp.AdCampaignMasterVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -31,10 +36,15 @@ import static com.ads.main.enums.AdException.NO_AD;
 @Slf4j
 public class AdQuizRedisService {
 
+
     private final static DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    private final RedissonClient redissonClient;
 
+    private final QAdvertiserCampaignMasterRepository qAdvertiserCampaignMasterRepository;
+    private final AdCampaignMasterConvert adCampaignMasterConvert;
+
+
+    private final RedissonClient redissonClient;
 
     private final ObjectMapper objectMapper;
 
@@ -61,6 +71,12 @@ public class AdQuizRedisService {
     }
 
 
+    public AdCampaignMasterVo findDbCampaignByCode(String campaignCode) throws NoAdException {
+        Optional<AdCampaignMasterEntity> adCampaignMasterEntityOptional = qAdvertiserCampaignMasterRepository.findAdCampaign(campaignCode);
+        AdCampaignMasterEntity adCampaignMasterEntity = adCampaignMasterEntityOptional.orElseThrow(NO_AD::throwErrors);
+        return adCampaignMasterConvert.toDto(adCampaignMasterEntity);
+    }
+
     @Cacheable(
             cacheNames = "ad-campaign"
             , key = "#campaignCode"
@@ -68,10 +84,15 @@ public class AdQuizRedisService {
     )
     public AdCampaignMasterVo findCampaignByCode(String campaignCode) throws NoAdException {
         RMap<String, String> maps = redissonClient.getMap(CampaignType.Quiz01.getCode());
+        log.debug("등록된 광고 목록 : {},  {}",campaignCode, maps.keySet());
         String campaignStrStr =  maps.get(campaignCode);
         try {
             if (maps.containsKey(campaignCode)) {
                 return objectMapper.readValue(campaignStrStr, AdCampaignMasterVo.class);
+            } else {
+                AdCampaignMasterVo adCampaignMasterVo = findDbCampaignByCode(campaignCode);
+                maps.fastPut(adCampaignMasterVo.getCampaignCode(), objectMapper.writeValueAsString(adCampaignMasterVo));
+                return adCampaignMasterVo;
             }
         } catch (JsonProcessingException e) {
             log.error("# ad detail parsing error: ", e);
@@ -81,7 +102,7 @@ public class AdQuizRedisService {
 
 
     // 퀴즈 참여 프로세스
-    public boolean joinProcess(AdCampaignMasterVo adCampaignMaster, RptAdAnswer rptAdAnswer) throws AppException {
+    public boolean joinProcess(AdCampaignMasterVo adCampaignMaster, RptAdAnswer rptAdAnswer) throws AdAnswerException {
 
         log.debug("# AD -> {}", adCampaignMaster);
 
@@ -123,9 +144,8 @@ public class AdQuizRedisService {
             return true;
 
         } catch (InterruptedException e) {
-            log.error("# joinCount Error", e);
             throw AdJoinException.ANSWER_WAIT.throwErrors();
-        } finally {
+        }  finally {
             if(lock != null && lock.isLocked()) {
                 lock.unlock();
             }

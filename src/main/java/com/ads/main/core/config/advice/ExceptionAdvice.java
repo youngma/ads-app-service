@@ -1,9 +1,11 @@
 package com.ads.main.core.config.advice;
 
 
+import com.ads.main.core.config.exception.AdAnswerException;
 import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.core.vo.RespVo;
+import com.ads.main.vo.resp.AnswerResp;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -11,8 +13,6 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -89,6 +89,12 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler({
+            AdAnswerException.class
+    })
+    public HttpEntity<RespVo> answer_exception(Exception e) {
+        return ResponseEntity.status(HttpStatus.OK).body(new RespVo(new AnswerResp(false, e.getMessage(), 0)));
+    }
+    @ExceptionHandler({
             NoAdException.class
     })
     public HttpEntity<RespVo> exception_201(Exception e) {
@@ -105,7 +111,7 @@ public class ExceptionAdvice {
 //        HttpRequestMethodNotSupportedException.class,
 //    })
 //    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public HttpEntity<RespVo> handleBaseException(Exception e) {
+//    public HttpEntity<RespVo> handleBaseException(Exception e) {AdQuizRedisService
 //        return ResponseEntity.badRequest().body(new RespVo(""));
 //    }
 

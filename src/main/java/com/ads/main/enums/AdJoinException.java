@@ -1,6 +1,6 @@
 package com.ads.main.enums;
 
-import com.ads.main.core.config.exception.AppException;
+import com.ads.main.core.config.exception.AdAnswerException;
 
 public enum AdJoinException {
 
@@ -16,8 +16,8 @@ public enum AdJoinException {
         this.message = message;
     }
 
-    public AppException throwErrors() {
-        return new AppException(this.message);
+    public AdAnswerException throwErrors() {
+        return new AdAnswerException(this.message);
     }
 
 }

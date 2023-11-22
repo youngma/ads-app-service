@@ -2,14 +2,11 @@ package com.ads.main.vo.inquiry.req;
 
 import com.ads.main.core.enums.inquiry.InquiryStatus;
 import com.ads.main.core.enums.inquiry.InquiryType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 
 
 @Data

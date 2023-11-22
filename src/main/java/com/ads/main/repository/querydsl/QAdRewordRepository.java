@@ -38,6 +38,7 @@ public class QAdRewordRepository {
 
         List<RewordResp> rewordResps =  jpaQueryFactory.select(
                         Projections.bean(RewordResp.class,
+                                rptAdAnswerEntity.answerAt.as("date"),
                                 rptAdAnswerEntity.userKey.as("user"),
                                 rptAdAnswerEntity.reword.as("reword")
                         )

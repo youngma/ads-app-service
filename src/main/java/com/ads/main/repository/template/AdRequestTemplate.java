@@ -42,9 +42,9 @@ public class AdRequestTemplate {
         jdbcTemplate.batchUpdate(
         """
                 insert into RPT_AD_REQUEST
-                 (REQUEST_ID, GROUP_CODE,  CAMPAIGN_CODE, USER_AGENT, REMOTE_IP, REQUEST_AT, AD_PRICE, USER_COMMISSION, PARTNER_COMMISSION, AD_REWORD)
+                 (REQUEST_ID, GROUP_CODE,  CAMPAIGN_CODE, USER_AGENT, REMOTE_IP, REQUEST_AT, AD_PRICE, USER_COMMISSION, PARTNER_COMMISSION, AD_REWORD, USER_KEY)
                 values
-                 (? , ?, ?, ?, ?, current_timestamp, ?, ?, ?, ?)
+                 (? , ?, ?, ?, ?, current_timestamp, ?, ?, ?, ?, ?)
                 on DUPLICATE KEY UPDATE
                 USER_AGENT = values(USER_AGENT),
                 REMOTE_IP = values(REMOTE_IP)
@@ -61,6 +61,7 @@ public class AdRequestTemplate {
                         ps.setObject(7, subItems.get(i).getUserCommission());
                         ps.setObject(8, subItems.get(i).getPartnerCommission());
                         ps.setObject(9, subItems.get(i).getAdReword());
+                        ps.setObject(10, subItems.get(i).getUserKey());
                     }
                     @Override
                     public int getBatchSize() {
