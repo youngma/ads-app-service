@@ -58,7 +58,7 @@ public class RptAdRequestVo implements Serializable {
     /**
      * 광고금액
      */
-    private Integer adPrice;
+    private Integer adCost;
 
 
     /**

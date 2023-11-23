@@ -67,8 +67,8 @@ public class RptAdRequestEntity implements Serializable {
     /**
      * 광고금액
      */
-    @Column(name = "AD_PRICE")
-    private Integer adPrice;
+    @Column(name = "AD_COST")
+    private Integer adCost;
 
     /**
      * 사용자 지급금액

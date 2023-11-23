@@ -42,7 +42,7 @@ public class AdRequestTemplate {
         jdbcTemplate.batchUpdate(
         """
                 insert into RPT_AD_REQUEST
-                 (REQUEST_ID, GROUP_CODE,  CAMPAIGN_CODE, USER_AGENT, REMOTE_IP, REQUEST_AT, AD_PRICE, USER_COMMISSION, PARTNER_COMMISSION, AD_REWORD, USER_KEY)
+                 (REQUEST_ID, GROUP_CODE,  CAMPAIGN_CODE, USER_AGENT, REMOTE_IP, REQUEST_AT, AD_COST, USER_COMMISSION, PARTNER_COMMISSION, AD_REWORD, USER_KEY)
                 values
                  (? , ?, ?, ?, ?, current_timestamp, ?, ?, ?, ?, ?)
                 on DUPLICATE KEY UPDATE

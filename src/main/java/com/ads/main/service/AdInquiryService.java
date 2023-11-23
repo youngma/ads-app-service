@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class AdInquiryService {
 
     private final AdInquiryRepository adInquiryRepository;
-    private final AdInquiryConverter adInquiryConverter;
+//    private final AdInquiryConverter adInquiryConverter;
 
     public void save(AdInquiryReqVo adInquiryReqVo) throws AppException {
 
