@@ -1,5 +1,6 @@
 package com.ads.main.vo.report.resp;
 
+import com.ads.main.vo.adGroup.resp.PartnerPostBackVo;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -15,8 +16,9 @@ public class RptAdRequestVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
+
     /**
-     * 광고요청코드
+     * 광고 요청 코드
      */
     @NotNull(message = "requestId can not null")
     private String requestId;
@@ -62,13 +64,13 @@ public class RptAdRequestVo implements Serializable {
 
 
     /**
-     * 사용자 지급금액
+     * 사용자 지급 금액
      */
     private Integer userCommission;
 
 
     /**
-     * 파트너 지급금액
+     * 파트너 지급 금액
      */
     private Integer partnerCommission;
 
@@ -79,4 +81,16 @@ public class RptAdRequestVo implements Serializable {
      */
     private Integer adReword;
 
+
+    public PartnerPostBackVo convertPostBackVo(String userKey) {
+        PartnerPostBackVo postBackVo = new PartnerPostBackVo();
+        postBackVo.setRequestId(this.requestId);
+        postBackVo.setCampaignCode(this.campaignCode);
+        postBackVo.setUsrKey(userKey);
+        postBackVo.setGroupCode(this.groupCode);
+        postBackVo.setPartnerCommission(this.partnerCommission);
+        postBackVo.setUserCommission(this.userCommission);
+        postBackVo.setAdReword(this.adReword);
+        return postBackVo;
+    }
 }

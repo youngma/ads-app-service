@@ -18,7 +18,7 @@ import com.ads.main.entity.mapper.RptAdRequestConvert;
 import com.ads.main.enums.AdException;
 import com.ads.main.enums.AdJoinException;
 import com.ads.main.enums.CampaignJoinType;
-import com.ads.main.repository.jpa.RptAdAnswerEntityRepository;
+import com.ads.main.repository.jpa.RptAdAnswerRepository;
 import com.ads.main.repository.jpa.RptAdRequestEntityRepository;
 import com.ads.main.repository.querydsl.QAdRewordRepository;
 import com.ads.main.repository.querydsl.QAdvertiserCampaignMasterRepository;
@@ -27,16 +27,15 @@ import com.ads.main.repository.template.AdClickTemplate;
 import com.ads.main.repository.template.AdImpressionTemplate;
 import com.ads.main.repository.template.AdRequestTemplate;
 import com.ads.main.vo.adGroup.resp.PartnerAdGroupVo;
-import com.ads.main.vo.inf.mobi.MobiAds;
-import com.ads.main.vo.report.resp.RptAdAnswerVo;
 import com.ads.main.vo.campaign.req.RptAdAnswer;
 import com.ads.main.vo.campaign.req.RptAdClick;
 import com.ads.main.vo.campaign.req.RptAdImpression;
 import com.ads.main.vo.campaign.req.RptAdRequest;
 import com.ads.main.vo.campaign.resp.AdCampaignMasterVo;
+import com.ads.main.vo.inf.mobi.MobiAds;
+import com.ads.main.vo.report.resp.RptAdAnswerVo;
 import com.ads.main.vo.report.resp.RptAdRequestVo;
 import com.ads.main.vo.resp.*;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
@@ -48,7 +47,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -82,7 +84,7 @@ public class AdCampaignService {
 
     private final AdQuizRedisService quizRedisService;
 
-    private final RptAdAnswerEntityRepository rptAdAnswerEntityRepository;
+    private final RptAdAnswerRepository rptAdAnswerEntityRepository;
     private final RptAdRequestEntityRepository rptAdRequestEntityRepository;
     private final QAdvertiserCampaignMasterRepository qAdvertiserCampaignMasterRepository;
     private final QAdRewordRepository qAdRewordRepository;
@@ -97,6 +99,7 @@ public class AdCampaignService {
     private final AdCampaignMasterConvert adCampaignMasterConvert;
     private final RptAdAnswerConvert rptAdAnswerConvert;
     private final RptAdRequestConvert rptAdRequestConvert;
+
     private PageMapper<AdCampaignMasterVo, AdCampaignMasterEntity> pageMapper;
 
     private MobonApi mobonApi;
@@ -118,7 +121,7 @@ public class AdCampaignService {
         CampaignType campaignType = adGroupService.findCampaignType(groupCode);
         CampaignJoinType campaignJoinType = CampaignJoinType.of(join);
 
-        Page<AdCampaignMasterEntity> adCampaignMasterEntity= qAdvertiserCampaignMasterRepository.findAdCampaigns(campaignType, campaignJoinType, user, PageRequest.of(page - 1, size));
+        Page<AdCampaignMasterEntity> adCampaignMasterEntity= qAdvertiserCampaignMasterRepository.findAdCampaigns(campaignType, groupCode, campaignJoinType, user, PageRequest.of(page - 1, size));
 
         if (adCampaignMasterEntity.isEmpty()) {
             throw AdException.NO_AD.throwErrors();
@@ -196,14 +199,14 @@ public class AdCampaignService {
                     int userCommission;
 
                     int partnerAdPrice = Math.round((float) (adPrice * partnerAdGroupVo.getCommissionRate()) / 100);
-                    int userAdPrice = Math.round((float) (adPrice - partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
+                    int userAdPrice = Math.round((float) (partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
 
                     if (CampaignType.Quiz02.getCode().equals(campaignMasterVo.getCampaignType())) {
                         partnerCommission = campaignMasterVo.getCommissionRate().intValue();
                         userCommission = campaignMasterVo.getUserCommissionRate().intValue();
                     } else {
-                        partnerCommission = adPrice - partnerAdPrice;
-                        userCommission = partnerCommission - userAdPrice;
+                        partnerCommission = partnerAdPrice;
+                        userCommission = userAdPrice;
                     }
 
                     int adReword =  Math.round((float) (userCommission * partnerAdGroupVo.getRewordRate()));
@@ -242,11 +245,12 @@ public class AdCampaignService {
             && !adCampaignMaster.getAdvertiser().getIfCode().isBlank()
             && !adCampaignMaster.getIfAdCode().isBlank()
         ) {
-            log.info("# 여기서 광고를 호출 합니다.");
-            return interfaceAdvertising(impression, adCampaignMaster, optionalRptAdAnswerEntity.isPresent());
+//            log.info("# 여기서 광고를 호출 합니다.");
+//            return interfaceAdvertising(impression, adCampaignMaster, optionalRptAdAnswerEntity.isPresent());
+            return manualAdvertising(impression, adCampaignMaster, optionalRptAdAnswerEntity.isPresent());
         } else {
             if (
-                    campaignType == CampaignType.Quiz01 || campaignType == CampaignType.Quiz02
+                campaignType == CampaignType.Quiz01 || campaignType == CampaignType.Quiz02
             ) {
                 return manualAdvertising(impression, adCampaignMaster, optionalRptAdAnswerEntity.isPresent());
             }
@@ -390,6 +394,7 @@ public class AdCampaignService {
         if (ret) {
             Integer reword = getRewordByAdRequestId(rptAdAnswer.requestId());
             saveAnswerLog(rptAdAnswer, reword);
+            postBack(rptAdAnswer.requestId(), rptAdAnswer.user());
             return new AnswerResp(true, "정답 입니다.", reword);
         }
 
@@ -412,11 +417,39 @@ public class AdCampaignService {
 
     public void saveClickLog(RptAdClick click) {
         try {
-            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> adClickTemplate.saveAll(List.of(click)));
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+
+
+
+                adClickTemplate.saveAll(List.of(click));
+            });
             future.get();
         } catch (Exception e) {
             log.debug("# click save error, {}", click);
             adClickTemplate.saveAll(List.of(click));
+        }
+    }
+
+    public void postBack(String requestId, String user) {
+        try {
+            RptAdRequestVo requestVo =  getRptAdRequestByAdRequestId(requestId);
+            PartnerAdGroupVo partnerAdGroupVo = adGroupService.searchByGroupCode(requestVo.getGroupCode());
+
+            if (!partnerAdGroupVo.getCallBackUrl().isBlank()) {
+                RestTemplate restTemplate = new RestTemplate();
+
+                log.info("# POST-BACK : {}", partnerAdGroupVo.getCallBackUrl());
+                log.info("# POST-BACK BODY : {}", requestVo.convertPostBackVo(user));
+
+                ResponseEntity<String> result = restTemplate.postForEntity(partnerAdGroupVo.getCallBackUrl(), requestVo.convertPostBackVo(user), String.class);
+                rptAdAnswerEntityRepository.findById(requestId).ifPresent((entity) -> {
+                    entity.setPostBackStatus(result.getStatusCode().value());
+                    entity.setPostBackResult(result.getBody());
+                    rptAdAnswerEntityRepository.saveAndFlush(entity);
+                });
+            }
+        } catch (Exception e) {
+            log.error("# POST-BACK ERROR : {}, {}", requestId, user);
         }
     }
 

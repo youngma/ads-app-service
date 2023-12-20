@@ -18,7 +18,9 @@ public interface RptAdAnswerConvert extends GenericMapper<RptAdAnswerVo, RptAdAn
     @Override
     List<RptAdAnswerVo> toDtoList(List<RptAdAnswerEntity> e);
 
-    @Mapping(target = "reword",ignore = true)
+    @Mapping(target = "postBackStatus", ignore = true)
+    @Mapping(target = "postBackResult", ignore = true)
+    @Mapping(target = "reword", ignore = true)
     @Mapping(target = "userKey", source = "user")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDto(RptAdAnswer rptAdAnswer, @MappingTarget RptAdAnswerVo rptAdAnswerVo);

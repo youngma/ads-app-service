@@ -8,10 +8,10 @@ import com.ads.main.core.enums.inquiry.InquiryType;
 import com.ads.main.core.security.config.dto.Role;
 import com.ads.main.core.utils.AppUtils;
 import com.ads.main.core.vo.RespVo;
-import com.ads.main.enums.AdJoinException;
 import com.ads.main.service.AdCampaignService;
 import com.ads.main.service.AdGroupCacheService;
 import com.ads.main.service.AdInquiryService;
+import com.ads.main.vo.adGroup.resp.PartnerPostBackVo;
 import com.ads.main.vo.campaign.req.RptAdAnswer;
 import com.ads.main.vo.campaign.req.RptAdClick;
 import com.ads.main.vo.campaign.req.RptAdImpression;
@@ -206,5 +206,16 @@ public class AdsController {
 
         return  new RespVo<>("등록 되었습니다.");
 
+    }
+
+
+    @PostMapping("/post-back")
+    public RespVo<String> inquiryByDetail(
+            @RequestBody PartnerPostBackVo postBackVo,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException, URISyntaxException, AppException {
+        log.info("# Post_back : {}", postBackVo);
+        return  new RespVo<>("등록 되었습니다.");
     }
 }

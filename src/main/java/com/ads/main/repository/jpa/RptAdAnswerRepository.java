@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public interface RptAdAnswerEntityRepository extends JpaRepository<RptAdAnswerEntity, String>, JpaSpecificationExecutor<RptAdAnswerEntity> {
+public interface RptAdAnswerRepository extends JpaRepository<RptAdAnswerEntity, String>, JpaSpecificationExecutor<RptAdAnswerEntity> {
 
     Optional<RptAdAnswerEntity> findFirstByCampaignCodeAndUserKey(String campaignCode, String user);
 

@@ -5,7 +5,7 @@ import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.RptAdAnswerEntity;
 import com.ads.main.entity.mapper.AdCampaignMasterConvert;
 import com.ads.main.entity.mapper.RptAdAnswerConvert;
-import com.ads.main.repository.jpa.RptAdAnswerEntityRepository;
+import com.ads.main.repository.jpa.RptAdAnswerRepository;
 import com.ads.main.repository.querydsl.QAdvertiserCampaignMasterRepository;
 import com.ads.main.vo.campaign.resp.AdCampaignMasterVo;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import static com.ads.main.enums.AdException.NO_AD;
 @RequiredArgsConstructor
 public class AdCampaignCacheService {
 
-    private final RptAdAnswerEntityRepository rptAdAnswerEntityRepository;
+    private final RptAdAnswerRepository rptAdAnswerEntityRepository;
 
     private final QAdvertiserCampaignMasterRepository qAdvertiserCampaignMasterRepository;
 

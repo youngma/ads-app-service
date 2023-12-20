@@ -63,4 +63,7 @@ public class RptAdAnswerVo implements Serializable {
     private String answer;
 
 
+    private Integer postBackStatus;
+    private String postBackResult;
+
 }

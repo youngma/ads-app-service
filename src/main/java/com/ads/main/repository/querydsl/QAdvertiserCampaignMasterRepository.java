@@ -2,14 +2,12 @@ package com.ads.main.repository.querydsl;
 
 import com.ads.main.core.enums.campaign.CampaignStatus;
 import com.ads.main.core.enums.campaign.CampaignType;
-import com.ads.main.core.enums.common.Bank;
 import com.ads.main.entity.AdCampaignMasterEntity;
-import com.ads.main.entity.QAdQuizEntity;
-import com.ads.main.entity.QRptAdAnswerEntity;
+import com.ads.main.entity.PartnerAdGroupEntity;
+import com.ads.main.entity.QPartnerAdGroupEntity;
+import com.ads.main.entity.QPartnerAdMappingEntity;
 import com.ads.main.enums.CampaignJoinType;
-import com.ads.main.vo.campaign.resp.AdQuizVo;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -25,7 +23,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
-import static com.ads.main.entity.QAdvertiserAccountEntity.advertiserAccountEntity;
+import static com.ads.main.entity.QPartnerAdGroupEntity.partnerAdGroupEntity;
+import static com.ads.main.entity.QPartnerAdMappingEntity.partnerAdMappingEntity;
 import static com.ads.main.entity.QRptAdAnswerEntity.rptAdAnswerEntity;
 
 @Repository
@@ -35,7 +34,7 @@ public class QAdvertiserCampaignMasterRepository {
     private final EntityManager entityManager;
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<AdCampaignMasterEntity> findAdCampaigns(CampaignType campaignType, CampaignJoinType campaignJoinType, String user, Pageable pageable) {
+    public Page<AdCampaignMasterEntity> findAdCampaigns(CampaignType campaignType, String groupCode, CampaignJoinType campaignJoinType, String user, Pageable pageable) {
 
         BooleanBuilder builder = new BooleanBuilder();
 
@@ -43,6 +42,13 @@ public class QAdvertiserCampaignMasterRepository {
         builder.and(adCampaignMasterEntity.exposureStatus.eq(true));
         builder.and(adCampaignMasterEntity.adStartDate.before(LocalDateTime.now()));
         builder.and(adCampaignMasterEntity.adEndDate.after(LocalDateTime.now()));
+
+        builder.and(adCampaignMasterEntity.seq.in(JPAExpressions
+                .select(partnerAdMappingEntity.campaignSeq)
+                .from(partnerAdMappingEntity)
+                .join(partnerAdGroupEntity)
+                .on(partnerAdGroupEntity.groupSeq.eq(partnerAdMappingEntity.groupSeq))
+                .where(partnerAdGroupEntity.groupCode.eq(groupCode))));
 
         switch (campaignJoinType) {
             case Join -> builder.and(adCampaignMasterEntity.campaignCode.in(JPAExpressions

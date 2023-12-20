@@ -80,6 +80,14 @@ public class RptAdAnswerEntity implements Serializable {
     @CreatedDate
     private LocalDateTime answerAt;
 
+
+    @Column(name = "POST_BACK_STATUS")
+    private Integer postBackStatus;
+
+
+    @Column(name = "POST_BACK_RESULT")
+    private String postBackResult;
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
