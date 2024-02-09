@@ -86,7 +86,7 @@ public class RptAdRequestVo implements Serializable {
         PartnerPostBackVo postBackVo = new PartnerPostBackVo();
         postBackVo.setRequestId(this.requestId);
         postBackVo.setCampaignCode(this.campaignCode);
-        postBackVo.setUsrKey(userKey);
+        postBackVo.setUserKey(userKey);
         postBackVo.setGroupCode(this.groupCode);
         postBackVo.setPartnerCommission(this.partnerCommission);
         postBackVo.setUserCommission(this.userCommission);

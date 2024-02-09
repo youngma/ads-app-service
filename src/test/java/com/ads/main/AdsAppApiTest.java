@@ -1,5 +1,6 @@
 package com.ads.main;
 
+import com.ads.main.vo.adGroup.resp.PartnerPostBackVo;
 import com.ads.main.vo.inquiry.req.AdInquiryReqVo;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -283,7 +284,8 @@ public class AdsAppApiTest {
                                         parameterWithName("answer").description("정답")
                                 )
                                 ,responseFields(
-                                        fieldWithPath("result.message").description("정답 결과").type(JsonFieldType.STRING),
+                                        fieldWithPath("result.answer").description("정답 결과").type(JsonFieldType.BOOLEAN),
+                                        fieldWithPath("result.message").description("정답 결과 메시지").type(JsonFieldType.STRING),
                                         fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
                                 )
                         )
@@ -310,7 +312,8 @@ public class AdsAppApiTest {
                                                         Schema.schema("QuizAnswerRespVo")
                                                 )
                                                 .responseFields(
-                                                        fieldWithPath("result.message").description("정답 결과").type(JsonFieldType.STRING),
+                                                        fieldWithPath("result.answer").description("정답 결과").type(JsonFieldType.BOOLEAN),
+                                                        fieldWithPath("result.message").description("정답 결과 메시지").type(JsonFieldType.STRING),
                                                         fieldWithPath("result.reword").description("적립 포인트").type(JsonFieldType.NUMBER).optional()
                                                 )
                                                 .build()
@@ -540,6 +543,83 @@ public class AdsAppApiTest {
                                                 )
                                                 .responseFields(
                                                         fieldWithPath("message").description("문의 사항 처리 결과").type(JsonFieldType.STRING)
+                                                )
+                                                .build()
+                                )
+                        )
+                );
+//
+    }
+
+    @Test
+    @DisplayName("리워드 Call Back Spec")
+    public void QuizAdsCallback() throws Exception {
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        PartnerPostBackVo postBackVo = new PartnerPostBackVo();
+        postBackVo.setRequestId(this.requestId);
+        postBackVo.setGroupCode(this.groupCode);
+        postBackVo.setCampaignCode(this.adCode);
+        postBackVo.setUserKey(userKey);
+        postBackVo.setPartnerCommission(100);
+        postBackVo.setUserCommission(10);
+        postBackVo.setAdReword(10);;
+
+        this.mockMvc.perform(
+                        RestDocumentationRequestBuilders.post("/app/v1/ads//post-back")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(postBackVo))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("user-agent", "mock-mvc")
+                )
+
+                .andDo(print())
+                .andExpect(status().isOk())
+                // restdoc
+                .andDo(
+                        MockMvcRestDocumentationWrapper.document("ads-call=back"
+                                , preprocessResponse(prettyPrint())
+                                , requestFields (
+                                        fieldWithPath("requestId").description("광고 요청 키"),
+                                        fieldWithPath("groupCode").description("광고 지면 코드"),
+                                        fieldWithPath("campaignCode").description("광고 코드"),
+                                        fieldWithPath("userKey").description("사용자 식별 키"),
+                                        fieldWithPath("userCommission").description("매체사 지급 수수료"),
+                                        fieldWithPath("partnerCommission").description("사용자 지급 수수료"),
+                                        fieldWithPath("adReword").description("리워드 금액")
+
+                                )
+                                ,responseFields(
+                                        fieldWithPath("message").description("퀴즈 광고 리워드 콜백 결과 메시지").type(JsonFieldType.STRING)
+                                )
+                        )
+                )
+//                     swagger
+                .andDo(
+                        document("ads-call=back"
+                                , preprocessRequest(prettyPrint())
+                                , preprocessResponse(prettyPrint())
+                                , resource(
+                                        ResourceSnippetParameters.builder()
+                                                .tag("퀴즈 광고 리워드 콜백")
+                                                .summary("퀴즈 광고 리워드 콜백")
+                                                .description("퀴즈 광고 리워드 콜백")
+                                                .requestFields (
+                                                        fieldWithPath("requestId").description("광고 요청 키"),
+                                                        fieldWithPath("groupCode").description("광고 지면 코드"),
+                                                        fieldWithPath("campaignCode").description("광고 코드"),
+                                                        fieldWithPath("userKey").description("사용자 식별 키"),
+                                                        fieldWithPath("userCommission").description("매체사 지급 수수료"),
+                                                        fieldWithPath("partnerCommission").description("사용자 지급 수수료"),
+                                                        fieldWithPath("adReword").description("리워드 금액")
+                                                )
+                                                .responseSchema(
+                                                        Schema.schema("PartnerPostBackVo")
+                                                )
+                                                .responseFields(
+                                                        fieldWithPath("message").description("퀴즈 광고 리워드 콜백 결과 메시지").type(JsonFieldType.STRING)
                                                 )
                                                 .build()
                                 )

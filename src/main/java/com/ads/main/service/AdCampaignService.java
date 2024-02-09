@@ -198,12 +198,17 @@ public class AdCampaignService {
                     int partnerCommission;
                     int userCommission;
 
-                    int partnerAdPrice = Math.round((float) (adPrice * partnerAdGroupVo.getCommissionRate()) / 100);
-                    int userAdPrice = Math.round((float) (partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
+//                    int partnerAdPrice = Math.round((float) (adPrice * partnerAdGroupVo.getCommissionRate()) / 100);
+//                    int userAdPrice = Math.round((float) (partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
+
+                    int partnerAdPrice = Math.round(((float) adPrice / 100) * partnerAdGroupVo.getCommissionRate());
+                    int userAdPrice = Math.round(((float) partnerAdPrice / 100) * partnerAdGroupVo.getUserCommissionRate());
 
                     if (CampaignType.Quiz02.getCode().equals(campaignMasterVo.getCampaignType())) {
                         partnerCommission = campaignMasterVo.getCommissionRate().intValue();
                         userCommission = campaignMasterVo.getUserCommissionRate().intValue();
+
+
                     } else {
                         partnerCommission = partnerAdPrice;
                         userCommission = userAdPrice;

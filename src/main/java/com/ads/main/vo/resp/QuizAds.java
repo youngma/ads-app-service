@@ -98,17 +98,20 @@ public class QuizAds {
         int userCommission = 0;
 
         // 파트너 광고 수수료
-        int partnerAdPrice = Math.round((float) (adPrice * partnerAdGroupVo.getCommissionRate()) / 100);
+//        int partnerAdPrice = Math.round((float) (adPrice * partnerAdGroupVo.getCommissionRate()) / 100);
 
         // 유저 포인트
-        int userAdPrice = Math.round((float) (adPrice - partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
+//        int userAdPrice = Math.round((float) (adPrice - partnerAdPrice *  partnerAdGroupVo.getUserCommissionRate()) / 100);
+
+        int partnerAdPrice = Math.round(((float) adPrice / 100) * partnerAdGroupVo.getCommissionRate());
+        int userAdPrice = Math.round(((float) partnerAdPrice / 100) * partnerAdGroupVo.getUserCommissionRate());
 
         if (CampaignType.Quiz02.getCode().equals(adCampaignMasterVo.getCampaignType())) {
             partnerCommission = adCampaignMasterVo.getCommissionRate().intValue();
             userCommission = adCampaignMasterVo.getUserCommissionRate().intValue();
         } else {
-            partnerCommission = adPrice - partnerAdPrice;
-            userCommission = partnerCommission - userAdPrice;
+            partnerCommission = partnerAdPrice;
+            userCommission = userAdPrice;
         }
 
         return Math.round((float) (userCommission * partnerAdGroupVo.getRewordRate()));

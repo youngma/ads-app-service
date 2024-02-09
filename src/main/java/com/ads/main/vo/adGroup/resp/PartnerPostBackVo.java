@@ -34,7 +34,7 @@ public class PartnerPostBackVo implements Serializable {
     private String campaignCode;
 
 
-    private String usrKey;
+    private String userKey;
 
 
     /**

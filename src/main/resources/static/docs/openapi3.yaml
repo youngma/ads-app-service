@@ -1,0 +1,617 @@
+openapi: 3.0.1
+info:
+  title: ADS-APP SERVER
+  description: 광고 API 서버 REST API SPEC
+  version: 0.1.0
+servers:
+- url: https://localhost:8082
+tags: []
+paths:
+  /app/v1/ads/post-back:
+    post:
+      tags:
+      - 퀴즈 광고 리워드 콜백
+      summary: 퀴즈 광고 리워드 콜백
+      description: 퀴즈 광고 리워드 콜백
+      operationId: ads-call=back
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/app-v1-ads-post-back1119840504'
+            examples:
+              ads-call=back:
+                value: |-
+                  {
+                    "requestId" : "test-request",
+                    "groupCode" : "brBJZBMxDe",
+                    "campaignCode" : "YxGBfKJBsG",
+                    "userKey" : "test-user",
+                    "userCommission" : 10,
+                    "partnerCommission" : 100,
+                    "adReword" : 10
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartnerPostBackVo'
+              examples:
+                ads-call=back:
+                  value: |-
+                    {
+                      "message" : "등록 되었습니다."
+                    }
+  /app/v1/ads/inquiry/{ad-group}:
+    post:
+      tags:
+      - 퀴즈 광고 문의 하기(리스팅)
+      summary: 퀴즈 광고 문의 하기(리스팅)
+      description: 퀴즈 광고 문의 하기(리스팅)
+      operationId: ads-inquiry-listing
+      parameters:
+      - name: ad-group
+        in: path
+        description: 광고 지면 코드
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/app-v1-ads-inquiry-ad-group-ad-code-723663488'
+            examples:
+              ads-inquiry-listing:
+                value: |-
+                  {
+                    "user" : "userKey",
+                    "quizTitle" : "Quiz-title",
+                    "title" : "Title",
+                    "phone" : "010-0000-0000"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizAnswerRespVo'
+              examples:
+                ads-inquiry-listing:
+                  value: |-
+                    {
+                      "message" : "등록 되었습니다."
+                    }
+  /app/v1/ads/search/{group-code}:
+    get:
+      tags:
+      - 퀴즈 광고 요청
+      summary: 퀴즈 광고 목록 노출
+      description: 진행중 인 퀴즈 광고 목록을 노출 한다.
+      operationId: ads-search
+      parameters:
+      - name: group-code
+        in: path
+        description: 파트너 광고 그룹 코드
+        required: true
+        schema:
+          type: string
+      - name: user-key
+        in: query
+        description: 파트너사 APP USER 식별키
+        required: true
+        schema:
+          type: string
+      - name: join
+        in: query
+        description: "참여 여부( true : 참여, fasle: 미참여, all: 전체)"
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: 파트너 광고 그룹 코드
+        required: true
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: 파트너 광고 그룹 코드
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizAdsRespVo'
+              examples:
+                ads-search:
+                  value: |-
+                    {
+                      "result" : {
+                        "content" : [ {
+                          "requestId" : "jbewyGxRvaWKdzb",
+                          "campaignName" : "캠페인 명",
+                          "campaignCode" : "YxGBfKJBsG",
+                          "totalParticipationLimit" : 100000,
+                          "dayParticipationLimit" : 100,
+                          "quizTitle" : "제목은 1",
+                          "landing" : {
+                            "thumb" : "http://localhost:8082/api/app/v1/ads/request/jbewyGxRvaWKdzb/brBJZBMxDe/YxGBfKJBsG?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f34363662626438653733386134346564386535663536316164656162633132622e706e67&user-key=test-user",
+                            "detail_page" : "http://localhost:8082/api/app/v1/ads/detail/jbewyGxRvaWKdzb/YxGBfKJBsG?user-key=test-user"
+                          },
+                          "reword" : 0,
+                          "pointName" : "포포",
+                          "joined" : false
+                        } ],
+                        "totalPages" : 1,
+                        "totalElements" : 1,
+                        "size" : 10
+                      }
+                    }
+  /app/v1/ads/answer/{request-id}/{ad-code}:
+    get:
+      tags:
+      - 퀴즈 광고 정답 확인
+      summary: 퀴즈 광고 정답 확인
+      description: 요청한 퀴즈 광고의 정답 확인 후 리워드 금액을 반환한다.
+      operationId: ads-answer
+      parameters:
+      - name: request-id
+        in: path
+        description: 광고 요청 코드
+        required: true
+        schema:
+          type: string
+      - name: ad-code
+        in: path
+        description: 광고 코드
+        required: true
+        schema:
+          type: string
+      - name: user-key
+        in: query
+        description: 파트너사 APP USER 식별키
+        required: true
+        schema:
+          type: string
+      - name: answer
+        in: query
+        description: 정답
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizAnswerRespVo'
+              examples:
+                ads-answer:
+                  value: |-
+                    {
+                      "result" : {
+                        "answer" : true,
+                        "message" : "정답 입니다.",
+                        "reword" : 2
+                      }
+                    }
+  /app/v1/ads/detail/{request-id}/{ad-code}:
+    get:
+      tags:
+      - 퀴즈 광고 상세
+      summary: 퀴즈 광고 상세 정보
+      description: 요청한 퀴즈 광고의 상세 정보를 제공 한다.
+      operationId: ads-details
+      parameters:
+      - name: request-id
+        in: path
+        description: 광고 요청 코드
+        required: true
+        schema:
+          type: string
+      - name: ad-code
+        in: path
+        description: 광고 지면 코드
+        required: true
+        schema:
+          type: string
+      - name: user-key
+        in: query
+        description: 파트너사 APP USER 식별키
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizDetailRespVo'
+              examples:
+                ads-details:
+                  value: |-
+                    {
+                      "result" : {
+                        "requestId" : "test-request",
+                        "campaignName" : "캠페인 명",
+                        "campaignCode" : "YxGBfKJBsG",
+                        "totalParticipationLimit" : 100000,
+                        "dayParticipationLimit" : 100,
+                        "useHow" : "참여방법",
+                        "quizTitle" : "제목은 1",
+                        "landing" : {
+                          "detail" : "http://localhost:8082/api/app/v1/ads/impression/test-request?redirect=687474703a2f2f6c6f63616c686f73743a393030302f66696c65732f63616d706169676e2f32613665333038303265323234393163393435653436323338373434643037332e706e67",
+                          "answer" : "http://localhost:8082/api/app/v1/ads/answer/test-request/YxGBfKJBsG?user-key=test-user",
+                          "hint_ad_pc" : "http://localhost:8082/api/app/v1/ads/click/hint/test-request?redirect=687474703a2f2f6e617665722e636f6d",
+                          "hint_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/hint/test-request?redirect=687474703a2f2f6e617665722e636f6d",
+                          "answer_ad_pc" : "http://localhost:8082/api/app/v1/ads/click/answer/test-request?redirect=687474703a2f2f6e617665722e636f6d",
+                          "answer_ad_mobile" : "http://localhost:8082/api/app/v1/ads/click/answer/test-request?redirect=687474703a2f2f6e617665722e636f6d",
+                          "reword" : "http://localhost:8082/api/app/v1/ads/reword/brBJZBMxDe/YxGBfKJBsG"
+                        },
+                        "reword" : 2,
+                        "joinUserCount" : 27,
+                        "joined" : false
+                      }
+                    }
+  /app/v1/ads/inquiry/{ad-group}/{ad-code}:
+    post:
+      tags:
+      - 퀴즈 광고 문의 하기(리스팅)
+      summary: 퀴즈 광고 문의 하기(리스팅)
+      description: 퀴즈 광고 문의 하기(리스팅)
+      operationId: ads-inquiry-detail
+      parameters:
+      - name: ad-group
+        in: path
+        description: 광고 지면 코드
+        required: true
+        schema:
+          type: string
+      - name: ad-code
+        in: path
+        description: 광고 코드
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/app-v1-ads-inquiry-ad-group-ad-code-723663488'
+            examples:
+              ads-inquiry-detail:
+                value: |-
+                  {
+                    "user" : "userKey",
+                    "quizTitle" : "Quiz-title",
+                    "title" : "Title",
+                    "phone" : "010-0000-0000"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizAnswerRespVo'
+              examples:
+                ads-inquiry-detail:
+                  value: |-
+                    {
+                      "message" : "등록 되었습니다."
+                    }
+  /app/v1/ads/reword/{group-code}/{ad-code}:
+    get:
+      tags:
+      - 퀴즈 광고 리워드 내역
+      summary: 퀴즈 광고 리워드 내역
+      description: 요청한 퀴즈 광고 적립 유저의 현황을 제공 한다.
+      operationId: ads-reword
+      parameters:
+      - name: group-code
+        in: path
+        description: 지면 코드
+        required: true
+        schema:
+          type: string
+      - name: ad-code
+        in: path
+        description: 광고 코드
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: 페이지
+        required: true
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: '페이지당 광고 '
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizRespRespVo'
+              examples:
+                ads-reword:
+                  value: |-
+                    {
+                      "result" : {
+                        "content" : [ {
+                          "user" : "vOrHWIpEtR",
+                          "reword" : 2,
+                          "date" : "2024-02-08 14:03:52"
+                        }, {
+                          "user" : "MVyAybjEFe",
+                          "reword" : 2,
+                          "date" : "2024-02-08 14:02:21"
+                        }, {
+                          "user" : "ArAMzGYAzk",
+                          "reword" : 2,
+                          "date" : "2024-02-08 13:58:00"
+                        }, {
+                          "user" : "brfQAcJZBg",
+                          "reword" : 2,
+                          "date" : "2024-02-08 13:57:36"
+                        }, {
+                          "user" : "kkCQhxklQm",
+                          "reword" : 2,
+                          "date" : "2024-02-08 13:56:50"
+                        }, {
+                          "user" : "OxkFzygFCD",
+                          "reword" : 2,
+                          "date" : "2024-02-08 13:52:59"
+                        }, {
+                          "user" : "hxPquaqZWj",
+                          "reword" : 2,
+                          "date" : "2023-12-28 03:39:46"
+                        }, {
+                          "user" : "yikPWLdkpv",
+                          "reword" : 2,
+                          "date" : "2023-12-28 03:39:27"
+                        }, {
+                          "user" : "IbiHTpjZyH",
+                          "reword" : 2,
+                          "date" : "2023-12-28 03:39:22"
+                        }, {
+                          "user" : "NjZtBhHzAL",
+                          "reword" : 2,
+                          "date" : "2023-11-22 18:28:18"
+                        } ],
+                        "totalPages" : 3,
+                        "totalElements" : 27,
+                        "size" : 10
+                      }
+                    }
+components:
+  schemas:
+    QuizAnswerRespVo:
+      title: QuizAnswerRespVo
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            reword:
+              type: number
+              description: 적립 포인트
+            answer:
+              type: boolean
+              description: 정답 결과
+            message:
+              type: string
+              description: 정답 결과 메시지
+    QuizRespRespVo:
+      title: QuizRespRespVo
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            size:
+              type: number
+              description: 페이지 당 광고수
+            totalPages:
+              type: number
+              description: 현제 페이지 수
+            content:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    description: 포인트 발급 시간
+                  reword:
+                    type: number
+                    description: 적립 포인트
+                  user:
+                    type: string
+                    description: 정답 유저키
+            totalElements:
+              type: number
+              description: 총 광고 수
+    PartnerPostBackVo:
+      title: PartnerPostBackVo
+      type: object
+      properties:
+        message:
+          type: string
+          description: 퀴즈 광고 리워드 콜백 결과 메시지
+    app-v1-ads-post-back1119840504:
+      type: object
+      properties:
+        adReword:
+          type: number
+          description: 리워드 금액
+        requestId:
+          type: string
+          description: 광고 요청 키
+        partnerCommission:
+          type: number
+          description: 사용자 지급 수수료
+        userCommission:
+          type: number
+          description: 매체사 지급 수수료
+        userKey:
+          type: string
+          description: 사용자 식별 키
+        campaignCode:
+          type: string
+          description: 광고 코드
+        groupCode:
+          type: string
+          description: 광고 지면 코드
+    QuizDetailRespVo:
+      title: QuizDetailRespVo
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            dayParticipationLimit:
+              type: number
+              description: 일별 참여 가능 인원
+            reword:
+              type: number
+              description: 적립 포인트
+            landing:
+              type: object
+              properties:
+                reword:
+                  type: string
+                  description: 리워드 적립 내역 조회 URL
+                answer:
+                  type: string
+                  description: 정답 호출 Endpoint
+                hint_ad_mobile:
+                  type: string
+                  description: 힌트 랜딩 페이지 (Mobile)
+                hint_ad_pc:
+                  type: string
+                  description: 힌트 랜딩 페이지 (PC)
+                detail:
+                  type: string
+                  description: 상세 이미지
+                answer_ad_mobile:
+                  type: string
+                  description: 정답 랜딩 페이지 (Mobile)
+                answer_ad_pc:
+                  type: string
+                  description: 정답 랜딩 페이지 (PC)
+            useHow:
+              type: string
+              description: 퀴즈 참여 방법
+            joined:
+              type: boolean
+              description: 참여 여부
+            pointName:
+              type: string
+              description: 포인트 명
+            requestId:
+              type: string
+              description: 광고 요청 키
+            totalParticipationLimit:
+              type: number
+              description: 총 참여 가능 인원
+            campaignName:
+              type: string
+              description: 광고 제목
+            quizTitle:
+              type: string
+              description: 퀴즈 문제
+            joinUserCount:
+              type: number
+              description: 참여 인원
+            campaignCode:
+              type: string
+              description: 광고 코드
+    app-v1-ads-inquiry-ad-group-ad-code-723663488:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: 전화번호
+        title:
+          type: string
+          description: 문의하기 내용
+        user:
+          type: string
+          description: 파트너사 APP USER 식별키
+        quizTitle:
+          type: string
+          description: 퀴즈 제목
+    QuizAdsRespVo:
+      title: QuizAdsRespVo
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            size:
+              type: number
+              description: 페이지 당 광고수
+            totalPages:
+              type: number
+              description: 현제 페이지 수
+            content:
+              type: array
+              items:
+                type: object
+                properties:
+                  dayParticipationLimit:
+                    type: number
+                    description: 일별 참여 가능 인원
+                  reword:
+                    type: number
+                    description: 적립 포인트
+                  landing:
+                    type: object
+                    properties:
+                      detail_page:
+                        type: string
+                        description: 광고 상세 요청(광고 노출 처리 용도)
+                      thumb:
+                        type: string
+                        description: 메인 페이지 이미지(광고 요청 처리 용도)
+                  joined:
+                    type: boolean
+                    description: 참여 여부
+                  pointName:
+                    type: string
+                    description: 포인트 명
+                  requestId:
+                    type: string
+                    description: 광고 요청 키
+                  totalParticipationLimit:
+                    type: number
+                    description: 총 참여 가능 인원
+                  campaignName:
+                    type: string
+                    description: 광고 제목
+                  quizTitle:
+                    type: string
+                    description: 퀴즈 문제
+                  campaignCode:
+                    type: string
+                    description: 광고 코드
+            totalElements:
+              type: number
+              description: 총 광고 수

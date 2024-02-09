@@ -10,6 +10,7 @@ import com.ads.main.vo.resp.QuizAds;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,6 +53,20 @@ public class AdsQuizTest {
         countDownLatch.await();
     }
 
+
+    @Test
+    public void test02() {
+
+        int adPrice = 200;
+        int partnerCommission;
+        int userCommission;
+
+        int partnerAdPrice = Math.round(((float) adPrice / 100) * 30);
+        int userAdPrice = Math.round(((float) partnerAdPrice / 100) * 30);
+
+
+        log.info("{}, {}",partnerAdPrice,userAdPrice );
+    }
 
     private class LockAnswer implements Runnable {
         private final CountDownLatch countDownLatch;
