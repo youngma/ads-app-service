@@ -23,6 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.tomcat.util.buf.HexUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.validation.annotation.Validated;
@@ -52,6 +53,25 @@ public class AdsV2Controller {
     ) throws NoAdException, AppException {
         adGroupService.checkAdGroupCode(adGroup);
         return new RespVo<>(adCampaignService.requestList(adGroup, page, size));
+    }
+
+    // 광고 상세 정보 요청 ()
+    @GetMapping("/check/{ad-group}/{ad-code}")
+    public RespVo<QuizAds> detail(
+            @PathVariable("ad-group") String adGroup,
+            @PathVariable("ad-code") String adCode,
+            @RequestParam("user-key") @Validated @NotBlank(message = "사용자 식별키는 필수 값 입니다.") String user,
+            @RequestHeader(HttpHeaders.USER_AGENT) String userAgent,
+            HttpServletRequest request
+    ) throws NoAdException {
+
+        String requestId = RandomStringUtils.randomAlphabetic(15);
+
+        RptAdRequest rptAdRequest = new RptAdRequest(adGroup, requestId, adCode, user, userAgent,  AppUtils.etRemoteAddr(request));
+        RptAdImpression rptAdImpression = new RptAdImpression(Role.PARTNER, requestId, adCode, userAgent, AppUtils.etRemoteAddr(request), BigDecimal.ZERO, user);
+        QuizAds quizAds = adCampaignService.markRequestAndImpression(rptAdRequest, rptAdImpression);
+
+        return  new RespVo<>(quizAds);
     }
 //
 //

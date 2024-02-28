@@ -8,6 +8,7 @@ import com.ads.main.core.config.exception.AdAnswerException;
 import com.ads.main.core.config.exception.AppException;
 import com.ads.main.core.config.exception.NoAdException;
 import com.ads.main.core.enums.campaign.CampaignType;
+import com.ads.main.core.utils.AppUtils;
 import com.ads.main.core.utils.PageMapper;
 import com.ads.main.entity.AdCampaignMasterEntity;
 import com.ads.main.entity.RptAdAnswerEntity;
@@ -305,6 +306,51 @@ public class AdCampaignService {
         throw NO_AD.throwErrors();
     }
 
+    public QuizAds markRequestAndImpression(RptAdRequest request, RptAdImpression impression) throws NoAdException {
+
+
+        AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(impression.campaignCode());
+        Optional<RptAdAnswerEntity> optionalRptAdAnswerEntity = rptAdAnswerEntityRepository.findFirstByCampaignCodeAndUserKey(impression.campaignCode(), impression.user());
+
+        log.info("# adCampaignMaster => {}", adCampaignMaster);
+
+        CampaignType campaignType = CampaignType.of(adCampaignMaster.getCampaignType());
+
+        if (optionalRptAdAnswerEntity.isPresent()) {
+            return QuizAds.builder()
+                    .requestId(impression.requestId())
+                    .campaignName(adCampaignMaster.getCampaignName())
+                    .campaignCode(adCampaignMaster.getCampaignCode())
+                    .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
+                    .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
+                    .isJoined(true)
+                    .quizTitle(adCampaignMaster.getQuiz().getQuizTitle())
+                    .useHow(adCampaignMaster.getQuiz().getUseHow())
+                    .build();
+        }
+
+        markRequest(request);
+
+        if (
+                adCampaignMaster.getAdvertiser().getIfCode() != null
+                        && adCampaignMaster.getIfAdCode() != null
+                        && !adCampaignMaster.getAdvertiser().getIfCode().isBlank()
+                        && !adCampaignMaster.getIfAdCode().isBlank()
+        ) {
+//            log.info("# 여기서 광고를 호출 합니다.");
+//            return interfaceAdvertising(impression, adCampaignMaster, optionalRptAdAnswerEntity.isPresent());
+            return manualAdvertising(impression, adCampaignMaster, false);
+        } else {
+            if (
+                    campaignType == CampaignType.Quiz01 || campaignType == CampaignType.Quiz02
+            ) {
+                return manualAdvertising(impression, adCampaignMaster, false);
+            }
+        }
+
+        throw NO_AD.throwErrors();
+    }
+
     private QuizAds manualAdvertising(RptAdImpression impression, AdCampaignMasterVo adCampaignMaster, boolean isJoined) throws NoAdException {
 
         RptAdRequestVo  rptAdRequestVo =  getRptAdRequestByAdRequestId(impression.requestId());
@@ -312,6 +358,7 @@ public class AdCampaignService {
         Integer joinUserCount = qAdRewordRepository.findJoinUserCount(rptAdRequestVo.getGroupCode(), rptAdRequestVo.getCampaignCode());
 
         Integer reword = rptAdRequestVo.getAdReword();
+
         saveImpressionLog(impression);
 
         LandingVo landing = new LandingVo(rptAdRequestVo.getGroupCode(), impression.requestId(), APP_SERVER, impression.user());
