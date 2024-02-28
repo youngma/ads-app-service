@@ -34,6 +34,10 @@ public class QAdvertiserCampaignMasterRepository {
     private final EntityManager entityManager;
     private final JPAQueryFactory jpaQueryFactory;
 
+    public Page<AdCampaignMasterEntity> findAdCampaigns(CampaignType campaignType, String groupCode, CampaignJoinType campaignJoinType, Pageable pageable) {
+        return findAdCampaigns(campaignType, groupCode, campaignJoinType, null, pageable);
+    }
+
     public Page<AdCampaignMasterEntity> findAdCampaigns(CampaignType campaignType, String groupCode, CampaignJoinType campaignJoinType, String user, Pageable pageable) {
 
         BooleanBuilder builder = new BooleanBuilder();

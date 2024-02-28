@@ -1,4 +1,4 @@
-package com.ads.main.controller;
+package com.ads.main.controller.v1;
 
 
 import com.ads.main.core.config.exception.AdAnswerException;

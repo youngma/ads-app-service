@@ -16,7 +16,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class QuizAds {
+public class QuizAdsV2 {
 
     /**
      * 광고 요청 ID
@@ -70,7 +70,7 @@ public class QuizAds {
     private String goodsCode;
 
 
-    private LandingVo landing;
+    private LandingV2Vo landing;
 
     private Integer reword;
 

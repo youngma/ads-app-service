@@ -8,13 +8,10 @@ import org.apache.tomcat.util.buf.HexUtils;
 
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LandingVo {
+public class LandingV2Vo {
 
     @JsonIgnore
     private String groupCode;
-
-    @JsonIgnore
-    private String requestId;
 
     @JsonIgnore
     private String appServerUrl;
@@ -45,39 +42,28 @@ public class LandingVo {
     // 리워드 적립 회원 조회
     private String reword;
 
-    public LandingVo(String groupCode, String requestId, String appServerUrl) {
+    public LandingV2Vo(String groupCode, String appServerUrl, String userKey) {
         this.groupCode = groupCode;
-        this.requestId = requestId;
         this.appServerUrl = appServerUrl;
+        this.userKey = userKey;
     }
 
-
-    public LandingVo(String groupCode, String requestId,  String appServerUrl, String user) {
-        this.groupCode = groupCode;
-        this.requestId = requestId;
-        this.appServerUrl = appServerUrl;
-        this.userKey = user;
-    }
 
     public String getThumb() {
         if (this.campaignCode != null) {
-            return this.appServerUrl.concat("/app/v1/ads/request/"+requestId+"/"+groupCode+"/"+this.campaignCode+"?redirect=").concat(HexUtils.toHexString(this.thumb.getBytes())).concat("&user-key=").concat(userKey);
+            return this.thumb;
         } else {
             return null;
         }
     }
 
     public String getDetail_page() {
-        if (this.campaignCode != null) {
-            return this.appServerUrl.concat("/app/v1/ads/detail/"+requestId+"/"+this.campaignCode).concat("?user-key=").concat(userKey);
-        } else {
-            return null;
-        }
+        return null;
     }
 
     public String getDetail() {
         if (this.detail != null) {
-            return this.appServerUrl.concat("/app/v1/ads/impression/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.detail.getBytes()) );
+            return this.detail;
         } else {
             return null;
         }
@@ -85,7 +71,7 @@ public class LandingVo {
 
     public String getAnswer() {
         if (this.answer != null) {
-            return this.appServerUrl.concat("/app/v1/ads/answer/"+requestId+"/"+answer).concat("?user-key=").concat(userKey);
+            return this.appServerUrl.concat("/app/v2/ads/answer/quiz-ads/"+answer).concat("?user-key=").concat(userKey);
         } else {
             return null;
         }
@@ -93,7 +79,7 @@ public class LandingVo {
 
     public String getReword() {
         if (this.reword != null) {
-            return this.appServerUrl.concat("/app/v1/ads/reword/"+groupCode+"/"+reword);
+            return this.appServerUrl.concat("/app/v2/ads/reword/"+groupCode+"/"+reword);
         } else {
             return null;
         }
@@ -101,7 +87,7 @@ public class LandingVo {
 
     public String getHint_ad_pc() {
         if (this.hint_ad_pc != null) {
-            return this.appServerUrl.concat("/app/v1/ads/click/hint/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.hint_ad_pc.getBytes()) );
+            return this.appServerUrl.concat("/app/v2/ads/click/hint/quiz-ads?redirect=").concat(HexUtils.toHexString(this.hint_ad_pc.getBytes()) );
         } else {
             return null;
         }
@@ -109,7 +95,7 @@ public class LandingVo {
 
     public String getHint_ad_mobile() {
         if (this.hint_ad_mobile != null) {
-            return this.appServerUrl.concat("/app/v1/ads/click/hint/"+requestId+"?redirect=").concat( HexUtils.toHexString(this.hint_ad_mobile.getBytes()) );
+            return this.appServerUrl.concat("/app/v2/ads/click/hint/quiz-ads?redirect=").concat( HexUtils.toHexString(this.hint_ad_mobile.getBytes()) );
         } else {
             return null;
         }
@@ -117,7 +103,7 @@ public class LandingVo {
 
     public String getAnswer_ad_pc() {
         if (this.answer_ad_pc != null) {
-            return this.appServerUrl.concat("/app/v1/ads/click/answer/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.answer_ad_pc.getBytes()) );
+            return this.appServerUrl.concat("/app/v2/ads/click/answer/quiz-ads?redirect=").concat(HexUtils.toHexString(this.answer_ad_pc.getBytes()) );
         } else {
             return null;
         }
@@ -125,7 +111,7 @@ public class LandingVo {
 
     public String getAnswer_ad_mobile() {
         if (this.answer_ad_mobile != null) {
-            return this.appServerUrl.concat("/app/v1/ads/click/answer/"+requestId+"?redirect=").concat(HexUtils.toHexString(this.answer_ad_mobile.getBytes()) );
+            return this.appServerUrl.concat("/app/v2/ads/click/answer/quiz-ads?redirect=").concat(HexUtils.toHexString(this.answer_ad_mobile.getBytes()) );
         } else {
             return null;
         }

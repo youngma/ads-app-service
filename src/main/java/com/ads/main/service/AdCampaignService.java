@@ -60,6 +60,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import static com.ads.main.entity.QAdCampaignMasterEntity.adCampaignMasterEntity;
 import static com.ads.main.enums.AdException.NO_AD;
 
 @Service
@@ -110,24 +111,29 @@ public class AdCampaignService {
         pageMapper =  new PageMapper<>(adCampaignMasterConvert);
         mobonApi = appClientFactory.load(DOMAIN.MOBON_API);
         objectMapper = new ObjectMapper();
-
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
-
     }
 
 
-    public PageAds<QuizAds> requestList(String groupCode, String join, String user, int page, int size) throws NoAdException, AppException {
+    public Page<AdCampaignMasterEntity> requestAds(String groupCode, String join, String user, int page, int size) throws AppException, NoAdException {
 
         CampaignType campaignType = adGroupService.findCampaignType(groupCode);
         CampaignJoinType campaignJoinType = CampaignJoinType.of(join);
 
-        Page<AdCampaignMasterEntity> adCampaignMasterEntity= qAdvertiserCampaignMasterRepository.findAdCampaigns(campaignType, groupCode, campaignJoinType, user, PageRequest.of(page - 1, size));
+        Page<AdCampaignMasterEntity> adCampaignMasterEntities = qAdvertiserCampaignMasterRepository.findAdCampaigns(campaignType, groupCode, campaignJoinType, user, PageRequest.of(page - 1, size));
 
-        if (adCampaignMasterEntity.isEmpty()) {
+        if (adCampaignMasterEntities.isEmpty()) {
             throw AdException.NO_AD.throwErrors();
         }
 
-        Set<String> campaignCodeSet = adCampaignMasterEntity.getContent()
+        return adCampaignMasterEntities;
+    }
+
+    public PageAds<QuizAds> requestList(String groupCode, String join, String user, int page, int size) throws NoAdException, AppException {
+
+        Page<AdCampaignMasterEntity> adCampaignMasterEntities= requestAds(groupCode, join, user, page, size);
+
+        Set<String> campaignCodeSet = adCampaignMasterEntities.getContent()
                 .stream()
                 .map(AdCampaignMasterEntity::getCampaignCode)
                 .collect(Collectors.toSet());
@@ -135,7 +141,42 @@ public class AdCampaignService {
         Set<String> joinCampaignCodeSet = rptAdAnswerEntityRepository.findAllByCampaignCodeInAndUserKey(campaignCodeSet, user)
                 .stream().map(RptAdAnswerEntity::getCampaignCode).collect(Collectors.toSet());
 
-        return convert(groupCode, joinCampaignCodeSet, user, pageMapper.convert(adCampaignMasterEntity));
+        return convert(groupCode, joinCampaignCodeSet, user, pageMapper.convert(adCampaignMasterEntities));
+    }
+
+    public PageAds<QuizAdsV2> requestList(String groupCode, int page, int size) throws NoAdException, AppException {
+        Page<AdCampaignMasterEntity> adCampaignMasterEntities = requestAds(groupCode, null, null, page, size);
+        return convert(groupCode, pageMapper.convert(adCampaignMasterEntities));
+    }
+
+    private PageAds<QuizAdsV2> convert(String groupCode, Page<AdCampaignMasterVo> vos) throws AppException {
+
+        PartnerAdGroupVo partnerAdGroupVo = adGroupService.searchByGroupCode(groupCode);
+
+        List<QuizAdsV2> quizAds = vos.getContent().stream().map(ad -> {
+
+
+            LandingV2Vo landing = new LandingV2Vo(groupCode, APP_SERVER, null);
+            landing.setThumb(generateUrl("quiz-list", ad));
+            landing.setDetail(generateUrl("quiz-detail-1", ad));
+            landing.setCampaignCode(ad.getCampaignCode());
+
+            return QuizAdsV2.builder()
+                    .partnerAdGroupVo(partnerAdGroupVo)
+                    .adCampaignMasterVo(ad)
+                    .campaignName(ad.getCampaignName())
+                    .campaignCode(ad.getCampaignCode())
+                    .pointName(partnerAdGroupVo.getPointName())
+                    .totalParticipationLimit(ad.getTotalParticipationLimit())
+                    .dayParticipationLimit(ad.getDayParticipationLimit())
+                    .quizTitle(ad.getQuiz().getQuizTitle())
+                    .useHow(ad.getQuiz().getUseHow())
+                    .landing(landing)
+                    .build();
+
+        }).toList();
+
+        return new PageAds<>(quizAds, vos.getTotalPages(), vos.getTotalElements(), vos.getSize());
     }
 
     private PageAds<QuizAds> convert(String groupCode, Set<String> joinCampaignCodeSet, String user, Page<AdCampaignMasterVo> vos) throws AppException {
