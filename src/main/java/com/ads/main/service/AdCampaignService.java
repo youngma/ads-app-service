@@ -308,7 +308,6 @@ public class AdCampaignService {
 
     public QuizAds markRequestAndImpression(RptAdRequest request, RptAdImpression impression) throws NoAdException {
 
-
         AdCampaignMasterVo adCampaignMaster = quizRedisService.findCampaignByCode(impression.campaignCode());
         Optional<RptAdAnswerEntity> optionalRptAdAnswerEntity = rptAdAnswerEntityRepository.findFirstByCampaignCodeAndUserKey(impression.campaignCode(), impression.user());
 
@@ -321,8 +320,8 @@ public class AdCampaignService {
                     .requestId(impression.requestId())
                     .campaignName(adCampaignMaster.getCampaignName())
                     .campaignCode(adCampaignMaster.getCampaignCode())
-                    .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
-                    .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
+//                    .totalParticipationLimit(adCampaignMaster.getTotalParticipationLimit())
+//                    .dayParticipationLimit(adCampaignMaster.getDayParticipationLimit())
                     .isJoined(true)
                     .quizTitle(adCampaignMaster.getQuiz().getQuizTitle())
                     .useHow(adCampaignMaster.getQuiz().getUseHow())
